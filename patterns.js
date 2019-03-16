@@ -77,7 +77,7 @@ var Patterns = {
 
     },
 
-    drawWaves: function({context, x, y, width, height, strokeStyle, fillStyle, lineWidth, radius, gap, count, alternating}={}) {
+    drawWaves: function({context, x, y, width, height, strokeStyle, fillStyle, lineWidth, radius, gap, count, alternating}={alternating: false}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
