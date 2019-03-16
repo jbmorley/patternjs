@@ -19,31 +19,76 @@
         }
 
         function draw() {
+
             var canvas = document.getElementById('asanoha');
             prepareForRetina(canvas);
             if (canvas.getContext) {
                 Patterns.drawAsaNoHa(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
             }
+
             var canvas = document.getElementById('circles');
             prepareForRetina(canvas);
             if (canvas.getContext) {
                 Patterns.drawPattern(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
             }
+
             var canvas = document.getElementById('waves');
             prepareForRetina(canvas);
             if (canvas.getContext) {
-                Patterns.drawWaves(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height, 'white', 'black', 3, 55, 10, 5, false);
+                Patterns.drawWaves({
+                    context: canvas.getContext('2d'),
+                    x: 0,
+                    y: 0,
+                    width: canvas.width,
+                    height: canvas.height,
+                    strokeStyle: 'white',
+                    fillStyle: 'black',
+                    lineWidth: 3,
+                    radius: 55,
+                    gap: 10,
+                    count: 5,
+                    alternating: false
+                });
             }
+
             var canvas = document.getElementById('waves-light');
             prepareForRetina(canvas);
             if (canvas.getContext) {
-                Patterns.drawWaves(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height, '#0033cc', 'white', 2, 80, 7, 11, false);
+                Patterns.drawWaves({
+                    context: canvas.getContext('2d'),
+                    x: 0, 
+                    y: 0, 
+                    width: canvas.width, 
+                    height: canvas.height, 
+                    strokeStyle: '#0033cc', 
+                    fillStyle: 'white', 
+                    lineWidth: 2, 
+                    radius: 80,
+                    gap: 7, 
+                    count: 11,
+                    alternating: false
+                 });
             }
+
             var canvas = document.getElementById('waves-inverted');
             prepareForRetina(canvas);
             if (canvas.getContext) {
-                Patterns.drawWaves(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height, '#336699', '#19334d', 3, 44, 8, 5, true);
+                Patterns.drawWaves({
+                    context: canvas.getContext('2d'),
+                    x: 0,
+                    y: 0,
+                    width: canvas.width,
+                    height: canvas.height,
+                    strokeStyle: '#336699',
+                    fillStyle: '#19334d',
+                    lineWidth: 3,
+                    radius: 44,
+                    gap: 8,
+                    count: 5,
+                    alternating: true
+                });
             }
+            
         };
     </script>
 </head>
