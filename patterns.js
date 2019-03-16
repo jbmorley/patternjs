@@ -1,5 +1,37 @@
 var Patterns = {
 
+    drawCircle: function(context, x, y, radius) {
+        context.fillStyle = 'white';
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fill();
+    },
+
+    drawDottedLine: function(context, x1, y1, x2, y2, radius, increment) {
+
+        var getIncrement = function(from, to) {
+            if (from < to) {
+                return to - from;
+            } else {
+                return ( from - to ) * -1;
+            }
+        };
+
+        var stepX = getIncrement(x1, x2);
+        var stepY = getIncrement(y1, y2);
+
+        var distance = Math.sqrt(stepX*stepX + stepY*stepY);
+        var steps = Math.floor(distance / increment);
+
+        stepX = stepX / steps;
+        stepY = stepY / steps;
+
+        for (var i = 0; i < steps; i++) {
+            Patterns.drawCircle(context, x1 + (stepX * i), y1 + (stepY * i), radius);
+        }
+
+    },
+
     drawAsaNoHa: function({context, x, y, width, height}={}) {
         context.strokeStyle = 'white';
         context.fillStyle = '#000033';
@@ -12,48 +44,66 @@ var Patterns = {
             context.stroke();
         };
 
-        var drawStar = function(context, center, length, altitude, orientation) {
+        var drawStar = function(context, center, length, altitude, orientation, drawLine) {
             drawLine(
                 context,
                 center.x, center.y,
-                center.x - ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation )
+                center.x - ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation ),
             );
             drawLine(
                 context,
                 center.x, center.y,
-                center.x, center.y + ( ( 2 * ( altitude / 3 ) ) * orientation )
+                center.x, center.y + ( ( 2 * ( altitude / 3 ) ) * orientation ),
             );
             drawLine(
                 context,
                 center.x, center.y,
-                center.x + ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation )
+                center.x + ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation ),
             );
         };
 
-        var drawPrimitive = function(context, x, y, length, altitude) {
+        var drawPrimitive = function(context, x, y, length, altitude, lineDrawer) {
 
             context.lineWidth = 2;
 
-            context.beginPath();
-            context.moveTo(x, y);
-            context.lineTo(x + ( length / 2 ), y + altitude);
-            context.lineTo(x + length, y);
-            context.closePath();
-            context.stroke();
+            lineDrawer(
+                context, 
+                x, y,
+                x + ( length / 2 ), y + altitude,
+            );
+
+            lineDrawer(
+                context,
+                x + ( length / 2 ), y + altitude,
+                x + length, y,
+            );
+
+            lineDrawer(
+                context,
+                x + length, y,
+                x, y,
+            );
 
             var center = { x: x + ( length / 2 ), y: y + ( altitude / 3 )};
-            drawStar(context, center, length, altitude, 1);
+            drawStar(context, center, length, altitude, 1, lineDrawer);
 
             var center = { x: x + length, y: y + ( 2 * ( altitude / 3 ) )};
-            drawStar(context, center, length, altitude, -1);
+            drawStar(context, center, length, altitude, -1, lineDrawer);
         };
 
         var length = 100;
         var altitude = (Math.sqrt(3) / 2 ) * length;
+
+        var lineDrawer = function(context, x1, y1, x2, y2) {
+            Patterns.drawDottedLine(context, x1, y1, x2, y2, 2, 8);
+        };
+
+        // var lineDrawer = drawLine;
+
         for (var offsetY = y - altitude; offsetY < height + altitude; offsetY = offsetY + ( altitude * 2 ) ) {
             for (var offsetX = x - length; offsetX < width + length; offsetX = offsetX + length) {
-                drawPrimitive(context, offsetX - ( length / 2 ), offsetY, length, altitude);
-                drawPrimitive(context, offsetX, offsetY + altitude, length, altitude);
+                drawPrimitive(context, offsetX - ( length / 2 ), offsetY, length, altitude, lineDrawer);
+                drawPrimitive(context, offsetX, offsetY + altitude, length, altitude, lineDrawer);
             }
         }
     },
