@@ -5,22 +5,29 @@ var Patterns = {
         context.fillStyle = '#000033';
         context.fillRect(x, y, width, height);
 
+        var drawLine = function(context, x1, y1, x2, y2) {
+            context.beginPath();
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.stroke();            
+        };
+
         var drawStar = function(context, center, length, altitude, orientation) {
-
-            context.beginPath();
-            context.moveTo(center.x, center.y);
-            context.lineTo(center.x - ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation ) );
-            context.stroke();
-
-            context.beginPath();
-            context.moveTo(center.x, center.y);
-            context.lineTo(center.x, center.y + ( ( 2 * ( altitude / 3 ) ) * orientation ) );
-            context.stroke();
-
-            context.beginPath();
-            context.moveTo(center.x, center.y);
-            context.lineTo(center.x + ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation ) );
-            context.stroke();
+            drawLine(
+                context,
+                center.x, center.y,
+                center.x - ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation )
+            );
+            drawLine(
+                context,
+                center.x, center.y,
+                center.x, center.y + ( ( 2 * ( altitude / 3 ) ) * orientation )
+            );
+            drawLine(
+                context,
+                center.x, center.y,
+                center.x + ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation )
+            );
         };
 
         var drawPrimitive = function(context, x, y, length, altitude) {
