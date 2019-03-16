@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patterns</title>
+    <script>
+
+        function prepareForRetina(canvas) {
+            if (window.devicePixelRatio > 1) {
+                var canvasWidth = canvas.width;
+                var canvasHeight = canvas.height;
+
+                canvas.width = canvasWidth * window.devicePixelRatio;
+                canvas.height = canvasHeight * window.devicePixelRatio;
+                canvas.style.width = canvasWidth + 'px';
+                canvas.style.height = canvasHeight + 'px';
+
+                canvas.getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
+            }
+        }
+
+        function draw() {
+            var canvas = document.getElementById('asanoha');
+            prepareForRetina(canvas);
+            if (canvas.getContext) {
+                Patterns.drawAsaNoHa(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
+            }
+            var canvas = document.getElementById('circles');
+            prepareForRetina(canvas);
+            if (canvas.getContext) {
+                Patterns.drawPattern(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
+            }
+            var canvas = document.getElementById('waves');
+            prepareForRetina(canvas);
+            if (canvas.getContext) {
+                Patterns.drawWaves(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height, 'white', 'black', 3, 55, 10, 5, false);
+            }
+            var canvas = document.getElementById('waves-light');
+            prepareForRetina(canvas);
+            if (canvas.getContext) {
+                Patterns.drawWaves(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height, '#0033cc', 'white', 2, 80, 7, 11, false);
+            }
+            var canvas = document.getElementById('waves-inverted');
+            prepareForRetina(canvas);
+            if (canvas.getContext) {
+                Patterns.drawWaves(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height, '#336699', '#19334d', 3, 44, 8, 5, true);
+            }
+        };
+    </script>
+</head>
+<body onload="draw()">
+    <canvas id="asanoha" width="600" height="400"></canvas>
+    <canvas id="circles" width="600" height="400"></canvas>
+    <canvas id="waves" width="600" height="400"></canvas>
+    <canvas id="waves-light" width="600" height="400"></canvas>
+    <canvas id="waves-inverted" width="600" height="400"></canvas>
+    <script src="patterns.js"></script>
+</body>
+</html>
