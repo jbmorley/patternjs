@@ -25,7 +25,13 @@
             var canvas = document.getElementById('asanoha');
             prepareForRetina(canvas);
             if (canvas.getContext) {
-                Patterns.drawAsaNoHa(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
+                Patterns.drawAsaNoHa({
+                    context: canvas.getContext('2d'),
+                    x: 0,
+                    y: 0,
+                    width: canvas.width,
+                    height: canvas.height
+                });
             }
 
             var canvas = document.getElementById('circles');

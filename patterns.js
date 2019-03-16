@@ -1,6 +1,6 @@
 var Patterns = {
 
-    drawAsaNoHa: function(context, x, y, width, height) {
+    drawAsaNoHa: function({context, x, y, width, height}={}) {
         context.strokeStyle = 'white';
         context.fillStyle = '#000033';
         context.fillRect(x, y, width, height);
