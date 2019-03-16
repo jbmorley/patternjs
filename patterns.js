@@ -9,7 +9,7 @@ var Patterns = {
             context.beginPath();
             context.moveTo(x1, y1);
             context.lineTo(x2, y2);
-            context.stroke();         
+            context.stroke();     
         };
 
         var drawStar = function(context, center, length, altitude, orientation) {
