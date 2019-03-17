@@ -1,4 +1,4 @@
-var Patterns = {
+var Pattern = {
 
     increment: function(from, to) {
         if (from < to) {
@@ -24,13 +24,13 @@ var Patterns = {
     },
 
     drawDottedLine: function(context, x1, y1, x2, y2, radius, increment) {
-        var stepX = Patterns.increment(x1, x2);
-        var stepY = Patterns.increment(y1, y2);
+        var stepX = Pattern.increment(x1, x2);
+        var stepY = Pattern.increment(y1, y2);
         var distance = Math.sqrt(( stepX * stepX ) + ( stepY * stepY ));
         var steps = Math.floor(distance / (increment * window.devicePixelRatio ));
         stepX = stepX / steps, stepY = stepY / steps;
         for (var i = 0; i < steps; i++) {
-            Patterns.drawCircle(context, x1 + (stepX * i), y1 + (stepY * i), radius);
+            Pattern.drawCircle(context, x1 + (stepX * i), y1 + (stepY * i), radius);
         }
     },
 
@@ -43,13 +43,13 @@ var Patterns = {
 
         dottedLine: function(radius, increment) {
             return function(context, x1, y1, x2, y2) {
-                Patterns.drawDottedLine(context, x1, y1, x2, y2, radius, increment);
+                Pattern.drawDottedLine(context, x1, y1, x2, y2, radius, increment);
             };
         },
 
         line: function(width) {
             return function(context, x1, y1, x2, y2) {
-                Patterns.drawLine(context, x1, y1, x2, y2, width);
+                Pattern.drawLine(context, x1, y1, x2, y2, width);
             }
         }
 
@@ -110,7 +110,7 @@ var Patterns = {
 
         var context = canvas.getContext('2d');
 
-        Patterns.applyStyle(context, style);
+        Pattern.applyStyle(context, style);
 
         context.fillRect(0, 0, canvas.width, canvas.height);
         for (var offsetY = 0 - altitude; offsetY < canvas.height + altitude; offsetY = offsetY + ( altitude * 2 ) ) {
@@ -133,7 +133,7 @@ var Patterns = {
 
         var context = canvas.getContext('2d');
 
-        Patterns.applyStyle(context, style);
+        Pattern.applyStyle(context, style);
         context.lineWidth = 4 * window.devicePixelRatio;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -165,7 +165,7 @@ var Patterns = {
 
         var context = canvas.getContext('2d');
 
-        Patterns.applyStyle(context, style)
+        Pattern.applyStyle(context, style)
         context.lineWidth = lineWidth * window.devicePixelRatio;
         context.fillRect(0, 0, canvas.width, canvas.height);
 

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Patterns</title>
+    <title>pattern.js</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
     <link id="theme" rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
@@ -43,54 +43,54 @@
 </head>
 <body>
 
-<h1>Patterns</h1>
+<h1>pattern.js</h1>
 
 <h2>麻の葉, Asa no ha</h2>
 <canvas class="pattern" id="asanoha" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('asanoha', 300, function(canvas) {
-        Patterns.asanoha({
+        Pattern.asanoha({
             canvas: canvas,
-            style: Patterns.styles.darkBlue,
-            lineDrawer: Patterns.drawers.line(2),
+            style: Pattern.styles.darkBlue,
+            lineDrawer: Pattern.drawers.line(2),
         });
     });
 </script>
-<pre><code class="javascript">Patterns.asanoha({
+<pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
-    style: Patterns.styles.darkBlue,
-    lineDrawer: Patterns.drawers.line(2),
+    style: Pattern.styles.darkBlue,
+    lineDrawer: Pattern.drawers.line(2),
 });</code></pre>
 
 <canvas class="pattern" id="asanoha-dots" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('asanoha-dots', 300, function(canvas) {
-        Patterns.asanoha({
+        Pattern.asanoha({
             canvas: canvas,
-            style: Patterns.styles.darkRed,
-            lineDrawer: Patterns.drawers.dottedLine(2, 8),
+            style: Pattern.styles.darkRed,
+            lineDrawer: Pattern.drawers.dottedLine(2, 8),
         });
     });
 </script>
-<pre><code class="javascript">Patterns.asanoha({
+<pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
-    style: Patterns.styles.darkRed,
-    lineDrawer: Patterns.drawers.dottedLine(2, 8),
+    style: Pattern.styles.darkRed,
+    lineDrawer: Pattern.drawers.dottedLine(2, 8),
 });</code></pre>
 
 <h2>七宝, Shippou</h2>
 <canvas class="pattern" id="circles" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('circles', 300, function(canvas) {
-        Patterns.shippou({
+        Pattern.shippou({
             canvas: canvas,
-            style: Patterns.styles.purple,
+            style: Pattern.styles.purple,
         });
     });
 </script>
-<pre><code class="javascript">Patterns.shippou({
+<pre><code class="javascript">Pattern.shippou({
     canvas: canvas,
-    style: Patterns.styles.purple,
+    style: Pattern.styles.purple,
 });</code></pre>
 
 <h2>青海波, Seigaiha</h2>
@@ -98,9 +98,9 @@
 <canvas class="pattern" id="waves" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('waves', 300, function(canvas) {
-        Patterns.seigaiha({
+        Pattern.seigaiha({
             canvas: canvas,
-            style: Patterns.styles.monochrome,
+            style: Pattern.styles.monochrome,
             lineWidth: 3,
             radius: 55,
             gap: 10,
@@ -109,9 +109,9 @@
         });
     });
 </script>
-<pre><code class="javascript">Patterns.seigaiha({
+<pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
-    style: Patterns.styles.monochrome,
+    style: Pattern.styles.monochrome,
     lineWidth: 3,
     radius: 55,
     gap: 10,
@@ -122,9 +122,9 @@
 <canvas class="pattern" id="waves-light" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('waves-light', 300, function(canvas) {
-        Patterns.seigaiha({
+        Pattern.seigaiha({
             canvas: canvas, 
-            style: Patterns.styles.sky,
+            style: Pattern.styles.sky,
             lineWidth: 2, 
             radius: 80,
             gap: 7, 
@@ -133,9 +133,9 @@
         });
     });
 </script>
-<pre><code class="javascript">Patterns.seigaiha({
+<pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas, 
-    style: Patterns.styles.sky,
+    style: Pattern.styles.sky,
     lineWidth: 2, 
     radius: 80,
     gap: 7, 
@@ -146,9 +146,9 @@
 <canvas class="pattern" id="waves-inverted" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('waves-inverted', 300, function(canvas) {
-        Patterns.seigaiha({
+        Pattern.seigaiha({
             canvas: canvas,
-            style: Patterns.styles.blues,
+            style: Pattern.styles.blues,
             lineWidth: 3,
             radius: 44,
             gap: 8,
@@ -157,9 +157,9 @@
         });
     });
 </script>
-<pre><code class="javascript">Patterns.seigaiha({
+<pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
-    style: Patterns.styles.blues,
+    style: Pattern.styles.blues,
     lineWidth: 3,
     radius: 44,
     gap: 8,
@@ -167,7 +167,7 @@
     alternating: true
 });</code></pre>
 
-<script src="patterns.js"></script>
+<script src="pattern.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
 </body>
