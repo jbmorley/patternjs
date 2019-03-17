@@ -49,14 +49,14 @@
 <canvas class="pattern" id="asanoha" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('asanoha', 300, function(canvas) {
-        Patterns.drawAsaNoHa({
+        Patterns.asanoha({
             canvas: canvas,
             style: Patterns.styles.darkBlue,
             lineDrawer: Patterns.drawers.line(2),
         });
     });
 </script>
-<pre><code class="javascript">Patterns.drawAsaNoHa({
+<pre><code class="javascript">Patterns.asanoha({
     canvas: canvas,
     style: Patterns.styles.darkBlue,
     lineDrawer: Patterns.drawers.line(2),
@@ -65,14 +65,14 @@
 <canvas class="pattern" id="asanoha-dots" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('asanoha-dots', 300, function(canvas) {
-        Patterns.drawAsaNoHa({
+        Patterns.asanoha({
             canvas: canvas,
             style: Patterns.styles.darkRed,
             lineDrawer: Patterns.drawers.dottedLine(2, 8),
         });
     });
 </script>
-<pre><code class="javascript">Patterns.drawAsaNoHa({
+<pre><code class="javascript">Patterns.asanoha({
     canvas: canvas,
     style: Patterns.styles.darkRed,
     lineDrawer: Patterns.drawers.dottedLine(2, 8),
@@ -82,13 +82,13 @@
 <canvas class="pattern" id="circles" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('circles', 300, function(canvas) {
-        Patterns.drawShippou({
+        Patterns.shippou({
             canvas: canvas,
             style: Patterns.styles.purple,
         });
     });
 </script>
-<pre><code class="javascript">Patterns.drawShippou({
+<pre><code class="javascript">Patterns.shippou({
     canvas: canvas,
     style: Patterns.styles.purple,
 });</code></pre>
@@ -98,7 +98,7 @@
 <canvas class="pattern" id="waves" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('waves', 300, function(canvas) {
-        Patterns.drawWaves({
+        Patterns.seigaiha({
             canvas: canvas,
             style: Patterns.styles.monochrome,
             lineWidth: 3,
@@ -109,7 +109,7 @@
         });
     });
 </script>
-<pre><code class="javascript">Patterns.drawWaves({
+<pre><code class="javascript">Patterns.seigaiha({
     canvas: canvas,
     style: Patterns.styles.monochrome,
     lineWidth: 3,
@@ -122,7 +122,7 @@
 <canvas class="pattern" id="waves-light" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('waves-light', 300, function(canvas) {
-        Patterns.drawWaves({
+        Patterns.seigaiha({
             canvas: canvas, 
             style: Patterns.styles.sky,
             lineWidth: 2, 
@@ -133,7 +133,7 @@
         });
     });
 </script>
-<pre><code class="javascript">Patterns.drawWaves({
+<pre><code class="javascript">Patterns.seigaiha({
     canvas: canvas, 
     style: Patterns.styles.sky,
     lineWidth: 2, 
@@ -146,7 +146,7 @@
 <canvas class="pattern" id="waves-inverted" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('waves-inverted', 300, function(canvas) {
-        Patterns.drawWaves({
+        Patterns.seigaiha({
             canvas: canvas,
             style: Patterns.styles.blues,
             lineWidth: 3,
@@ -157,7 +157,7 @@
         });
     });
 </script>
-<pre><code class="javascript">Patterns.drawWaves({
+<pre><code class="javascript">Patterns.seigaiha({
     canvas: canvas,
     style: Patterns.styles.blues,
     lineWidth: 3,

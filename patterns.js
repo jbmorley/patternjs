@@ -89,7 +89,7 @@ var Patterns = {
 
     },
 
-    drawAsaNoHa: function({canvas, style, lineDrawer}={}) {
+    asanoha: function({canvas, style, lineDrawer}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
             drawLine(context, x, y, x - ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
@@ -121,7 +121,7 @@ var Patterns = {
         }
     },
 
-    drawShippou: function({canvas, style}={}) {
+    shippou: function({canvas, style}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -148,7 +148,7 @@ var Patterns = {
 
     },
 
-    drawWaves: function({canvas, style, lineWidth, radius, gap, count, alternating}={}) {
+    seigaiha: function({canvas, style, lineWidth, radius, gap, count, alternating}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
