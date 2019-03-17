@@ -11,3 +11,7 @@ h1, h2 {
 .pattern {
 	display: block;
 }
+
+pre {
+	margin: 0 0 8px 0;
+}

@@ -8,6 +8,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
     <script>
 
+        function onDocumentReady(callback) {
+            document.addEventListener('DOMContentLoaded', callback, false);
+        }
+
         function onResize(element, callback) {
                 var parent = element.parentElement;
                 var resizeCallback = function() {
@@ -17,13 +21,15 @@
                 resizeCallback();
         }
 
-        function makeResizing(canvas, height, callback) {
-            onResize(canvas, function(canvas, parentWidth, parentHeight) {
-                canvas.width = parentWidth * window.devicePixelRatio;
-                canvas.height = height * window.devicePixelRatio;
-                canvas.style.width = parentWidth + 'px';
-                canvas.style.height = height + 'px';
-                callback(canvas);
+        function makeResizingCanvas(id, height, callback) {
+            onDocumentReady(function() {
+                onResize(document.getElementById(id), function(canvas, parentWidth, parentHeight) {
+                    canvas.width = parentWidth * window.devicePixelRatio;
+                    canvas.height = height * window.devicePixelRatio;
+                    canvas.style.width = parentWidth + 'px';
+                    canvas.style.height = height + 'px';
+                    callback(canvas);
+                });
             });
         }
 
@@ -33,114 +39,27 @@
             };
         }
 
-        function draw() {
-
-            var canvas = document.getElementById('asanoha');
-            makeResizing(canvas, 300, function(canvas) {
-                Patterns.drawAsaNoHa({
-                    context: canvas.getContext('2d'),
-                    x: 0,
-                    y: 0,
-                    width: canvas.width,
-                    height: canvas.height,
-                    style: Patterns.styles.darkBlue,
-                    lineDrawer: Patterns.drawers.line(2),
-                });
-            });
-
-            var canvas = document.getElementById('asanoha-dots');
-            makeResizing(canvas, 300, function(canvas) {
-                Patterns.drawAsaNoHa({
-                    context: canvas.getContext('2d'),
-                    x: 0,
-                    y: 0,
-                    width: canvas.width,
-                    height: canvas.height,
-                    style: Patterns.styles.darkRed,
-                    lineDrawer: Patterns.drawers.dottedLine(2, 8),
-                });
-            });
-
-            var canvas = document.getElementById('circles');
-            makeResizing(canvas, 300, function(canvas) {
-                Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
-            });
-
-            var canvas = document.getElementById('waves');
-            makeResizing(canvas, 300, function(canvas) {
-                Patterns.drawWaves({
-                    context: canvas.getContext('2d'),
-                    x: 0,
-                    y: 0,
-                    width: canvas.width,
-                    height: canvas.height,
-                    style: Patterns.styles.monochrome,
-                    lineWidth: 3,
-                    radius: 55,
-                    gap: 10,
-                    count: 5,
-                    alternating: false,
-                });
-            });
-
-            var canvas = document.getElementById('waves-light');
-            makeResizing(canvas, 300, function(canvas) {
-                Patterns.drawWaves({
-                    context: canvas.getContext('2d'),
-                    x: 0, 
-                    y: 0, 
-                    width: canvas.width, 
-                    height: canvas.height, 
-                    style: Patterns.styles.sky,
-                    lineWidth: 2, 
-                    radius: 80,
-                    gap: 7, 
-                    count: 11,
-                    alternating: false,
-                 });
-            });
-            if (canvas.getContext) {
-                Patterns.drawWaves({
-                    context: canvas.getContext('2d'),
-                    x: 0, 
-                    y: 0, 
-                    width: canvas.width, 
-                    height: canvas.height, 
-                    style: Patterns.styles.sky,
-                    lineWidth: 2, 
-                    radius: 80,
-                    gap: 7, 
-                    count: 11,
-                    alternating: false,
-                 });
-            }
-
-            var canvas = document.getElementById('waves-inverted');
-            makeResizing(canvas, 300, function(canvas) {
-                Patterns.drawWaves({
-                    context: canvas.getContext('2d'),
-                    x: 0,
-                    y: 0,
-                    width: canvas.width,
-                    height: canvas.height,
-                    style: Patterns.styles.blues,
-                    lineWidth: 3,
-                    radius: 44,
-                    gap: 8,
-                    count: 5,
-                    alternating: true
-                });
-            });
-
-        };
     </script>
 </head>
-<body onload="draw()">
+<body>
 
 <h1>Patterns</h1>
 
 <h2>麻の葉, Asa no ha</h2>
 <canvas class="pattern" id="asanoha" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('asanoha', 300, function(canvas) {
+        Patterns.drawAsaNoHa({
+            context: canvas.getContext('2d'),
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            style: Patterns.styles.darkBlue,
+            lineDrawer: Patterns.drawers.line(2),
+        });
+    });
+</script>
 <pre><code class="javascript">Patterns.drawAsaNoHa({
     context: canvas.getContext('2d'),
     x: 0,
@@ -149,10 +68,22 @@
     height: canvas.height,
     style: Patterns.styles.darkBlue,
     lineDrawer: Patterns.drawers.line(2),
-});
-</code></pre>
+});</code></pre>
 
 <canvas class="pattern" id="asanoha-dots" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('asanoha-dots', 300, function(canvas) {
+        Patterns.drawAsaNoHa({
+            context: canvas.getContext('2d'),
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            style: Patterns.styles.darkRed,
+            lineDrawer: Patterns.drawers.dottedLine(2, 8),
+        });
+    });
+</script>
 <pre><code class="javascript">Patterns.drawAsaNoHa({
     context: canvas.getContext('2d'),
     x: 0,
@@ -161,16 +92,114 @@
     height: canvas.height,
     style: Patterns.styles.darkRed,
     lineDrawer: Patterns.drawers.dottedLine(2, 8),
-});
-</code></pre>
+});</code></pre>
 
 <h2>七宝, Shippou</h2>
 <canvas class="pattern" id="circles" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('circles', 300, function(canvas) {
+        Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
+    });
+</script>
+<pre><code class="javascript">Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);</code></pre>
 
 <h2>Waves</h2>
+
 <canvas class="pattern" id="waves" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('waves', 300, function(canvas) {
+        Patterns.drawWaves({
+            context: canvas.getContext('2d'),
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            style: Patterns.styles.monochrome,
+            lineWidth: 3,
+            radius: 55,
+            gap: 10,
+            count: 5,
+            alternating: false,
+        });
+    });
+</script>
+<pre><code class="javascript">Patterns.drawWaves({
+    context: canvas.getContext('2d'),
+    x: 0,
+    y: 0,
+    width: canvas.width,
+    height: canvas.height,
+    style: Patterns.styles.monochrome,
+    lineWidth: 3,
+    radius: 55,
+    gap: 10,
+    count: 5,
+    alternating: false,
+});</code></pre>
+
 <canvas class="pattern" id="waves-light" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('waves-light', 300, function(canvas) {
+        Patterns.drawWaves({
+            context: canvas.getContext('2d'),
+            x: 0, 
+            y: 0, 
+            width: canvas.width, 
+            height: canvas.height, 
+            style: Patterns.styles.sky,
+            lineWidth: 2, 
+            radius: 80,
+            gap: 7, 
+            count: 11,
+            alternating: false,
+         });
+    });
+</script>
+<pre><code class="javascript">Patterns.drawWaves({
+    context: canvas.getContext('2d'),
+    x: 0, 
+    y: 0, 
+    width: canvas.width, 
+    height: canvas.height, 
+    style: Patterns.styles.sky,
+    lineWidth: 2, 
+    radius: 80,
+    gap: 7, 
+    count: 11,
+    alternating: false,
+});</code></pre>
+
 <canvas class="pattern" id="waves-inverted" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('waves-inverted', 300, function(canvas) {
+        Patterns.drawWaves({
+            context: canvas.getContext('2d'),
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            style: Patterns.styles.blues,
+            lineWidth: 3,
+            radius: 44,
+            gap: 8,
+            count: 5,
+            alternating: true
+        });
+    });
+</script>
+<pre><code class="javascript">Patterns.drawWaves({
+    context: canvas.getContext('2d'),
+    x: 0,
+    y: 0,
+    width: canvas.width,
+    height: canvas.height,
+    style: Patterns.styles.blues,
+    lineWidth: 3,
+    radius: 44,
+    gap: 8,
+    count: 5,
+    alternating: true
+});</code></pre>
 
 <script src="patterns.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
