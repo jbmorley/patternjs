@@ -1,4 +1,5 @@
-# patterns
-JavaScript renderings of various different patterns
+# Patterns
 
-[See it here](https://jbmorley.github.io/patterns)
+JavaScript pattern rendering library.
+
+See it [here](https://jbmorley.github.io/patterns).
