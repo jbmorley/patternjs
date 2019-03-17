@@ -121,7 +121,7 @@ var Patterns = {
         }
     },
 
-    drawShippou: function({canvas}={}) {
+    drawShippou: function({canvas, style}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -133,7 +133,7 @@ var Patterns = {
 
         var context = canvas.getContext('2d');
 
-        Patterns.applyStyle(context, Patterns.styles.purple);
+        Patterns.applyStyle(context, style);
         context.lineWidth = 4;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
