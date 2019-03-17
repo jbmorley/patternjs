@@ -50,22 +50,14 @@
 <script type="text/javascript">
     makeResizingCanvas('asanoha', 300, function(canvas) {
         Patterns.drawAsaNoHa({
-            context: canvas.getContext('2d'),
-            x: 0,
-            y: 0,
-            width: canvas.width,
-            height: canvas.height,
+            canvas: canvas,
             style: Patterns.styles.darkBlue,
             lineDrawer: Patterns.drawers.line(2),
         });
     });
 </script>
 <pre><code class="javascript">Patterns.drawAsaNoHa({
-    context: canvas.getContext('2d'),
-    x: 0,
-    y: 0,
-    width: canvas.width,
-    height: canvas.height,
+    canvas: canvas,
     style: Patterns.styles.darkBlue,
     lineDrawer: Patterns.drawers.line(2),
 });</code></pre>
@@ -74,22 +66,14 @@
 <script type="text/javascript">
     makeResizingCanvas('asanoha-dots', 300, function(canvas) {
         Patterns.drawAsaNoHa({
-            context: canvas.getContext('2d'),
-            x: 0,
-            y: 0,
-            width: canvas.width,
-            height: canvas.height,
+            canvas: canvas,
             style: Patterns.styles.darkRed,
             lineDrawer: Patterns.drawers.dottedLine(2, 8),
         });
     });
 </script>
 <pre><code class="javascript">Patterns.drawAsaNoHa({
-    context: canvas.getContext('2d'),
-    x: 0,
-    y: 0,
-    width: canvas.width,
-    height: canvas.height,
+    canvas: canvas,
     style: Patterns.styles.darkRed,
     lineDrawer: Patterns.drawers.dottedLine(2, 8),
 });</code></pre>

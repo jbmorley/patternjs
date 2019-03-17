@@ -89,7 +89,7 @@ var Patterns = {
 
     },
 
-    drawAsaNoHa: function({context, x, y, width, height, style, lineDrawer}={}) {
+    drawAsaNoHa: function({canvas, style, lineDrawer}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
             drawLine(context, x, y, x - ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
@@ -108,11 +108,13 @@ var Patterns = {
         var length = 100;
         var altitude = (Math.sqrt(3) / 2 ) * length;
 
+        var context = canvas.getContext('2d');
+
         Patterns.applyStyle(context, style);
 
-        context.fillRect(x, y, width, height);
-        for (var offsetY = y - altitude; offsetY < height + altitude; offsetY = offsetY + ( altitude * 2 ) ) {
-            for (var offsetX = x - length; offsetX < width + length; offsetX = offsetX + length) {
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        for (var offsetY = 0 - altitude; offsetY < canvas.height + altitude; offsetY = offsetY + ( altitude * 2 ) ) {
+            for (var offsetX = 0 - length; offsetX < canvas.width + length; offsetX = offsetX + length) {
                 drawPrimitive(context, offsetX - ( length / 2 ), offsetY, length, altitude, lineDrawer);
                 drawPrimitive(context, offsetX, offsetY + altitude, length, altitude, lineDrawer);
             }
