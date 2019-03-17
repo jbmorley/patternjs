@@ -11,12 +11,12 @@ var Patterns = {
     drawCircle: function(context, x, y, radius) {
         context.fillStyle = 'white';
         context.beginPath();
-        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.arc(x, y, radius * window.devicePixelRatio, 0, 2 * Math.PI);
         context.fill();
     },
 
     drawLine: function(context, x1, y1, x2, y2, width) {
-        context.lineWidth = width;
+        context.lineWidth = width * window.devicePixelRatio;
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
@@ -27,7 +27,7 @@ var Patterns = {
         var stepX = Patterns.increment(x1, x2);
         var stepY = Patterns.increment(y1, y2);
         var distance = Math.sqrt(( stepX * stepX ) + ( stepY * stepY ));
-        var steps = Math.floor(distance / increment);
+        var steps = Math.floor(distance / (increment * window.devicePixelRatio ));
         stepX = stepX / steps, stepY = stepY / steps;
         for (var i = 0; i < steps; i++) {
             Patterns.drawCircle(context, x1 + (stepX * i), y1 + (stepY * i), radius);
@@ -105,7 +105,7 @@ var Patterns = {
             drawStar(context, x + length, y + ( 2 * ( altitude / 3 ) ), length, altitude, -1, lineDrawer);
         };
 
-        var length = 100;
+        var length = 100 * window.devicePixelRatio;
         var altitude = (Math.sqrt(3) / 2 ) * length;
 
         var context = canvas.getContext('2d');
@@ -129,12 +129,12 @@ var Patterns = {
             context.stroke();
         };
 
-        var radius = 40;
+        var radius = 40 * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
 
         Patterns.applyStyle(context, style);
-        context.lineWidth = 4;
+        context.lineWidth = 4 * window.devicePixelRatio;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         for (var offsetY = 0 - radius; offsetY < canvas.height + radius; offsetY = offsetY + ( radius * 2 ) ) {
@@ -166,11 +166,14 @@ var Patterns = {
         var context = canvas.getContext('2d');
 
         Patterns.applyStyle(context, style)
-        context.lineWidth = lineWidth;
+        context.lineWidth = lineWidth * window.devicePixelRatio;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         var row = 0;
         var column = 0;
+
+        var radius = radius * window.devicePixelRatio;
+        var gap = gap * window.devicePixelRatio
 
         for (var offsetY = 0; offsetY < canvas.height + radius; offsetY = offsetY + ( radius ) ) {
             row++
