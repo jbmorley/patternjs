@@ -8,18 +8,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
     <script>
 
-        function prepareForRetina(canvas) {
-            if (window.devicePixelRatio > 1) {
-                var canvasWidth = canvas.width;
-                var canvasHeight = canvas.height;
+        function onResize(element, callback) {
+                var parent = element.parentElement;
+                var resizeCallback = function() {
+                    callback(element, parent.clientWidth, parent.clientHeight);
+                }
+                window.addEventListener('resize', resizeCallback, false);
+                resizeCallback();
+        }
 
-                canvas.width = canvasWidth * window.devicePixelRatio;
-                canvas.height = canvasHeight * window.devicePixelRatio;
-                canvas.style.width = canvasWidth + 'px';
-                canvas.style.height = canvasHeight + 'px';
-
-                canvas.getContext('2d').scale(window.devicePixelRatio, window.devicePixelRatio);
-            }
+        function makeResizing(canvas, height, callback) {
+            onResize(canvas, function(canvas, parentWidth, parentHeight) {
+                canvas.width = parentWidth * window.devicePixelRatio;
+                canvas.height = height * window.devicePixelRatio;
+                canvas.style.width = parentWidth + 'px';
+                canvas.style.height = height + 'px';
+                callback(canvas);
+            });
         }
 
         function addDownload(canvas) {
@@ -28,16 +33,10 @@
             };
         }
 
-        function prepareCanvas(canvas) {
-            prepareForRetina(canvas);
-            addDownload(canvas);
-        }
-
         function draw() {
 
             var canvas = document.getElementById('asanoha');
-            prepareCanvas(canvas);
-            if (canvas.getContext) {
+            makeResizing(canvas, 300, function(canvas) {
                 Patterns.drawAsaNoHa({
                     context: canvas.getContext('2d'),
                     x: 0,
@@ -47,11 +46,10 @@
                     style: Patterns.styles.darkBlue,
                     lineDrawer: Patterns.drawers.line(2),
                 });
-            }
+            });
 
             var canvas = document.getElementById('asanoha-dots');
-            prepareCanvas(canvas);
-            if (canvas.getContext) {
+            makeResizing(canvas, 300, function(canvas) {
                 Patterns.drawAsaNoHa({
                     context: canvas.getContext('2d'),
                     x: 0,
@@ -61,17 +59,15 @@
                     style: Patterns.styles.darkRed,
                     lineDrawer: Patterns.drawers.dottedLine(2, 8),
                 });
-            }
+            });
 
             var canvas = document.getElementById('circles');
-            prepareCanvas(canvas);
-            if (canvas.getContext) {
+            makeResizing(canvas, 300, function(canvas) {
                 Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
-            }
+            });
 
             var canvas = document.getElementById('waves');
-            prepareCanvas(canvas);
-            if (canvas.getContext) {
+            makeResizing(canvas, 300, function(canvas) {
                 Patterns.drawWaves({
                     context: canvas.getContext('2d'),
                     x: 0,
@@ -85,10 +81,24 @@
                     count: 5,
                     alternating: false,
                 });
-            }
+            });
 
             var canvas = document.getElementById('waves-light');
-            prepareCanvas(canvas);
+            makeResizing(canvas, 300, function(canvas) {
+                Patterns.drawWaves({
+                    context: canvas.getContext('2d'),
+                    x: 0, 
+                    y: 0, 
+                    width: canvas.width, 
+                    height: canvas.height, 
+                    style: Patterns.styles.sky,
+                    lineWidth: 2, 
+                    radius: 80,
+                    gap: 7, 
+                    count: 11,
+                    alternating: false,
+                 });
+            });
             if (canvas.getContext) {
                 Patterns.drawWaves({
                     context: canvas.getContext('2d'),
@@ -106,8 +116,7 @@
             }
 
             var canvas = document.getElementById('waves-inverted');
-            prepareCanvas(canvas);
-            if (canvas.getContext) {
+            makeResizing(canvas, 300, function(canvas) {
                 Patterns.drawWaves({
                     context: canvas.getContext('2d'),
                     x: 0,
@@ -121,7 +130,7 @@
                     count: 5,
                     alternating: true
                 });
-            }
+            });
 
         };
     </script>
