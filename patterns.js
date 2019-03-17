@@ -141,7 +141,7 @@ var Patterns = {
             for (var offsetX = 0 + radius; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
                 drawCircle(context, offsetX, offsetY, radius);
             }
-            for (var offsetX = 0; offsetX < canvas.width; offsetX = offsetX + ( radius * 2 ) ) {
+            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
                 drawCircle(context, offsetX, offsetY + radius, radius);
             }
         }
@@ -184,7 +184,7 @@ var Patterns = {
             }
             row++;
             column = 0;
-            for (var offsetX = 0; offsetX < canvas.width; offsetX = offsetX + ( radius * 2 ) ) {
+            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
                 column++
                 if (alternating && ( column % 2 == 0 && row % 4 == 0 ) ) {
                     drawCircle(context, offsetX, offsetY + ( radius / 2 ), radius);
