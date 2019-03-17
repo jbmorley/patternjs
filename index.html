@@ -20,10 +20,21 @@
             }
         }
 
+        function addDownload(canvas) {
+            canvas.onclick = function() {
+                window.open(canvas.toDataURL('image/png'));
+            };
+        }
+
+        function prepareCanvas(canvas) {
+            prepareForRetina(canvas);
+            addDownload(canvas);
+        }
+
         function draw() {
 
             var canvas = document.getElementById('asanoha');
-            prepareForRetina(canvas);
+            prepareCanvas(canvas);
             if (canvas.getContext) {
                 Patterns.drawAsaNoHa({
                     context: canvas.getContext('2d'),
@@ -37,7 +48,7 @@
             }
 
             var canvas = document.getElementById('asanoha-dots');
-            prepareForRetina(canvas);
+            prepareCanvas(canvas);
             if (canvas.getContext) {
                 Patterns.drawAsaNoHa({
                     context: canvas.getContext('2d'),
@@ -51,13 +62,13 @@
             }
 
             var canvas = document.getElementById('circles');
-            prepareForRetina(canvas);
+            prepareCanvas(canvas);
             if (canvas.getContext) {
                 Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
             }
 
             var canvas = document.getElementById('waves');
-            prepareForRetina(canvas);
+            prepareCanvas(canvas);
             if (canvas.getContext) {
                 Patterns.drawWaves({
                     context: canvas.getContext('2d'),
@@ -75,7 +86,7 @@
             }
 
             var canvas = document.getElementById('waves-light');
-            prepareForRetina(canvas);
+            prepareCanvas(canvas);
             if (canvas.getContext) {
                 Patterns.drawWaves({
                     context: canvas.getContext('2d'),
@@ -93,7 +104,7 @@
             }
 
             var canvas = document.getElementById('waves-inverted');
-            prepareForRetina(canvas);
+            prepareCanvas(canvas);
             if (canvas.getContext) {
                 Patterns.drawWaves({
                     context: canvas.getContext('2d'),
