@@ -1,5 +1,13 @@
 var Patterns = {
 
+    increment: function(from, to) {
+        if (from < to) {
+            return to - from;
+        } else {
+            return ( from - to ) * -1;
+        }
+    },
+
     drawCircle: function(context, x, y, radius) {
         context.fillStyle = 'white';
         context.beginPath();
@@ -7,99 +15,102 @@ var Patterns = {
         context.fill();
     },
 
+    drawLine: function(context, x1, y1, x2, y2, width) {
+        context.lineWidth = width;
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+    },
+
     drawDottedLine: function(context, x1, y1, x2, y2, radius, increment) {
-
-        var getIncrement = function(from, to) {
-            if (from < to) {
-                return to - from;
-            } else {
-                return ( from - to ) * -1;
-            }
-        };
-
-        var stepX = getIncrement(x1, x2);
-        var stepY = getIncrement(y1, y2);
-
-        var distance = Math.sqrt(stepX*stepX + stepY*stepY);
+        var stepX = Patterns.increment(x1, x2);
+        var stepY = Patterns.increment(y1, y2);
+        var distance = Math.sqrt(( stepX * stepX ) + ( stepY * stepY ));
         var steps = Math.floor(distance / increment);
-
-        stepX = stepX / steps;
-        stepY = stepY / steps;
-
+        stepX = stepX / steps, stepY = stepY / steps;
         for (var i = 0; i < steps; i++) {
             Patterns.drawCircle(context, x1 + (stepX * i), y1 + (stepY * i), radius);
+        }
+    },
+
+    applyStyle: function(context, style) {
+        context.fillStyle = style.backgroundStyle;
+        context.strokeStyle = style.foregroundStyle;
+    },
+
+    drawers: {
+
+        dottedLine: function(radius, increment) {
+            return function(context, x1, y1, x2, y2) {
+                Patterns.drawDottedLine(context, x1, y1, x2, y2, radius, increment);
+            };
+        },
+
+        line: function(width) {
+            return function(context, x1, y1, x2, y2) {
+                Patterns.drawLine(context, x1, y1, x2, y2, width);
+            }
         }
 
     },
 
-    drawAsaNoHa: function({context, x, y, width, height}={}) {
-        context.strokeStyle = 'white';
-        context.fillStyle = '#000033';
-        context.fillRect(x, y, width, height);
+    styles: {
 
-        var drawLine = function(context, x1, y1, x2, y2) {
-            context.beginPath();
-            context.moveTo(x1, y1);
-            context.lineTo(x2, y2);
-            context.stroke();
-        };
+        monochrome: {
+            backgroundStyle: '#000000',
+            foregroundStyle: '#ffffff',
+        },
 
-        var drawStar = function(context, center, length, altitude, orientation, drawLine) {
-            drawLine(
-                context,
-                center.x, center.y,
-                center.x - ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation ),
-            );
-            drawLine(
-                context,
-                center.x, center.y,
-                center.x, center.y + ( ( 2 * ( altitude / 3 ) ) * orientation ),
-            );
-            drawLine(
-                context,
-                center.x, center.y,
-                center.x + ( length / 2 ), center.y - ( ( altitude / 3 ) * orientation ),
-            );
+        darkBlue: {
+            backgroundStyle: '#000033',
+            foregroundStyle: '#ffffff',
+        },
+
+        darkRed: {
+            backgroundStyle: '#3B0B17',
+            foregroundStyle: '#ffffff',
+        },
+
+        purple: {
+            backgroundStyle: '#330066',
+            foregroundStyle: '#ffffff',
+        },
+
+        sky: {
+            backgroundStyle: '#ffffff',
+            foregroundStyle: '#0033cc',
+        },
+
+        blues: {
+            backgroundStyle: '#19334d',
+            foregroundStyle: '#336699',
+        },
+
+    },
+
+    drawAsaNoHa: function({context, x, y, width, height, style, lineDrawer}={}) {
+
+        var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
+            drawLine(context, x, y, x - ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
+            drawLine(context, x, y, x, y + ( ( 2 * ( altitude / 3 ) ) * orientation ));
+            drawLine(context, x, y, x + ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
         };
 
         var drawPrimitive = function(context, x, y, length, altitude, lineDrawer) {
-
-            context.lineWidth = 2;
-
-            lineDrawer(
-                context, 
-                x, y,
-                x + ( length / 2 ), y + altitude,
-            );
-
-            lineDrawer(
-                context,
-                x + ( length / 2 ), y + altitude,
-                x + length, y,
-            );
-
-            lineDrawer(
-                context,
-                x + length, y,
-                x, y,
-            );
-
-            var center = { x: x + ( length / 2 ), y: y + ( altitude / 3 )};
-            drawStar(context, center, length, altitude, 1, lineDrawer);
-
-            var center = { x: x + length, y: y + ( 2 * ( altitude / 3 ) )};
-            drawStar(context, center, length, altitude, -1, lineDrawer);
+            lineDrawer(context, x, y, x + ( length / 2 ), y + altitude);
+            lineDrawer(context, x + ( length / 2 ), y + altitude, x + length, y);
+            lineDrawer(context, x + length, y, x, y);
+            drawStar(context, x + ( length / 2 ), y + ( altitude / 3 ), length, altitude, 1, lineDrawer);
+            drawStar(context, x + length, y + ( 2 * ( altitude / 3 ) ), length, altitude, -1, lineDrawer);
         };
 
         var length = 100;
         var altitude = (Math.sqrt(3) / 2 ) * length;
 
-        var lineDrawer = function(context, x1, y1, x2, y2) {
-            Patterns.drawDottedLine(context, x1, y1, x2, y2, 2, 8);
-        };
+        Patterns.applyStyle(context, style);
 
-        // var lineDrawer = drawLine;
-
+        context.fillRect(x, y, width, height);
         for (var offsetY = y - altitude; offsetY < height + altitude; offsetY = offsetY + ( altitude * 2 ) ) {
             for (var offsetX = x - length; offsetX < width + length; offsetX = offsetX + length) {
                 drawPrimitive(context, offsetX - ( length / 2 ), offsetY, length, altitude, lineDrawer);
@@ -108,7 +119,7 @@ var Patterns = {
         }
     },
 
-    drawPattern: function(context, x, y, width, height) {
+    drawShippou: function(context, x, y, width, height) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -116,12 +127,11 @@ var Patterns = {
             context.stroke();
         };
 
-        context.lineWidth = 4;
-        context.strokeStyle = 'white';
-        context.fillStyle = '#330066';
-        context.fillRect(x, y, width, height);
-
         var radius = 40;
+
+        Patterns.applyStyle(context, Patterns.styles.purple);
+        context.lineWidth = 4;
+        context.fillRect(x, y, width, height);
 
         for (var offsetY = y - radius; offsetY < height + radius; offsetY = offsetY + ( radius * 2 ) ) {
             for (var offsetX = x + radius; offsetX < width + radius; offsetX = offsetX + ( radius * 2 ) ) {
@@ -134,7 +144,7 @@ var Patterns = {
 
     },
 
-    drawWaves: function({context, x, y, width, height, strokeStyle, fillStyle, lineWidth, radius, gap, count, alternating}={alternating: false}) {
+    drawWaves: function({context, x, y, width, height, style, lineWidth, radius, gap, count, alternating}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -149,9 +159,8 @@ var Patterns = {
             }            
         };
 
+        Patterns.applyStyle(context, style)
         context.lineWidth = lineWidth;
-        context.strokeStyle = strokeStyle;
-        context.fillStyle = fillStyle;
         context.fillRect(x, y, width, height);
 
         var row = 0;
