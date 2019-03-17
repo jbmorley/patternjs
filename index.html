@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Patterns</title>
     <link id="theme" rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
     <script>
 
         function prepareForRetina(canvas) {
@@ -126,20 +128,43 @@
 </head>
 <body onload="draw()">
 
-    <h1>Patterns</h1>
+<h1>Patterns</h1>
 
-    <h2>麻の葉, Asa no ha</h2>
-    <canvas class="pattern" id="asanoha" width="600" height="400"></canvas>
-    <canvas class="pattern" id="asanoha-dots" width="600" height="400"></canvas>
+<h2>麻の葉, Asa no ha</h2>
+<canvas class="pattern" id="asanoha" width="600" height="400"></canvas>
+<pre><code class="javascript">Patterns.drawAsaNoHa({
+    context: canvas.getContext('2d'),
+    x: 0,
+    y: 0,
+    width: canvas.width,
+    height: canvas.height,
+    style: Patterns.styles.darkBlue,
+    lineDrawer: Patterns.drawers.line(2),
+});
+</code></pre>
 
-    <h2>七宝, Shippou</h2>
-    <canvas class="pattern" id="circles" width="600" height="400"></canvas>
+<canvas class="pattern" id="asanoha-dots" width="600" height="400"></canvas>
+<pre><code class="javascript">Patterns.drawAsaNoHa({
+    context: canvas.getContext('2d'),
+    x: 0,
+    y: 0,
+    width: canvas.width,
+    height: canvas.height,
+    style: Patterns.styles.darkRed,
+    lineDrawer: Patterns.drawers.dottedLine(2, 8),
+});
+</code></pre>
 
-    <h2>Waves</h2>
-    <canvas class="pattern" id="waves" width="600" height="400"></canvas>
-    <canvas class="pattern" id="waves-light" width="600" height="400"></canvas>
-    <canvas class="pattern" id="waves-inverted" width="600" height="400"></canvas>
+<h2>七宝, Shippou</h2>
+<canvas class="pattern" id="circles" width="600" height="400"></canvas>
 
-    <script src="patterns.js"></script>
+<h2>Waves</h2>
+<canvas class="pattern" id="waves" width="600" height="400"></canvas>
+<canvas class="pattern" id="waves-light" width="600" height="400"></canvas>
+<canvas class="pattern" id="waves-inverted" width="600" height="400"></canvas>
+
+<script src="patterns.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 </body>
 </html>
