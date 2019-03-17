@@ -148,7 +148,7 @@ var Patterns = {
 
     },
 
-    drawWaves: function({context, x, y, width, height, style, lineWidth, radius, gap, count, alternating}={}) {
+    drawWaves: function({canvas, style, lineWidth, radius, gap, count, alternating}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -163,23 +163,25 @@ var Patterns = {
             }            
         };
 
+        var context = canvas.getContext('2d');
+
         Patterns.applyStyle(context, style)
         context.lineWidth = lineWidth;
-        context.fillRect(x, y, width, height);
+        context.fillRect(0, 0, canvas.width, canvas.height);
 
         var row = 0;
         var column = 0;
 
-        for (var offsetY = y; offsetY < height + radius; offsetY = offsetY + ( radius ) ) {
+        for (var offsetY = 0; offsetY < canvas.height + radius; offsetY = offsetY + ( radius ) ) {
             row++
             column = 0;
-            for (var offsetX = x + radius; offsetX < width + radius; offsetX = offsetX + ( radius * 2 ) ) {
+            for (var offsetX = 0 + radius; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
                 column++
                 drawConcentricCircles(context, offsetX, offsetY, radius, gap, count);
             }
             row++;
             column = 0;
-            for (var offsetX = x; offsetX < width; offsetX = offsetX + ( radius * 2 ) ) {
+            for (var offsetX = 0; offsetX < canvas.width; offsetX = offsetX + ( radius * 2 ) ) {
                 column++
                 if (alternating && ( column % 2 == 0 && row % 4 == 0 ) ) {
                     drawCircle(context, offsetX, offsetY + ( radius / 2 ), radius);
