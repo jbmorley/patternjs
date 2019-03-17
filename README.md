@@ -1,4 +1,4 @@
-# Patterns
+# pattern.js
 
 JavaScript pattern rendering library.
 
