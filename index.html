@@ -82,10 +82,14 @@
 <canvas class="pattern" id="circles" width="600" height="400"></canvas>
 <script type="text/javascript">
     makeResizingCanvas('circles', 300, function(canvas) {
-        Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);
+        Patterns.drawShippou({
+            canvas: canvas,
+        });
     });
 </script>
-<pre><code class="javascript">Patterns.drawShippou(canvas.getContext('2d'), 0, 0, canvas.width, canvas.height);</code></pre>
+<pre><code class="javascript">Patterns.drawShippou({
+    canvas: canvas,
+});</code></pre>
 
 <h2>Waves</h2>
 

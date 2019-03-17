@@ -121,7 +121,7 @@ var Patterns = {
         }
     },
 
-    drawShippou: function(context, x, y, width, height) {
+    drawShippou: function({canvas}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -131,15 +131,17 @@ var Patterns = {
 
         var radius = 40;
 
+        var context = canvas.getContext('2d');
+
         Patterns.applyStyle(context, Patterns.styles.purple);
         context.lineWidth = 4;
-        context.fillRect(x, y, width, height);
+        context.fillRect(0, 0, canvas.width, canvas.height);
 
-        for (var offsetY = y - radius; offsetY < height + radius; offsetY = offsetY + ( radius * 2 ) ) {
-            for (var offsetX = x + radius; offsetX < width + radius; offsetX = offsetX + ( radius * 2 ) ) {
+        for (var offsetY = 0 - radius; offsetY < canvas.height + radius; offsetY = offsetY + ( radius * 2 ) ) {
+            for (var offsetX = 0 + radius; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
                 drawCircle(context, offsetX, offsetY, radius);
             }
-            for (var offsetX = x; offsetX < width; offsetX = offsetX + ( radius * 2 ) ) {
+            for (var offsetX = 0; offsetX < canvas.width; offsetX = offsetX + ( radius * 2 ) ) {
                 drawCircle(context, offsetX, offsetY + radius, radius);
             }
         }
