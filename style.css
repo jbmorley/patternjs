@@ -27,3 +27,7 @@ h1, h2, code, .content {
     padding-left: 20px;
     padding-right: 20px;
 }
+
+.copyright {
+    text-align: center;
+}
