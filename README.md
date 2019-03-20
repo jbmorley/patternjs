@@ -2,4 +2,4 @@
 
 JavaScript pattern rendering library.
 
-See it [here](https://jbmorley.github.io/patterns).
+See it [here](https://patternjs.com).
