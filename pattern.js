@@ -196,6 +196,54 @@ var Pattern = {
             }
         }
 
-    }
+    },
+
+    triangles: function({canvas, style}={}) {
+
+        var drawCircle = function(context, x, y, radius) {
+            context.beginPath();
+            context.arc(x, y, radius, 0, 2 * Math.PI);
+            context.stroke();
+        };
+
+        var drawTriangle = function(context, x, y, width, altitude) {
+            context.beginPath();
+            context.moveTo(x - ( width / 2), y + (altitude / 2));
+            context.lineTo(x + ( width / 2), y + (altitude / 2));
+            context.lineTo(x, y - (altitude / 2));
+            context.closePath();
+            context.fill();
+            // context.stroke();
+        }
+
+        var radius = 60 * window.devicePixelRatio;
+
+        var context = canvas.getContext('2d');
+
+        style = {
+            backgroundStyle: '#19334d',
+            foregroundStyle: '#336699',
+        };
+
+        Pattern.applyStyle(context, style);
+
+        context.lineWidth = 4 * window.devicePixelRatio;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        context.fillStyle = style.foregroundStyle;
+
+        padding = 6 * window.devicePixelRatio;
+        altitude = radius / 2;
+
+        for (var offsetY = 0 - radius; offsetY < canvas.height + radius; offsetY = offsetY + ( ( altitude + padding ) * 2 ) ) {
+            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + radius + padding ) {
+                drawTriangle(context, offsetX, offsetY, radius, altitude);
+            }
+            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + radius + padding ) {
+                drawTriangle(context, offsetX - ( ( radius + padding ) / 2 ), offsetY + altitude + padding, radius, altitude);
+            }
+        }
+
+    },
 
 };

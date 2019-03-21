@@ -167,6 +167,23 @@
     alternating: true
 });</code></pre>
 
+<h2>Triangles</h2>
+
+<canvas class="pattern" id="triangles" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('triangles', 300, function(canvas) {
+        Pattern.triangles({
+            canvas: canvas,
+            style: Pattern.styles.monochrome,
+            lineWidth: 3,
+            radius: 44,
+            gap: 8,
+            count: 5,
+            alternating: true
+        });
+    });
+</script>
+
 <p class="copyright">
     Copyright &copy; Jason Barrie Morley 2019
 </p>
