@@ -246,6 +246,7 @@ var Pattern = {
 
 
         context.lineWidth = 2;
+        drawShape(x, y);
 
 
 
