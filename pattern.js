@@ -198,6 +198,60 @@ var Pattern = {
 
     },
 
+    unknown: function({canvas, style}={}) {
+
+        var drawShape = function(x, y) {
+            context.moveTo(x, y);
+            context.lineTo(x, y + (size * 7 ));
+            context.lineTo(x + size, y + (size * 7 ));
+            context.lineTo(x + size, y + (size * 6 ));
+            context.lineTo(x + ( 2 * size ), y + (size * 6 ));
+            context.lineTo(x + ( 2 * size ), y + (size * 5 ));
+            context.lineTo(x + ( 1 * size ), y + (size * 5 ));
+            context.lineTo(x + ( 1 * size ), y + (size * 4 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 4 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 5 ));
+            context.lineTo(x + ( 6 * size ), y + (size * 5 ));
+            context.lineTo(x + ( 6 * size ), y + (size * 6 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 6 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 7 ));
+            context.lineTo(x + ( 8 * size ), y + (size * 7 ));
+            context.lineTo(x + ( 8 * size ), y + (size * 0 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 0 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 1 ));
+            context.lineTo(x + ( 6 * size ), y + (size * 1 ));
+            context.lineTo(x + ( 6 * size ), y + (size * 2 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 2 ));
+            context.lineTo(x + ( 7 * size ), y + (size * 3 ));
+            context.lineTo(x + ( 1 * size ), y + (size * 3 ));
+            context.lineTo(x + ( 1 * size ), y + (size * 2 ));
+            context.lineTo(x + ( 2 * size ), y + (size * 2 ));
+            context.lineTo(x + ( 2 * size ), y + (size * 1 ));
+            context.lineTo(x + ( 1 * size ), y + (size * 1 ));
+            context.lineTo(x + ( 1 * size ), y + (size * 0 ));
+            context.lineTo(x + ( 0 * size ), y + (size * 0 ));
+            context.stroke();
+        };
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var size = 10 * window.devicePixelRatio;
+        var x = 100;
+        var y = 100;
+
+
+
+
+        context.lineWidth = 2;
+
+
+
+
+    },
+
     triangles: function({canvas, style}={}) {
 
         var drawTriangle = function(context, x, y, width, altitude) {
