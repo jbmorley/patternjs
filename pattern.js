@@ -200,12 +200,6 @@ var Pattern = {
 
     triangles: function({canvas, style}={}) {
 
-        var drawCircle = function(context, x, y, radius) {
-            context.beginPath();
-            context.arc(x, y, radius, 0, 2 * Math.PI);
-            context.stroke();
-        };
-
         var drawTriangle = function(context, x, y, width, altitude) {
             context.beginPath();
             context.moveTo(x - ( width / 2), y + (altitude / 2));
@@ -213,18 +207,11 @@ var Pattern = {
             context.lineTo(x, y - (altitude / 2));
             context.closePath();
             context.fill();
-            // context.stroke();
         }
 
         var radius = 60 * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
-
-        style = {
-            backgroundStyle: '#19334d',
-            foregroundStyle: '#336699',
-        };
-
         Pattern.applyStyle(context, style);
 
         context.lineWidth = 4 * window.devicePixelRatio;

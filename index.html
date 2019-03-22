@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
     <script>
 
-        function onDocumentReady(callback) {
+function onDocumentReady(callback) {
             document.addEventListener('DOMContentLoaded', callback, false);
         }
 
@@ -167,7 +167,23 @@
     alternating: true
 });</code></pre>
 
-<h2>Triangles</h2>
+<h2>Unknown 1</h2>
+
+<canvas class="pattern" id="unknown" width="600" height="400"></canvas>
+<script type="text/javascript">
+    makeResizingCanvas('unknown', 300, function(canvas) {
+        Pattern.triangles({
+            canvas: canvas,
+            style: Pattern.styles.monochrome,
+        });
+    });
+</script>
+<pre><code class="javascript">Pattern.triangles({
+    canvas: canvas,
+    style: Pattern.styles.monochrome,
+});</code></pre>
+
+<h2>Unknown 2</h2>
 
 <canvas class="pattern" id="triangles" width="600" height="400"></canvas>
 <script type="text/javascript">
@@ -175,14 +191,13 @@
         Pattern.triangles({
             canvas: canvas,
             style: Pattern.styles.monochrome,
-            lineWidth: 3,
-            radius: 44,
-            gap: 8,
-            count: 5,
-            alternating: true
         });
     });
 </script>
+<pre><code class="javascript">Pattern.triangles({
+    canvas: canvas,
+    style: Pattern.styles.monochrome,
+});</code></pre>
 
 <p class="copyright">
     Copyright &copy; Jason Barrie Morley 2019
