@@ -369,15 +369,13 @@ var Pattern = {
         padding = 6 * window.devicePixelRatio;
         altitude = radius / 2;
 
-        for (var offsetY = 0 - radius; offsetY < canvas.height + radius; offsetY = offsetY + ( ( altitude + padding ) * 2 ) ) {
-            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + radius + padding ) {
-                drawTriangle(context, offsetX, offsetY, radius, altitude);
-            }
-            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + radius + padding ) {
-                drawTriangle(context, offsetX - ( ( radius + padding ) / 2 ), offsetY + altitude + padding, radius, altitude);
-            }
-        }
-
+        Pattern.alternate({x: 0, y: 0,
+                           width: canvas.width, height: canvas.height,
+                           stepX: radius + padding, stepY: altitude + padding,
+                           offset: true,
+                           draw: function({x, y}={}) {
+                               drawTriangle(context, x, y, radius, altitude);
+                           }});
     },
 
 };
