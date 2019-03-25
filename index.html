@@ -22,14 +22,51 @@
                 resizeCallback();
         }
 
-        function makeResizingCanvas(id, height, callback) {
+        function download(width, height, renderer) {
+            var canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            renderer(canvas);
+            window.open(canvas.toDataURL('image/png'));
+        }
+
+        function downloadButton(width, height, renderer) {
+            var button = document.createElement('div');
+            button.innerHTML = "Download " + width + "x" + height;
+            button.classList.add('download');
+            button.addEventListener('click', function() {
+                download(width, height, renderer);
+            });
+            return button;
+        }
+
+        function initialize(id, height, renderer) {
             onDocumentReady(function() {
-                onResize(document.getElementById(id), function(canvas, parentWidth, parentHeight) {
+
+                var container = document.getElementById(id);
+                var pattern = document.createElement('canvas');
+                pattern.classList.add('pattern');
+                container.appendChild(pattern);
+                renderer(pattern);
+
+                var div = document.createElement('div');
+                div.classList.add('content');
+                div.classList.add('meta');
+                container.appendChild(div);
+
+                div.appendChild(downloadButton(window.screen.width * window.devicePixelRatio,
+                                               window.screen.height * window.devicePixelRatio,
+                                               renderer));
+                div.appendChild(downloadButton(600 * window.devicePixelRatio,
+                                               400 * window.devicePixelRatio,
+                                               renderer));
+                
+                onResize(pattern, function(canvas, parentWidth, parentHeight) {
                     canvas.width = parentWidth * window.devicePixelRatio;
                     canvas.height = height * window.devicePixelRatio;
                     canvas.style.width = parentWidth + 'px';
                     canvas.style.height = height + 'px';
-                    callback(canvas);
+                    renderer(canvas);
                 });
             });
         }
@@ -47,9 +84,9 @@
 <h1>pattern.js</h1>
 
 <h2>麻の葉, Asa no ha</h2>
-<canvas class="pattern" id="asanoha" width="600" height="400"></canvas>
+<div id="asanoha" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('asanoha', 300, function(canvas) {
+    initialize('asanoha', 300, function(canvas) {
         Pattern.asanoha({
             canvas: canvas,
             style: Pattern.styles.darkBlue,
@@ -63,9 +100,9 @@
     lineDrawer: Pattern.drawers.line(2),
 });</code></pre>
 
-<canvas class="pattern" id="asanoha-dots" width="600" height="400"></canvas>
+<div id="asanoha-dots" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('asanoha-dots', 300, function(canvas) {
+    initialize('asanoha-dots', 300, function(canvas) {
         Pattern.asanoha({
             canvas: canvas,
             style: Pattern.styles.darkRed,
@@ -80,9 +117,9 @@
 });</code></pre>
 
 <h2>七宝, Shippou</h2>
-<canvas class="pattern" id="circles" width="600" height="400"></canvas>
+<div id="circles" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('circles', 300, function(canvas) {
+    initialize('circles', 300, function(canvas) {
         Pattern.shippou({
             canvas: canvas,
             style: Pattern.styles.purple,
@@ -96,9 +133,9 @@
 
 <h2>青海波, Seigaiha</h2>
 
-<canvas class="pattern" id="waves" width="600" height="400"></canvas>
+<div id="waves" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('waves', 300, function(canvas) {
+    initialize('waves', 300, function(canvas) {
         Pattern.seigaiha({
             canvas: canvas,
             style: Pattern.styles.monochrome,
@@ -120,9 +157,9 @@
     alternating: false,
 });</code></pre>
 
-<canvas class="pattern" id="waves-light" width="600" height="400"></canvas>
+<div id="waves-light" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('waves-light', 300, function(canvas) {
+    initialize('waves-light', 300, function(canvas) {
         Pattern.seigaiha({
             canvas: canvas, 
             style: Pattern.styles.sky,
@@ -144,9 +181,9 @@
     alternating: false,
 });</code></pre>
 
-<canvas class="pattern" id="waves-inverted" width="600" height="400"></canvas>
+<div id="waves-inverted" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('waves-inverted', 300, function(canvas) {
+    initialize('waves-inverted', 300, function(canvas) {
         Pattern.seigaiha({
             canvas: canvas,
             style: Pattern.styles.blues,
@@ -170,30 +207,13 @@
 
 <h2>Unknown 1</h2>
 
-<canvas class="pattern" id="unknown" width="600" height="400"></canvas>
-<p><div class="download" id="download">Download</div></p>
-<script type="text/javascript">
-
-    function renderUnknown1(canvas) {
+<div id="unknown1" class="pattern-container"></div>
+<script type="text/javascript">    
+    initialize('unknown1', 300, function(canvas) {
         Pattern.unknown1({
             canvas: canvas,
             style: Pattern.styles.purples,
             step: 10,
-        });
-    }
-    
-    makeResizingCanvas('unknown', 300, function(canvas) {
-        renderUnknown1(canvas);
-    });
-    onDocumentReady(function() {
-        document.getElementById('download').addEventListener('click', function() {
-            var canvas = document.createElement('canvas');
-            canvas.width = 600 * window.devicePixelRatio;
-            canvas.width = window.screen.width * window.devicePixelRatio;
-            canvas.height = 400 * window.devicePixelRatio;
-            canvas.height = window.screen.height * window.devicePixelRatio;
-            renderUnknown1(canvas);
-            window.open(canvas.toDataURL('image/png'));
         });
     });
 </script>
@@ -205,9 +225,9 @@
 
 <h2>Unknown 2</h2>
 
-<canvas class="pattern" id="triangles" width="600" height="400"></canvas>
+<div id="unknown2" class="pattern-container"></div>
 <script type="text/javascript">
-    makeResizingCanvas('triangles', 300, function(canvas) {
+    initialize('unknown2', 300, function(canvas) {
         Pattern.unknown2({
             canvas: canvas,
             style: Pattern.styles.monochrome,
