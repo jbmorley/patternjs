@@ -189,7 +189,9 @@
         document.getElementById('download').addEventListener('click', function() {
             var canvas = document.createElement('canvas');
             canvas.width = 600 * window.devicePixelRatio;
+            canvas.width = window.screen.width * window.devicePixelRatio;
             canvas.height = 400 * window.devicePixelRatio;
+            canvas.height = window.screen.height * window.devicePixelRatio;
             renderUnknown1(canvas);
             window.open(canvas.toDataURL('image/png'));
         });
