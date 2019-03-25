@@ -345,7 +345,7 @@ var Pattern = {
                            }});
     },
 
-    triangles: function({canvas, style}={}) {
+    unknown2: function({canvas, style}={}) {
 
         var drawTriangle = function(context, x, y, width, altitude) {
             context.beginPath();
