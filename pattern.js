@@ -7,36 +7,43 @@ var Pattern = {
         this.y = y;
         this.angle = 0;
         
-        this.lineTo = function({x, y}={}) {
+        this.lineTo = function(x, y) {
             this.context.moveTo(this.x, this.y);
             this.context.lineTo(x, y);
-            this.context.stroke();
             this.x = x;
             this.y = y;
+        };
+
+        this.stroke = function() {
+            this.context.stroke();
         };
         
         this.forward = function(distance) {
             var x = Math.sin(this.angle) * distance;
             var y = Math.cos(this.angle) * distance;
-            this.lineTo({x: this.x + x, y: this.y + y });
+            this.lineTo(this.x + x, this.y + y);
         };
         
-        this.turn = function({angle}={}) {
+        this.turn = function(angle) {
             this.angle = this.angle + angle;
         };
-        
-        this.left = function({angle}={}) {
-            if (angle === undefined) {
-                angle = Math.PI / 2;
-            }
-            this.turn({angle: angle});
+
+        this.setAngle = function(angle) {
+            this.angle = angle;
         };
         
-        this.right = function({angle}={}) {
+        this.left = function(angle) {
             if (angle === undefined) {
                 angle = Math.PI / 2;
             }
-            this.turn({angle: angle * -1});
+            this.turn(angle);
+        };
+        
+        this.right = function(angle) {
+            if (angle === undefined) {
+                angle = Math.PI / 2;
+            }
+            this.turn(angle * -1);
         };
         
     },
@@ -51,12 +58,12 @@ var Pattern = {
 
         for (var j = y - stepY; j < y + height; j = j + ( stepY * 2 )) {
             for (var i = x - stepX; i < x + width + stepX; i = i + stepX) {
-                draw({x: i, y: j});
+                draw(i, j);
                 var i2 = i;
                 if (offset) {
                     i2 = i + ( stepX / 2 );                    
                 }
-                draw({x: i2, y: j + stepY});
+                draw(i2, j + stepY);
             }
         }
     },
@@ -269,62 +276,63 @@ var Pattern = {
         var drawPattern = function(context, x, y, step, left) {
             var right = Math.PI - left;
             var turtle = new Pattern.Turtle({context: context, x: x, y: y});
-            turtle.right({angle: left});
+            turtle.setAngle(left * -1);
             turtle.forward(step * 7);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step);
-            turtle.right({angle: left});
+            turtle.right(left);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.right({angle: right});
+            turtle.right(right);
             turtle.forward(step);
-            turtle.right({angle: left});
+            turtle.right(left);
             turtle.forward(step * 7);
-            turtle.right({angle: right});
+            turtle.right(right);
             turtle.forward(step);
-            turtle.right({angle: left});
+            turtle.right(left);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.right({angle: right});
+            turtle.right(right);
             turtle.forward(step);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step * 7);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step);
-            turtle.right({angle: left});
+            turtle.right(left);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.right({angle: right});
+            turtle.right(right);
             turtle.forward(step);
-            turtle.right({angle: left});
+            turtle.right(left);
             turtle.forward(step * 7);
-            turtle.right({angle: right});
+            turtle.right(right);
             turtle.forward(step);
-            turtle.right({angle: left});
+            turtle.right(left);
             turtle.forward(step);
-            turtle.left({angle: left});
+            turtle.left(left);
             turtle.forward(step);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
-            turtle.right({angle: right});
+            turtle.right(right);
             turtle.forward(step);
-            turtle.left({angle: right});
+            turtle.left(right);
             turtle.forward(step);
+            turtle.stroke();
         }
         
         var context = canvas.getContext('2d');
@@ -340,7 +348,7 @@ var Pattern = {
         Pattern.alternate({x: 0, y: 0,
                            width: canvas.width, height: canvas.height,
                            stepX: stepX, stepY: stepY,
-                           draw: function({x, y}={}) {
+                           draw: function(x, y) {
                                drawPattern(context, x, y, step, angle);
                            }});
     },
@@ -373,7 +381,7 @@ var Pattern = {
                            width: canvas.width, height: canvas.height,
                            stepX: radius + padding, stepY: altitude + padding,
                            offset: true,
-                           draw: function({x, y}={}) {
+                           draw: function(x, y) {
                                drawTriangle(context, x, y, radius, altitude);
                            }});
     },
