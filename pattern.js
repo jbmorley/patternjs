@@ -264,59 +264,85 @@ var Pattern = {
 
     },
 
-    unknown: function({canvas, style}={}) {
-
-        var drawShape = function(x, y) {
-            context.moveTo(x, y);
-            context.lineTo(x, y + (size * 7 ));
-            context.lineTo(x + size, y + (size * 7 ));
-            context.lineTo(x + size, y + (size * 6 ));
-            context.lineTo(x + ( 2 * size ), y + (size * 6 ));
-            context.lineTo(x + ( 2 * size ), y + (size * 5 ));
-            context.lineTo(x + ( 1 * size ), y + (size * 5 ));
-            context.lineTo(x + ( 1 * size ), y + (size * 4 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 4 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 5 ));
-            context.lineTo(x + ( 6 * size ), y + (size * 5 ));
-            context.lineTo(x + ( 6 * size ), y + (size * 6 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 6 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 7 ));
-            context.lineTo(x + ( 8 * size ), y + (size * 7 ));
-            context.lineTo(x + ( 8 * size ), y + (size * 0 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 0 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 1 ));
-            context.lineTo(x + ( 6 * size ), y + (size * 1 ));
-            context.lineTo(x + ( 6 * size ), y + (size * 2 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 2 ));
-            context.lineTo(x + ( 7 * size ), y + (size * 3 ));
-            context.lineTo(x + ( 1 * size ), y + (size * 3 ));
-            context.lineTo(x + ( 1 * size ), y + (size * 2 ));
-            context.lineTo(x + ( 2 * size ), y + (size * 2 ));
-            context.lineTo(x + ( 2 * size ), y + (size * 1 ));
-            context.lineTo(x + ( 1 * size ), y + (size * 1 ));
-            context.lineTo(x + ( 1 * size ), y + (size * 0 ));
-            context.lineTo(x + ( 0 * size ), y + (size * 0 ));
-            context.stroke();
-        };
-
+    unknown1: function({canvas, style}={}) {
+        
+        var drawPattern = function(context, x, y, step, left) {
+            var right = Math.PI - left;
+            var turtle = new Pattern.Turtle({context: context, x: x, y: y});
+            turtle.right({angle: left});
+            turtle.forward(step * 7);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step);
+            turtle.right({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: left});
+            turtle.forward(step * 7);
+            turtle.right({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: right});
+            turtle.forward(step);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step * 7);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step);
+            turtle.right({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: left});
+            turtle.forward(step * 7);
+            turtle.right({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: left});
+            turtle.forward(step);
+            turtle.left({angle: right});
+            turtle.forward(step);
+            turtle.right({angle: right});
+            turtle.forward(step);
+            turtle.left({angle: right});
+            turtle.forward(step);
+        }
+        
         var context = canvas.getContext('2d');
         Pattern.applyStyle(context, style);
-
         context.fillRect(0, 0, canvas.width, canvas.height);
+        var step = 10 * window.devicePixelRatio;
+        context.lineWidth = 2 * window.devicePixelRatio;
+        
+        var stepX = 90 * window.devicePixelRatio;
+        var stepY = 50 * window.devicePixelRatio;
+        var angle = Math.PI / 3;
 
-        var size = 10 * window.devicePixelRatio;
-        var x = 100;
-        var y = 100;
-
-
-
-
-        context.lineWidth = 2;
-        drawShape(x, y);
-
-
-
-
+        Pattern.alternate({x: 0, y: 0,
+                           width: canvas.width, height: canvas.height,
+                           stepX: stepX, stepY: stepY,
+                           draw: function({x, y}={}) {
+                               drawPattern(context, x, y, step, angle);
+                           }});
     },
 
     triangles: function({canvas, style}={}) {

@@ -171,97 +171,16 @@ function onDocumentReady(callback) {
 
 <canvas class="pattern" id="unknown" width="600" height="400"></canvas>
 <script type="text/javascript">
-    function unknown({canvas, style}={}) {
-        
-        var drawPattern = function(context, x, y, step, left) {
-            var right = Math.PI - left;
-            var turtle = new Pattern.Turtle({context: context, x: x, y: y});
-            turtle.right({angle: left});
-            turtle.forward(step * 7);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step);
-            turtle.right({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: left});
-            turtle.forward(step * 7);
-            turtle.right({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: right});
-            turtle.forward(step);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step * 7);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step);
-            turtle.right({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: left});
-            turtle.forward(step * 7);
-            turtle.right({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: left});
-            turtle.forward(step);
-            turtle.left({angle: right});
-            turtle.forward(step);
-            turtle.right({angle: right});
-            turtle.forward(step);
-            turtle.left({angle: right});
-            turtle.forward(step);
-        }
-        
-        var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        var step = 10 * window.devicePixelRatio;
-        context.lineWidth = 2 * window.devicePixelRatio;
-        
-        var stepX = 90 * window.devicePixelRatio;
-        var stepY = 50 * window.devicePixelRatio;
-        var angle = Math.PI / 3;
-
-        Pattern.alternate({x: 0, y: 0,
-                           width: canvas.width, height: canvas.height,
-                           stepX: stepX, stepY: stepY,
-                           draw: function({x, y}={}) {
-                               drawPattern(context, x, y, step, angle);
-                           }});
-    }
-
     makeResizingCanvas('unknown', 300, function(canvas) {
-        unknown({
+        Pattern.unknown1({
             canvas: canvas,
             style: Pattern.styles.purples,
         });
     });
 </script>
-<pre><code class="javascript">Pattern.triangles({
+<pre><code class="javascript">Pattern.unknown1({
     canvas: canvas,
-    style: Pattern.styles.monochrome,
+    style: Pattern.styles.purples,
 });</code></pre>
 
 <h2>Unknown 2</h2>
