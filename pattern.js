@@ -264,7 +264,7 @@ var Pattern = {
 
     },
 
-    unknown1: function({canvas, style}={}) {
+    unknown1: function({canvas, style, step}={}) {
         
         var drawPattern = function(context, x, y, step, left) {
             var right = Math.PI - left;
@@ -330,7 +330,7 @@ var Pattern = {
         var context = canvas.getContext('2d');
         Pattern.applyStyle(context, style);
         context.fillRect(0, 0, canvas.width, canvas.height);
-        var step = 10 * window.devicePixelRatio;
+        step = step * window.devicePixelRatio;
         context.lineWidth = 2 * window.devicePixelRatio;
         
         var stepX = 90 * window.devicePixelRatio;
