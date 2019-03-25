@@ -54,10 +54,7 @@ var Pattern = {
         
     },
 
-    alternate: function({x, y,
-                         width, height,
-                         stepX, stepY,
-                         offset, draw}={}) {
+    alternate: function(x, y, width, height, stepX, stepY, offset, draw) {
         if (offset === undefined) {
             offset = false;
         }
@@ -351,12 +348,9 @@ var Pattern = {
         var angle = Math.PI / 3;
 
         var turtle = new Pattern.Turtle(context);
-        Pattern.alternate({x: 0, y: 0,
-                           width: canvas.width, height: canvas.height,
-                           stepX: stepX, stepY: stepY,
-                           draw: function(x, y) {
-                               drawPattern(turtle, x, y, step, angle);
-                           }});
+        Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
+            drawPattern(turtle, x, y, step, angle);
+        });
         turtle.stroke();
     },
 
@@ -384,13 +378,9 @@ var Pattern = {
         padding = 6 * window.devicePixelRatio;
         altitude = radius / 2;
 
-        Pattern.alternate({x: 0, y: 0,
-                           width: canvas.width, height: canvas.height,
-                           stepX: radius + padding, stepY: altitude + padding,
-                           offset: true,
-                           draw: function(x, y) {
-                               drawTriangle(context, x, y, radius, altitude);
-                           }});
+        Pattern.alternate(0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
+            drawTriangle(context, x, y, radius, altitude);
+        });
     },
 
 };
