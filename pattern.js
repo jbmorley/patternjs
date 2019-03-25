@@ -1,5 +1,66 @@
 var Pattern = {
 
+    Turtle: function({context, x, y}={}) {
+    
+        this.context = context;
+        this.x = x;
+        this.y = y;
+        this.angle = 0;
+        
+        this.lineTo = function({x, y}={}) {
+            this.context.moveTo(this.x, this.y);
+            this.context.lineTo(x, y);
+            this.context.stroke();
+            this.x = x;
+            this.y = y;
+        };
+        
+        this.forward = function(distance) {
+            var x = Math.sin(this.angle) * distance;
+            var y = Math.cos(this.angle) * distance;
+            this.lineTo({x: this.x + x, y: this.y + y });
+        };
+        
+        this.turn = function({angle}={}) {
+            this.angle = this.angle + angle;
+        };
+        
+        this.left = function({angle}={}) {
+            if (angle === undefined) {
+                angle = Math.PI / 2;
+            }
+            this.turn({angle: angle});
+        };
+        
+        this.right = function({angle}={}) {
+            if (angle === undefined) {
+                angle = Math.PI / 2;
+            }
+            this.turn({angle: angle * -1});
+        };
+        
+    },
+
+    alternate: function({x, y,
+                         width, height,
+                         stepX, stepY,
+                         offset, draw}={}) {
+        if (offset === undefined) {
+            offset = false;
+        }
+
+        for (var j = y - stepY; j < y + height; j = j + ( stepY * 2 )) {
+            for (var i = x - stepX; i < x + width + stepX; i = i + stepX) {
+                draw({x: i, y: j});
+                var i2 = i;
+                if (offset) {
+                    i2 = i + ( stepX / 2 );                    
+                }
+                draw({x: i2, y: j + stepY});
+            }
+        }
+    },
+
     increment: function(from, to) {
         if (from < to) {
             return to - from;
@@ -85,6 +146,11 @@ var Pattern = {
         blues: {
             backgroundStyle: '#19334d',
             foregroundStyle: '#336699',
+        },
+
+        purples: {
+            backgroundStyle: '#4f2c64',
+            foregroundStyle: '#beafe6',
         },
 
     },
