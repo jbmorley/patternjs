@@ -1,14 +1,20 @@
 var Pattern = {
 
-    Turtle: function({context, x, y}={}) {
+    Turtle: function(context) {
     
         this.context = context;
-        this.x = x;
-        this.y = y;
+        this.x = 0;
+        this.y = 0;
         this.angle = 0;
+        this.context.moveTo(0, 0);
+
+        this.moveTo = function(x, y) {
+            this.context.moveTo(x, y);
+            this.x = x;
+            this.y = y;
+        }
         
         this.lineTo = function(x, y) {
-            this.context.moveTo(this.x, this.y);
             this.context.lineTo(x, y);
             this.x = x;
             this.y = y;
@@ -273,9 +279,9 @@ var Pattern = {
 
     unknown1: function({canvas, style, step}={}) {
         
-        var drawPattern = function(context, x, y, step, left) {
+        var drawPattern = function(turtle, x, y, step, left) {
             var right = Math.PI - left;
-            var turtle = new Pattern.Turtle({context: context, x: x, y: y});
+            turtle.moveTo(x, y);
             turtle.setAngle(left * -1);
             turtle.forward(step * 7);
             turtle.left(right);
@@ -332,7 +338,6 @@ var Pattern = {
             turtle.forward(step);
             turtle.left(right);
             turtle.forward(step);
-            turtle.stroke();
         }
         
         var context = canvas.getContext('2d');
@@ -345,12 +350,14 @@ var Pattern = {
         var stepY = 50 * window.devicePixelRatio;
         var angle = Math.PI / 3;
 
+        var turtle = new Pattern.Turtle(context);
         Pattern.alternate({x: 0, y: 0,
                            width: canvas.width, height: canvas.height,
                            stepX: stepX, stepY: stepY,
                            draw: function(x, y) {
-                               drawPattern(context, x, y, step, angle);
+                               drawPattern(turtle, x, y, step, angle);
                            }});
+        turtle.stroke();
     },
 
     unknown2: function({canvas, style}={}) {
