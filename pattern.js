@@ -183,18 +183,13 @@ var Pattern = {
 
         var length = 100 * window.devicePixelRatio;
         var altitude = (Math.sqrt(3) / 2 ) * length;
-
+        
         var context = canvas.getContext('2d');
-
         Pattern.applyStyle(context, style);
-
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        for (var offsetY = 0 - altitude; offsetY < canvas.height + altitude; offsetY = offsetY + ( altitude * 2 ) ) {
-            for (var offsetX = 0 - length; offsetX < canvas.width + length; offsetX = offsetX + length) {
-                drawPrimitive(context, offsetX - ( length / 2 ), offsetY, length, altitude, lineDrawer);
-                drawPrimitive(context, offsetX, offsetY + altitude, length, altitude, lineDrawer);
-            }
-        }
+        context.fillRect(0, 0, canvas.width, canvas.height);        
+        Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
+            drawPrimitive(context, x, y, length, altitude, lineDrawer);
+        });
     },
 
     shippou: function({canvas, style}={}) {
