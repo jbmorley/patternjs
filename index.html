@@ -7,6 +7,7 @@
     <link id="theme" rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script src="utilities.js"></script>
     <script>
 
         function onDocumentReady(callback) {
@@ -22,26 +23,8 @@
                 resizeCallback();
         }
 
-        function download(width, height, renderer) {
-            var canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            renderer(canvas);
-            window.open(canvas.toDataURL('image/png'));
-        }
-
-        function downloadButton(width, height, title, renderer) {
-            var button = document.createElement('div');
-            button.innerHTML = title;
-            button.classList.add('download');
-            button.addEventListener('click', function() {
-                download(width, height, renderer);
-            });
-            return button;
-        }
-
         function initialize(id, height, renderer) {
-            onDocumentReady(function() {
+            Utilities.onDocumentReady(function() {
 
                 var container = document.getElementById(id);
                 var pattern = document.createElement('canvas');
@@ -54,14 +37,14 @@
                 div.classList.add('meta');
                 container.appendChild(div);
 
-                div.appendChild(downloadButton(window.screen.width * window.devicePixelRatio,
-                                               window.screen.height * window.devicePixelRatio,
-                                               "Download Desktop",
-                                               renderer));
-                div.appendChild(downloadButton(600 * window.devicePixelRatio,
-                                               400 * window.devicePixelRatio,
-                                               "Download Sample",
-                                               renderer));
+                div.appendChild(Utilities.downloadButton(window.screen.width * window.devicePixelRatio,
+                                                         window.screen.height * window.devicePixelRatio,
+                                                         "Download Desktop",
+                                                         renderer));
+                div.appendChild(Utilities.downloadButton(600 * window.devicePixelRatio,
+                                                         400 * window.devicePixelRatio,
+                                                         "Download Sample",
+                                                         renderer));
                 
                 onResize(pattern, function(canvas, parentWidth, parentHeight) {
                     canvas.width = parentWidth * window.devicePixelRatio;
@@ -71,12 +54,6 @@
                     renderer(canvas);
                 });
             });
-        }
-
-        function addDownload(canvas) {
-            canvas.onclick = function() {
-                window.open(canvas.toDataURL('image/png'));
-            };
         }
 
     </script>
