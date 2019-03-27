@@ -37,11 +37,13 @@
                 div.classList.add('meta');
                 container.appendChild(div);
 
-                div.appendChild(Utilities.downloadButton(window.screen.width * window.devicePixelRatio,
+                div.appendChild(Utilities.downloadButton('pattern',
+                                                         window.screen.width * window.devicePixelRatio,
                                                          window.screen.height * window.devicePixelRatio,
                                                          "Download Desktop",
                                                          renderer));
-                div.appendChild(Utilities.downloadButton(600 * window.devicePixelRatio,
+                div.appendChild(Utilities.downloadButton('pattern',
+                                                         600 * window.devicePixelRatio,
                                                          400 * window.devicePixelRatio,
                                                          "Download Sample",
                                                          renderer));
