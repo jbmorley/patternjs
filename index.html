@@ -45,16 +45,18 @@
                     label.innerHTML = parameter;
                     optionDiv.appendChild(label);
 
+                    var key = String(parameter);
+
                     var input = document.createElement('input');
-                    input.value = parameters[parameter];
-                    input.addEventListener('change', function(event) {
-                        options[parameter] = Number(event.target.value);
+                    input.value = parameters[key];
+                    input.addEventListener('change', function(key) { return function(event) {
+                        options[key] = Number(event.target.value);
                         renderer(canvas, options);
-                    });
-                    input.addEventListener('keyup', function(event) {
-                        options[parameter] = Number(event.target.value);
+                    }}(key));
+                    input.addEventListener('keyup', function(key) { return function(event) {
+                        options[key] = Number(event.target.value);
                         renderer(canvas, options);
-                    });
+                    }}(key));
                     optionDiv.appendChild(input);
                 }
 
@@ -145,16 +147,17 @@
 <div id="waves" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves', 300, function(canvas, options) {
+        console.log(options);
         Pattern.seigaiha({
             canvas: canvas,
             style: Pattern.styles.monochrome,
             lineWidth: 3,
             radius: 55,
-            gap: 10,
+            gap: options.gap,
             count: options.count,
             alternating: false,
         });
-    }, {'count': 5});
+    }, {'count': 5, 'gap': 10});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
