@@ -160,12 +160,12 @@
             canvas: canvas,
             style: Pattern.styles.monochrome,
             lineWidth: 3,
-            radius: 55,
+            radius: options.radius,
             gap: options.gap,
             count: options.count,
             alternating: false,
         });
-    }, {'count': 5, 'gap': 10});
+    }, {'count': 5, 'gap': 10, 'radius': 55});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
