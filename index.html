@@ -23,6 +23,27 @@
                 resizeCallback();
         }
 
+        function slider(key, configuration, callback) {
+
+            var change = function(event) {
+                callback(key, Number(event.target.value));
+            }
+
+            var div = document.createElement('div');
+
+            var label = document.createElement('label');
+            label.innerHTML = key;
+            div.appendChild(label);
+
+            var input = document.createElement('input');
+            input.value = configuration;
+            input.addEventListener('change', change);
+            input.addEventListener('keyup', change);
+            div.appendChild(input);
+
+            return div;
+        }
+
         function initialize(id, height, renderer, parameters) {
             Utilities.onDocumentReady(function() {
 
@@ -38,26 +59,13 @@
                 container.appendChild(optionDiv);
 
                 for (var parameter in parameters) {
-
                     options[parameter] = parameters[parameter];
-
-                    var label = document.createElement('label');
-                    label.innerHTML = parameter;
-                    optionDiv.appendChild(label);
-
-                    var key = String(parameter);
-
-                    var input = document.createElement('input');
-                    input.value = parameters[key];
-                    input.addEventListener('change', function(key) { return function(event) {
-                        options[key] = Number(event.target.value);
-                        renderer(canvas, options);
-                    }}(key));
-                    input.addEventListener('keyup', function(key) { return function(event) {
-                        options[key] = Number(event.target.value);
-                        renderer(canvas, options);
-                    }}(key));
-                    optionDiv.appendChild(input);
+                    optionDiv.appendChild(slider(parameter,
+                                                 parameters[parameter],
+                                                 function(key, value) {
+                                                     options[key] = value;
+                                                     renderer(canvas, options);
+                                                 }));
                 }
 
                 var buttonDiv = document.createElement('div');
