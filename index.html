@@ -32,12 +32,14 @@
             var div = document.createElement('div');
 
             var label = document.createElement('label');
-            label.innerHTML = key;
+            label.innerHTML = configuration.title;
             div.appendChild(label);
 
             var input = document.createElement('input');
             input.type = "range";
-            input.value = configuration;
+            input.value = configuration.default;
+            input.min = configuration.min;
+            input.max = configuration.max;
             input.classList.add("slider");
             input.addEventListener('change', change);
             input.addEventListener('input', change);
@@ -62,7 +64,7 @@
                 container.appendChild(optionDiv);
 
                 for (var parameter in parameters) {
-                    options[parameter] = parameters[parameter];
+                    options[parameter] = parameters[parameter].default;
                     optionDiv.appendChild(slider(parameter,
                                                  parameters[parameter],
                                                  function(key, value) {
@@ -113,7 +115,7 @@
             style: Pattern.styles.darkBlue,
             lineDrawer: Pattern.drawers.line(options.strokeWidth),
         });
-    }, {'strokeWidth': 2});
+    }, {strokeWidth: {title: 'Stroke Width', default: 2, min: 1, max: 20}});
 </script>
 <pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
@@ -167,7 +169,9 @@
             count: options.count,
             alternating: false,
         });
-    }, {'count': 5, 'gap': 10, 'radius': 55});
+    }, {'count': {title: 'Line Count', default: 5, min: 2, max: 20},
+        'gap': {title: 'Line Spacing', default: 10, min: 1, max: 20},
+        'radius': {title: 'Radius', default: 55, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
