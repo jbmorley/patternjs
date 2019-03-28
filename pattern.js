@@ -378,4 +378,25 @@ var Pattern = {
         });
     },
 
+    unknown3: function({canvas, style}={}) {
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        context.lineWidth = 2;
+
+        var path = new Pattern.Turtle(context);
+        path.turn(2 * Math.PI);
+        var degree = Math.PI / 180;
+        path.moveTo(100, 100);
+        for (var i = 1; i < 1000; i++) {
+            path.forward(1);
+            var angle = ( degree * 300 ) / i;
+            path.left(angle);
+        }
+        path.stroke();
+
+    }
+
 };

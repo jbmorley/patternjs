@@ -105,7 +105,6 @@
 <div id="asanoha" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('asanoha', 300, function(canvas, options) {
-        console.log(options);
         Pattern.asanoha({
             canvas: canvas,
             style: Pattern.styles.darkBlue,
@@ -257,6 +256,20 @@
 <pre><code class="javascript">Pattern.unknown2({
     canvas: canvas,
     style: Pattern.styles.monochrome,
+});</code></pre>
+
+<div id="unknown3" class="pattern-container"></div>
+<script type="text/javascript">
+    initialize('unknown3', 300, function(canvas, options) {
+        Pattern.unknown3({
+            canvas: canvas,
+            style: Pattern.styles.blues,
+        });
+    });
+</script>
+<pre><code class="javascript">Pattern.unknown3({
+    canvas: canvas,
+    style: Pattern.styles.blues,
 });</code></pre>
 
 <p class="copyright">
