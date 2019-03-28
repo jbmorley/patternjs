@@ -38,6 +38,7 @@
             var input = document.createElement('input');
             input.type = "range";
             input.value = configuration;
+            input.classList.add("slider");
             input.addEventListener('change', change);
             input.addEventListener('input', change);
             input.addEventListener('keyup', change);
