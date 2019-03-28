@@ -23,37 +23,64 @@
                 resizeCallback();
         }
 
-        function initialize(id, height, renderer) {
+        function initialize(id, height, renderer, parameters) {
             Utilities.onDocumentReady(function() {
 
+                var options = {}
+
                 var container = document.getElementById(id);
-                var pattern = document.createElement('canvas');
-                pattern.classList.add('pattern');
-                container.appendChild(pattern);
-                renderer(pattern);
+                var canvas = document.createElement('canvas');
+                canvas.classList.add('pattern');
+                container.appendChild(canvas);
 
-                var div = document.createElement('div');
-                div.classList.add('content');
-                div.classList.add('meta');
-                container.appendChild(div);
+                var optionDiv = document.createElement('div');
+                optionDiv.classList.add('content');
+                container.appendChild(optionDiv);
 
-                div.appendChild(Utilities.downloadButton(id,
-                                                         window.screen.width * window.devicePixelRatio,
-                                                         window.screen.height * window.devicePixelRatio,
-                                                         "Download Desktop",
-                                                         renderer));
-                div.appendChild(Utilities.downloadButton(id,
-                                                         600 * window.devicePixelRatio,
-                                                         400 * window.devicePixelRatio,
-                                                         "Download Sample",
-                                                         renderer));
+                for (var parameter in parameters) {
+
+                    options[parameter] = parameters[parameter];
+
+                    var label = document.createElement('label');
+                    label.innerHTML = parameter;
+                    optionDiv.appendChild(label);
+
+                    var input = document.createElement('input');
+                    input.value = parameters[parameter];
+                    input.addEventListener('change', function(event) {
+                        options[parameter] = Number(event.target.value);
+                        renderer(canvas, options);
+                    });
+                    input.addEventListener('keyup', function(event) {
+                        options[parameter] = Number(event.target.value);
+                        renderer(canvas, options);
+                    });
+                    optionDiv.appendChild(input);
+                }
+
+                var buttonDiv = document.createElement('div');
+                buttonDiv.classList.add('content');
+                buttonDiv.classList.add('meta');
+                container.appendChild(buttonDiv);
+
+                buttonDiv.appendChild(Utilities.downloadButton(id,
+                                                               window.screen.width * window.devicePixelRatio,
+                                                               window.screen.height * window.devicePixelRatio,
+                                                               "Download Desktop",
+                                                               renderer));
+                buttonDiv.appendChild(Utilities.downloadButton(id,
+                                                               600 * window.devicePixelRatio,
+                                                               400 * window.devicePixelRatio,
+                                                               "Download Sample",
+                                                               renderer));
                 
-                onResize(pattern, function(canvas, parentWidth, parentHeight) {
+                renderer(canvas, options);
+                onResize(canvas, function(canvas, parentWidth, parentHeight) {
                     canvas.width = parentWidth * window.devicePixelRatio;
                     canvas.height = height * window.devicePixelRatio;
                     canvas.style.width = parentWidth + 'px';
                     canvas.style.height = height + 'px';
-                    renderer(canvas);
+                    renderer(canvas, options);
                 });
             });
         }
@@ -67,13 +94,14 @@
 <h2>麻の葉, Asa no ha</h2>
 <div id="asanoha" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('asanoha', 300, function(canvas) {
+    initialize('asanoha', 300, function(canvas, options) {
+        console.log(options);
         Pattern.asanoha({
             canvas: canvas,
             style: Pattern.styles.darkBlue,
-            lineDrawer: Pattern.drawers.line(2),
+            lineDrawer: Pattern.drawers.line(options.strokeWidth),
         });
-    });
+    }, {'strokeWidth': 2});
 </script>
 <pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
@@ -83,7 +111,7 @@
 
 <div id="asanoha-dots" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('asanoha-dots', 300, function(canvas) {
+    initialize('asanoha-dots', 300, function(canvas, options) {
         Pattern.asanoha({
             canvas: canvas,
             style: Pattern.styles.darkRed,
@@ -100,7 +128,7 @@
 <h2>七宝, Shippou</h2>
 <div id="circles" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('circles', 300, function(canvas) {
+    initialize('circles', 300, function(canvas, options) {
         Pattern.shippou({
             canvas: canvas,
             style: Pattern.styles.purple,
@@ -116,17 +144,17 @@
 
 <div id="waves" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('waves', 300, function(canvas) {
+    initialize('waves', 300, function(canvas, options) {
         Pattern.seigaiha({
             canvas: canvas,
             style: Pattern.styles.monochrome,
             lineWidth: 3,
             radius: 55,
             gap: 10,
-            count: 5,
+            count: options.count,
             alternating: false,
         });
-    });
+    }, {'count': 5});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
@@ -140,7 +168,7 @@
 
 <div id="waves-light" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('waves-light', 300, function(canvas) {
+    initialize('waves-light', 300, function(canvas, options) {
         Pattern.seigaiha({
             canvas: canvas, 
             style: Pattern.styles.sky,
@@ -164,7 +192,7 @@
 
 <div id="waves-inverted" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('waves-inverted', 300, function(canvas) {
+    initialize('waves-inverted', 300, function(canvas, options) {
         Pattern.seigaiha({
             canvas: canvas,
             style: Pattern.styles.blues,
@@ -190,7 +218,7 @@
 
 <div id="unknown1" class="pattern-container"></div>
 <script type="text/javascript">    
-    initialize('unknown1', 300, function(canvas) {
+    initialize('unknown1', 300, function(canvas, options) {
         Pattern.unknown1({
             canvas: canvas,
             style: Pattern.styles.purples,
@@ -208,7 +236,7 @@
 
 <div id="unknown2" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('unknown2', 300, function(canvas) {
+    initialize('unknown2', 300, function(canvas, options) {
         Pattern.unknown2({
             canvas: canvas,
             style: Pattern.styles.monochrome,
