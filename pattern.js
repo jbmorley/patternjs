@@ -396,7 +396,6 @@ var Pattern = {
             path.left(angle);
         }
         path.stroke();
-
     }
 
 };
