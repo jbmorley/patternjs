@@ -78,16 +78,20 @@
                 buttonDiv.classList.add('meta');
                 container.appendChild(buttonDiv);
 
+                var rendererWithOptions = function(canvas) {
+                    renderer(canvas, options);
+                }
+
                 buttonDiv.appendChild(Utilities.downloadButton(id,
                                                                window.screen.width * window.devicePixelRatio,
                                                                window.screen.height * window.devicePixelRatio,
                                                                "Download Desktop",
-                                                               renderer));
+                                                               rendererWithOptions));
                 buttonDiv.appendChild(Utilities.downloadButton(id,
                                                                600 * window.devicePixelRatio,
                                                                400 * window.devicePixelRatio,
                                                                "Download Sample",
-                                                               renderer));
+                                                               rendererWithOptions));
                 
                 renderer(canvas, options);
                 onResize(canvas, function(canvas, parentWidth, parentHeight) {
