@@ -396,6 +396,29 @@ var Pattern = {
             path.left(angle);
         }
         path.stroke();
+    },
+
+    hexagons: function({canvas, style, side, lineWidth}={}) {
+
+        function hexagon(path, x, y, side) {
+            path.moveTo(x, y);
+            for (var i = 0; i < 6; i++) {
+                path.turn(Math.PI / 3);
+                path.forward(side);
+            }
+        }
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.lineWidth = lineWidth * window.devicePixelRatio;
+
+        var path = new Pattern.Turtle(context);
+        var side = side * window.devicePixelRatio;
+        Pattern.alternate(0, 0, canvas.width, canvas.height, side * 2 + 8, side * 2, true, function(x, y) {
+            hexagon(path, x, y, side);
+        });
+        path.stroke();
     }
 
 };
