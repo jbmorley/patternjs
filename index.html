@@ -137,10 +137,10 @@
         Pattern.asanoha({
             canvas: canvas,
             style: Pattern.styles.darkRed,
-            size: 100,
+            size: options.size,
             lineDrawer: Pattern.drawers.dottedLine(2, 8),
         });
-    });
+    }, {size: {title: 'Size', default: 100, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
@@ -231,13 +231,16 @@
         Pattern.seigaiha({
             canvas: canvas,
             style: Pattern.styles.blues,
-            lineWidth: 3,
-            radius: 44,
-            gap: 8,
-            count: 5,
+            lineWidth: options.lineWidth,
+            radius: options.radius,
+            gap: options.gap,
+            count: options.count,
             alternating: true
         });
-    });
+    }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
+        count: {title: 'Line Count', default: 5, min: 2, max: 20},
+        gap: {title: 'Line Spacing', default: 8, min: 1, max: 20},
+        radius: {title: 'Radius', default: 44, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
