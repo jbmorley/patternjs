@@ -309,10 +309,10 @@
         Pattern.hexagons({
             canvas: canvas,
             style: Pattern.styles.blues,
-            side: options.side,
+            side: options.sideLength,
             lineWidth: options.lineWidth,
         });
-    }, {side: {title: 'Side Length', default: 10, min: 1, max: 20},
+    }, {sideLength: {title: 'Side Length', default: 10, min: 1, max: 100},
         lineWidth: {title: 'Line Width', default: 2, min: 1, max: 4}});
 </script>
 <pre><code class="javascript">Pattern.hexagons({
