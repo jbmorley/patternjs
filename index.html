@@ -179,13 +179,13 @@
             style: Pattern.styles.monochrome,
             lineWidth: options.lineWidth,
             radius: options.radius,
-            gap: options.gap,
+            lineSpacing: options.lineSpacing,
             count: options.count,
             alternating: false,
         });
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
-        gap: {title: 'Line Spacing', default: 10, min: 1, max: 20},
+        lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
         radius: {title: 'Radius', default: 55, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
@@ -193,7 +193,7 @@
     style: Pattern.styles.monochrome,
     lineWidth: 3,
     radius: 55,
-    gap: 10,
+    lineSpacing: 10,
     count: 5,
     alternating: false,
 });</code></pre>
@@ -206,13 +206,13 @@
             style: Pattern.styles.sky,
             lineWidth: options.lineWidth,
             radius: options.radius,
-            gap: options.gap, 
+            lineSpacing: options.lineSpacing, 
             count: options.count,
             alternating: false,
         });
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         count: {title: 'Line Count', default: 11, min: 2, max: 20},
-        gap: {title: 'Line Spacing', default: 7, min: 1, max: 20},
+        lineSpacing: {title: 'Line Spacing', default: 7, min: 1, max: 20},
         radius: {title: 'Radius', default: 80, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
@@ -220,7 +220,7 @@
     style: Pattern.styles.sky,
     lineWidth: 2, 
     radius: 80,
-    gap: 7, 
+    lineSpacing: 7, 
     count: 11,
     alternating: false,
 });</code></pre>
@@ -233,13 +233,13 @@
             style: Pattern.styles.blues,
             lineWidth: options.lineWidth,
             radius: options.radius,
-            gap: options.gap,
+            lineSpacing: options.lineSpacing,
             count: options.count,
             alternating: true
         });
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
-        gap: {title: 'Line Spacing', default: 8, min: 1, max: 20},
+        lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
         radius: {title: 'Radius', default: 44, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
@@ -247,7 +247,7 @@
     style: Pattern.styles.blues,
     lineWidth: 3,
     radius: 44,
-    gap: 8,
+    lineSpacing: 8,
     count: 5,
     alternating: true
 });</code></pre>

@@ -212,7 +212,7 @@ var Pattern = {
         });
     },
 
-    seigaiha: function({canvas, style, lineWidth, radius, gap, count, alternating}={}) {
+    seigaiha: function({canvas, style, lineWidth, radius, lineSpacing, count, alternating}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -237,14 +237,14 @@ var Pattern = {
         var column = 0;
 
         var radius = radius * window.devicePixelRatio;
-        var gap = gap * window.devicePixelRatio
+        var lineSpacing = lineSpacing * window.devicePixelRatio
 
         for (var offsetY = 0; offsetY < canvas.height + radius; offsetY = offsetY + ( radius ) ) {
             row++
             column = 0;
             for (var offsetX = 0 + radius; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
                 column++
-                drawConcentricCircles(context, offsetX, offsetY, radius, gap, count);
+                drawConcentricCircles(context, offsetX, offsetY, radius, lineSpacing, count);
             }
             row++;
             column = 0;
@@ -255,7 +255,7 @@ var Pattern = {
                 } else if ( alternating && ( column % 2 == 1 && row % 4 == 2 ) ) {
                     drawCircle(context, offsetX, offsetY + ( radius / 2 ), radius);
                 } else {
-                    drawConcentricCircles(context, offsetX, offsetY + ( radius / 2 ), radius, gap, count);
+                    drawConcentricCircles(context, offsetX, offsetY + ( radius / 2 ), radius, lineSpacing, count);
                 }
             }
         }
