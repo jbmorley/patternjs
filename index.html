@@ -151,12 +151,17 @@
         Pattern.shippou({
             canvas: canvas,
             style: Pattern.styles.purple,
+            lineWidth: options.lineWidth,
+            radius: options.radius,
         });
-    });
+    }, {lineWidth: {title: 'Line Width', default: 4, min: 1, max: 20},
+        radius: {title: 'Radius', default: 40, min: 1, max: 100}});
 </script>
 <pre><code class="javascript">Pattern.shippou({
     canvas: canvas,
     style: Pattern.styles.purple,
+    lineWidth: 4,
+    radius: 40,
 });</code></pre>
 
 <h2>青海波, Seigaiha</h2>

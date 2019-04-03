@@ -192,7 +192,7 @@ var Pattern = {
         });
     },
 
-    shippou: function({canvas, style}={}) {
+    shippou: function({canvas, style, lineWidth, radius}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -200,12 +200,12 @@ var Pattern = {
             context.stroke();
         };
 
-        var radius = 40 * window.devicePixelRatio;
+        var radius = radius * window.devicePixelRatio;
+        var lineWidth = lineWidth * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
-
         Pattern.applyStyle(context, style);
-        context.lineWidth = 4 * window.devicePixelRatio;
+        context.lineWidth = lineWidth;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         for (var offsetY = 0 - radius; offsetY < canvas.height + radius; offsetY = offsetY + ( radius * 2 ) ) {
