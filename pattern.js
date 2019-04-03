@@ -263,7 +263,10 @@ var Pattern = {
 
     },
 
-    unknown1: function({canvas, style, featureLength, lineWidth}={}) {
+    unknown1: function({canvas, style, featureLength, lineWidth, angle}={}) {
+
+        if (angle === undefined) { angle = Math.PI / 3; }
+        if (featureLength === undefined) { featureLength = 10; }
         
         var drawPattern = function(turtle, x, y, featureLength, left) {
             var right = Math.PI - left;
@@ -334,7 +337,7 @@ var Pattern = {
         
         var stepX = 90 * window.devicePixelRatio;
         var stepY = 50 * window.devicePixelRatio;
-        var angle = Math.PI / 3;
+        // var angle = Math.PI / 3;
 
         var turtle = new Pattern.Turtle(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
