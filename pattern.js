@@ -263,73 +263,73 @@ var Pattern = {
 
     },
 
-    unknown1: function({canvas, style, step}={}) {
+    unknown1: function({canvas, style, featureLength}={}) {
         
-        var drawPattern = function(turtle, x, y, step, left) {
+        var drawPattern = function(turtle, x, y, featureLength, left) {
             var right = Math.PI - left;
             turtle.moveTo(x, y);
             turtle.setAngle(left * -1);
-            turtle.forward(step * 7);
+            turtle.forward(featureLength * 7);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(left);
-            turtle.forward(step * 7);
+            turtle.forward(featureLength * 7);
             turtle.right(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step * 7);
+            turtle.forward(featureLength * 7);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(left);
-            turtle.forward(step * 7);
+            turtle.forward(featureLength * 7);
             turtle.right(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(left);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.right(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
             turtle.left(right);
-            turtle.forward(step);
+            turtle.forward(featureLength);
         }
         
         var context = canvas.getContext('2d');
         Pattern.applyStyle(context, style);
         context.fillRect(0, 0, canvas.width, canvas.height);
-        step = step * window.devicePixelRatio;
+        featureLength = featureLength * window.devicePixelRatio;
         context.lineWidth = 2 * window.devicePixelRatio;
         
         var stepX = 90 * window.devicePixelRatio;
@@ -338,7 +338,7 @@ var Pattern = {
 
         var turtle = new Pattern.Turtle(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
-            drawPattern(turtle, x, y, step, angle);
+            drawPattern(turtle, x, y, featureLength, angle);
         });
         turtle.stroke();
     },

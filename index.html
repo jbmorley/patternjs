@@ -260,14 +260,14 @@
         Pattern.unknown1({
             canvas: canvas,
             style: Pattern.styles.purples,
-            step: options.featureSize,
+            featureLength: options.featureLength,
         });
-    }, {featureSize: {title: 'Feature Size', default: 10, min: 1, max: 200}});
+    }, {featureLength: {title: 'Feature Length', default: 10, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.unknown1({
     canvas: canvas,
     style: Pattern.styles.purples,
-    step: 10,
+    featureLength: 10,
 });</code></pre>
 
 <h2>Unknown 2</h2>
