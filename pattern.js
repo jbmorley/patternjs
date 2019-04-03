@@ -207,16 +207,9 @@ var Pattern = {
         Pattern.applyStyle(context, style);
         context.lineWidth = lineWidth;
         context.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (var offsetY = 0 - radius; offsetY < canvas.height + radius; offsetY = offsetY + ( radius * 2 ) ) {
-            for (var offsetX = 0 + radius; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
-                drawCircle(context, offsetX, offsetY, radius);
-            }
-            for (var offsetX = 0; offsetX < canvas.width + radius; offsetX = offsetX + ( radius * 2 ) ) {
-                drawCircle(context, offsetX, offsetY + radius, radius);
-            }
-        }
-
+        Pattern.alternate(0, 0, canvas.width, canvas.height, radius * 2, radius, true, function(x, y) {
+            drawCircle(context, x, y, radius);
+        });
     },
 
     seigaiha: function({canvas, style, lineWidth, radius, gap, count, alternating}={}) {
@@ -404,7 +397,7 @@ var Pattern = {
             path.moveTo(x, y);
             for (var i = 0; i < 6; i++) {
                 path.turn(Math.PI / 3);
-                path.forward(side);
+                path.forward(side);              
             }
         }
 
