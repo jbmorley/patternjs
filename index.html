@@ -41,6 +41,9 @@
             input.value = configuration.default;
             input.min = configuration.min;
             input.max = configuration.max;
+            if (configuration.step !== undefined) {
+                input.step = configuration.step;
+            }
             input.classList.add("slider");
             input.addEventListener('change', change);
             input.addEventListener('input', change);
@@ -261,15 +264,18 @@
             canvas: canvas,
             style: Pattern.styles.purples,
             featureLength: options.featureLength,
+            angle: options.angle,
             lineWidth: options.lineWidth,
         });
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
-        featureLength: {title: 'Feature Length', default: 10, min: 1, max: 200}});
+        featureLength: {title: 'Feature Length', default: 10, min: 1, max: 200},
+        angle: {title: 'Angle', default: Math.PI / 3, min: 0, max: Math.PI, step: Math.PI / 90}});
 </script>
 <pre><code class="javascript">Pattern.unknown1({
     canvas: canvas,
     style: Pattern.styles.purples,
     featureLength: 10,
+    angle: Math.PI / 3,
     lineWidth: 1,
 });</code></pre>
 
