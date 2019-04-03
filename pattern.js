@@ -337,7 +337,6 @@ var Pattern = {
         
         var stepX = 90 * window.devicePixelRatio;
         var stepY = 50 * window.devicePixelRatio;
-        // var angle = Math.PI / 3;
 
         var turtle = new Pattern.Turtle(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
