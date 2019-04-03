@@ -199,13 +199,16 @@
         Pattern.seigaiha({
             canvas: canvas, 
             style: Pattern.styles.sky,
-            lineWidth: 2, 
-            radius: 80,
-            gap: 7, 
-            count: 11,
+            lineWidth: options.lineWidth,
+            radius: options.radius,
+            gap: options.gap, 
+            count: options.count,
             alternating: false,
         });
-    });
+    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
+        count: {title: 'Line Count', default: 11, min: 2, max: 20},
+        gap: {title: 'Line Spacing', default: 7, min: 1, max: 20},
+        radius: {title: 'Radius', default: 80, min: 1, max: 200}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas, 
