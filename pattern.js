@@ -165,7 +165,7 @@ var Pattern = {
 
     },
 
-    asanoha: function({canvas, style, lineDrawer}={}) {
+    asanoha: function({canvas, style, size, lineDrawer}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
             drawLine(context, x, y, x - ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
@@ -181,7 +181,7 @@ var Pattern = {
             drawStar(context, x + length, y + ( 2 * ( altitude / 3 ) ), length, altitude, -1, lineDrawer);
         };
 
-        var length = 100 * window.devicePixelRatio;
+        var length = size * window.devicePixelRatio;
         var altitude = (Math.sqrt(3) / 2 ) * length;
         
         var context = canvas.getContext('2d');
