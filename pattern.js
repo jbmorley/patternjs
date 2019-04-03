@@ -263,7 +263,7 @@ var Pattern = {
 
     },
 
-    unknown1: function({canvas, style, featureLength}={}) {
+    unknown1: function({canvas, style, featureLength, lineWidth}={}) {
         
         var drawPattern = function(turtle, x, y, featureLength, left) {
             var right = Math.PI - left;
@@ -330,7 +330,7 @@ var Pattern = {
         Pattern.applyStyle(context, style);
         context.fillRect(0, 0, canvas.width, canvas.height);
         featureLength = featureLength * window.devicePixelRatio;
-        context.lineWidth = 2 * window.devicePixelRatio;
+        context.lineWidth = lineWidth * window.devicePixelRatio;
         
         var stepX = 90 * window.devicePixelRatio;
         var stepY = 50 * window.devicePixelRatio;
