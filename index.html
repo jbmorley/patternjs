@@ -295,6 +295,39 @@
     style: Pattern.styles.monochrome,
 });</code></pre>
 
+<div id="unknown3" class="pattern-container"></div>
+<script type="text/javascript">
+    initialize('unknown3', 300, function(canvas, options) {
+        Pattern.unknown3({
+            canvas: canvas,
+            style: Pattern.styles.blues,
+        });
+    });
+</script>
+<pre><code class="javascript">Pattern.unknown3({
+    canvas: canvas,
+    style: Pattern.styles.blues,
+});</code></pre>
+
+<div id="hexagons" class="pattern-container"></div>
+<script type="text/javascript">
+    initialize('hexagons', 300, function(canvas, options) {
+        Pattern.hexagons({
+            canvas: canvas,
+            style: Pattern.styles.blues,
+            side: options.sideLength,
+            lineWidth: options.lineWidth,
+        });
+    }, {sideLength: {title: 'Side Length', default: 10, min: 1, max: 100},
+        lineWidth: {title: 'Line Width', default: 2, min: 1, max: 4}});
+</script>
+<pre><code class="javascript">Pattern.hexagons({
+    canvas: canvas,
+    style: Pattern.styles.blues,
+    side: 10,
+    lineWidth: 2,
+});</code></pre>
+
 <p class="copyright">
     Copyright &copy; Jason Barrie Morley 2019
 </p>
