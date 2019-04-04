@@ -52,6 +52,10 @@ var Pattern = {
             }
             this.turn(angle * -1);
         };
+
+        this.close = function() {
+            this.context.closePath();
+        };
         
     },
 
@@ -271,7 +275,7 @@ var Pattern = {
         var drawPattern = function(turtle, x, y, featureLength, left) {
             var right = Math.PI - left;
             turtle.moveTo(x, y);
-            turtle.setAngle(left * -1);
+            turtle.setAngle(( right / 2 ) * -1);
             turtle.forward(featureLength * 7);
             turtle.left(right);
             turtle.forward(featureLength);
@@ -327,6 +331,7 @@ var Pattern = {
             turtle.forward(featureLength);
             turtle.left(right);
             turtle.forward(featureLength);
+            turtle.close();
         }
         
         var context = canvas.getContext('2d');
@@ -335,8 +340,9 @@ var Pattern = {
         featureLength = featureLength * window.devicePixelRatio;
         context.lineWidth = lineWidth * window.devicePixelRatio;
 
-        var stepX = ( ( 5 * featureLength ) * Math.sin( angle ) ) + ( ( 5 * featureLength ) * Math.sin( angle ) );
-        var stepY = ( ( 5 * featureLength ) * Math.cos( angle ) ) + ( ( 5 * featureLength ) * Math.sin( (Math.PI / 2) - angle ) );
+        var right = Math.PI - angle;
+        var stepX = 10 * featureLength * Math.sin( right / 2 );
+        var stepY = 10 * featureLength * Math.cos( right / 2 );
 
         var turtle = new Pattern.Turtle(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
