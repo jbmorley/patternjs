@@ -372,49 +372,6 @@ var Pattern = {
         Pattern.alternate(0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
             drawTriangle(context, x, y, radius, altitude);
         });
-    },
-
-    unknown3: function({canvas, style}={}) {
-
-        var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        context.lineWidth = 2;
-
-        var path = new Pattern.Turtle(context);
-        path.turn(2 * Math.PI);
-        var degree = Math.PI / 180;
-        path.moveTo(100, 100);
-        for (var i = 1; i < 1000; i++) {
-            path.forward(1);
-            var angle = ( degree * 300 ) / i;
-            path.left(angle);
-        }
-        path.stroke();
-    },
-
-    hexagons: function({canvas, style, side, lineWidth}={}) {
-
-        function hexagon(path, x, y, side) {
-            path.moveTo(x, y);
-            for (var i = 0; i < 6; i++) {
-                path.turn(Math.PI / 3);
-                path.forward(side);              
-            }
-        }
-
-        var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.lineWidth = lineWidth * window.devicePixelRatio;
-
-        var path = new Pattern.Turtle(context);
-        var side = side * window.devicePixelRatio;
-        Pattern.alternate(0, 0, canvas.width, canvas.height, side * 2 + 8, side * 2, true, function(x, y) {
-            hexagon(path, x, y, side);
-        });
-        path.stroke();
     }
 
 };
