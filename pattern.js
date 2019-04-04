@@ -263,7 +263,7 @@ var Pattern = {
 
     },
 
-    unknown1: function({canvas, style, featureLength, lineWidth, angle}={}) {
+    sayagata: function({canvas, style, featureLength, lineWidth, angle}={}) {
 
         if (angle === undefined) { angle = Math.PI / 3; }
         if (featureLength === undefined) { featureLength = 10; }
@@ -334,9 +334,9 @@ var Pattern = {
         context.fillRect(0, 0, canvas.width, canvas.height);
         featureLength = featureLength * window.devicePixelRatio;
         context.lineWidth = lineWidth * window.devicePixelRatio;
-        
-        var stepX = 90 * window.devicePixelRatio;
-        var stepY = 50 * window.devicePixelRatio;
+
+        var stepX = ( ( 5 * featureLength ) * Math.sin( angle ) ) + ( ( 5 * featureLength ) * Math.sin( angle ) );
+        var stepY = ( ( 5 * featureLength ) * Math.cos( angle ) ) + ( ( 5 * featureLength ) * Math.sin( (Math.PI / 2) - angle ) );
 
         var turtle = new Pattern.Turtle(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
