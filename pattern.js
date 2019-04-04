@@ -345,7 +345,7 @@ var Pattern = {
         turtle.stroke();
     },
 
-    unknown2: function({canvas, style}={}) {
+    unknown: function({canvas, style}={}) {
 
         var drawTriangle = function(context, x, y, width, altitude) {
             context.beginPath();
