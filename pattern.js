@@ -228,7 +228,10 @@ var Pattern = {
 
         var drawConcentricCircles = function(context, x, y, radius, step, count) {
             for (var i = 0; i < count; i++) {
-                drawCircle(context, x, y, radius - ( i * step ));
+                var circleRadius = radius - ( i * step );
+                if (circleRadius > 0) {
+                    drawCircle(context, x, y, radius - ( i * step ));
+                }
             }            
         };
 
