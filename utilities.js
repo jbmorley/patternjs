@@ -4,6 +4,14 @@ var Utilities = {
         document.addEventListener('DOMContentLoaded', callback, false);
     },
 
+    button: function(title, callback) {
+        var button = document.createElement('div');
+        button.innerHTML = title;
+        button.classList.add('download');
+        button.addEventListener('click', callback);
+        return button;
+    },
+
     downloadButton: function(name, width, height, title, renderer) {
         var button = document.createElement('div');
         button.innerHTML = title;

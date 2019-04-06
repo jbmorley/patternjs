@@ -1,6 +1,6 @@
 var Pattern = {
 
-    Turtle: function(context) {
+    Path: function(context) {
     
         this.context = context;
         this.x = 0;
@@ -344,7 +344,7 @@ var Pattern = {
         var stepX = 10 * featureLength * Math.sin( right / 2 );
         var stepY = 10 * featureLength * Math.cos( right / 2 );
 
-        var turtle = new Pattern.Turtle(context);
+        var turtle = new Pattern.Path(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
             drawPattern(turtle, x, y, featureLength, angle);
         });
