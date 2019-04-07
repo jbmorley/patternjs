@@ -22,14 +22,10 @@ var Utilities = {
         return button;
     },
 
-    download: function(name, width, height, renderer) {
-        var canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        renderer(canvas);
+    performDownload: function(filename, dataURL) {
         var a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');
-        a.download = name + '_' + width + 'x' + height + '.png';
+        a.href = dataURL;
+        a.download = filename;
         if (typeof MouseEvent === "function") {
             event = new MouseEvent("click", {
                 view: window,
@@ -46,6 +42,14 @@ var Utilities = {
         } else if (a.fireEvent) {
             a.fireEvent("onclick");
         }
+    },
+
+    download: function(name, width, height, renderer) {
+        var canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        renderer(canvas);
+        Utilities.performDownload(name + '_' + width + 'x' + height + '.png', canvas.toDataURL('image/png'));
     },
 
 }

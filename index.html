@@ -83,7 +83,7 @@
                 container.appendChild(buttonDiv);
 
                 var rendererWithOptions = function(canvas) {
-                    renderer(canvas, options);
+                    return renderer(canvas, options);
                 }
 
                 buttonDiv.appendChild(Utilities.downloadButton(id,
@@ -98,63 +98,11 @@
                                                                rendererWithOptions));
 
                 buttonDiv.appendChild(Utilities.button("Download SVG", function(event) {
-
-                    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                    svg.setAttribute('style', 'border: 1px solid black');
-                    svg.setAttribute('width', '400');
-                    svg.setAttribute('height', '450');
-                    svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-
-                    var path1 = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-                    path1.setAttribute('d', 'M 100 350 l 150 -300');
-                    path1.setAttribute('stroke', 'red');
-                    path1.setAttribute('stroke-width', '3');
-                    path1.setAttribute('fill', 'none');
-                    svg.appendChild(path1);
-
-                    var path2 = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-                    path2.setAttribute('d', 'M 250 50 l 150 300');
-                    path2.setAttribute('stroke', 'red');
-                    path2.setAttribute('stroke-width', '3');
-                    path2.setAttribute('fill', 'none');
-                    svg.appendChild(path2);
-
-                    var path3 = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-                    path3.setAttribute('d', 'M 175 200 l 150 0');
-                    path3.setAttribute('stroke', 'green');
-                    path3.setAttribute('stroke-width', '3');
-                    path3.setAttribute('fill', 'none');
-                    svg.appendChild(path3);
-
-                    var path4 = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-                    path4.setAttribute('d', 'M 100 350 q 150 -300 300 0');
-                    path4.setAttribute('stroke', 'blue');
-                    path4.setAttribute('stroke-width', '5');
-                    path4.setAttribute('fill', 'none');
-                    svg.appendChild(path4);
-
-                    var serializer = new XMLSerializer();
-                    var output = serializer.serializeToString(svg);
-
-                    var a = document.createElement('a');
-                    a.href = "data:text/svg;charset=UTF-8," + output;
-                    a.download = 'pattern.svg';
-                    if (typeof MouseEvent === "function") {
-                        event = new MouseEvent("click", {
-                            view: window,
-                            bubbles: true,
-                            cancelable: true,
-                            ctrlKey: false,
-                            altKey: false,
-                            shiftKey: false,
-                            metaKey: false,
-                            button: 0,
-                            buttons: 1,
-                        });
-                        a.dispatchEvent(event);
-                    } else if (a.fireEvent) {
-                        a.fireEvent("onclick");
-                    }
+                    var canvas = document.createElement('canvas');
+                    canvas.width = 600;
+                    canvas.height = 400;
+                    var svg = rendererWithOptions(canvas);
+                    Utilities.performDownload(id + '.svg', svg.toDataURL());
                 }));
                 
                 renderer(canvas, options);
@@ -320,7 +268,7 @@
 <div id="sayagata" class="pattern-container"></div>
 <script type="text/javascript">    
     initialize('sayagata', 300, function(canvas, options) {
-        Pattern.sayagata({
+        return Pattern.sayagata({
             canvas: canvas,
             style: Pattern.styles.purples,
             featureLength: options.featureLength,

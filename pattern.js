@@ -1,21 +1,52 @@
 var Pattern = {
 
+    Polyline: function(x, y) {
+
+        this.points = [];
+        this.points.push([x, y]);
+
+        this.addPoint = function(x, y) {
+            this.points.push([x, y]);
+        };
+
+        this.length = function() {
+            return this.points.length;
+        };
+
+        this.svg = function() {
+            var polyline = document.createElementNS("http://www.w3.org/2000/svg", 'polyline');
+
+            var coordinates = []
+            for (var i = 0; i < this.points.length; i++) {
+                coordinates.push(this.points[i][0] + "," + this.points[i][1]);
+            }
+            var points = coordinates.join(" ");
+            polyline.setAttribute('points', points);
+            polyline.setAttribute('stroke', 'black');
+            polyline.setAttribute('stroke-width', '1');
+            polyline.setAttribute('fill', 'none');
+            return polyline;
+        }
+
+    },
+
     Path: function(context) {
-    
-        this.context = context;
-        this.x = 0;
-        this.y = 0;
-        this.angle = 0;
-        this.context.beginPath();
-        this.context.moveTo(0, 0);
 
         this.moveTo = function(x, y) {
+            this.startPolyline(x, y);
             this.context.moveTo(x, y);
             this.x = x;
             this.y = y;
-        }
+        };
+
+        this.startPolyline = function(x, y) {
+            var polyline = new Pattern.Polyline(x, y);
+            this.lines.push(polyline);
+            this.current = polyline;
+        };
         
         this.lineTo = function(x, y) {
+            this.current.addPoint(x, y);
             this.context.lineTo(x, y);
             this.x = x;
             this.y = y;
@@ -56,7 +87,45 @@ var Pattern = {
         this.close = function() {
             this.context.closePath();
         };
+
+        this.svg = function() {
+            var svg = [];
+            for (var i = 0; i < this.lines.length; i++) {
+                var polyline = this.lines[i];
+                svg.push(polyline.svg())
+            }
+            return svg;
+        };
+
+        this.context = context;
+        this.angle = 0;
+        this.lines = [];
+        this.context.beginPath();
+        this.moveTo(0, 0);
         
+    },
+
+    SVG: function(width, height) {
+
+        this.element = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        this.element.setAttribute('width', width);
+        this.element.setAttribute('height', height);
+        this.element.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+
+        this.appendChild = function(child) {
+            this.element.appendChild(child);
+        };
+
+        this.toXML = function() {
+            var serializer = new XMLSerializer();
+            var output = serializer.serializeToString(this.element);
+            return output;
+        };
+
+        this.toDataURL = function() {
+            return "data:text/svg;charset=UTF-8," + this.toXML();
+        };
+
     },
 
     alternate: function(x, y, width, height, stepX, stepY, offset, draw) {
@@ -275,66 +344,66 @@ var Pattern = {
         if (angle === undefined) { angle = Math.PI / 3; }
         if (featureLength === undefined) { featureLength = 10; }
         
-        var drawPattern = function(turtle, x, y, featureLength, left) {
+        var drawPattern = function(path, x, y, featureLength, left) {
             var right = Math.PI - left;
-            turtle.moveTo(x, y);
-            turtle.setAngle(( right / 2 ) * -1);
-            turtle.forward(featureLength * 7);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength);
-            turtle.right(left);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.right(right);
-            turtle.forward(featureLength);
-            turtle.right(left);
-            turtle.forward(featureLength * 7);
-            turtle.right(right);
-            turtle.forward(featureLength);
-            turtle.right(left);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.right(right);
-            turtle.forward(featureLength);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength * 7);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength);
-            turtle.right(left);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.right(right);
-            turtle.forward(featureLength);
-            turtle.right(left);
-            turtle.forward(featureLength * 7);
-            turtle.right(right);
-            turtle.forward(featureLength);
-            turtle.right(left);
-            turtle.forward(featureLength);
-            turtle.left(left);
-            turtle.forward(featureLength);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.right(right);
-            turtle.forward(featureLength);
-            turtle.left(right);
-            turtle.forward(featureLength);
-            turtle.close();
+            path.moveTo(x, y);
+            path.setAngle(( right / 2 ) * -1);
+            path.forward(featureLength * 7);
+            path.left(right);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength);
+            path.right(left);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength);
+            path.left(right);
+            path.forward(featureLength);
+            path.right(right);
+            path.forward(featureLength);
+            path.right(left);
+            path.forward(featureLength * 7);
+            path.right(right);
+            path.forward(featureLength);
+            path.right(left);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength);
+            path.left(right);
+            path.forward(featureLength);
+            path.right(right);
+            path.forward(featureLength);
+            path.left(right);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength * 7);
+            path.left(right);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength);
+            path.right(left);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength);
+            path.left(right);
+            path.forward(featureLength);
+            path.right(right);
+            path.forward(featureLength);
+            path.right(left);
+            path.forward(featureLength * 7);
+            path.right(right);
+            path.forward(featureLength);
+            path.right(left);
+            path.forward(featureLength);
+            path.left(left);
+            path.forward(featureLength);
+            path.left(right);
+            path.forward(featureLength);
+            path.right(right);
+            path.forward(featureLength);
+            path.left(right);
+            path.forward(featureLength);
+            path.close();
         }
         
         var context = canvas.getContext('2d');
@@ -347,11 +416,19 @@ var Pattern = {
         var stepX = 10 * featureLength * Math.sin( right / 2 );
         var stepY = 10 * featureLength * Math.cos( right / 2 );
 
-        var turtle = new Pattern.Path(context);
+        var path = new Pattern.Path(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
-            drawPattern(turtle, x, y, featureLength, angle);
+            drawPattern(path, x, y, featureLength, angle);
         });
-        turtle.stroke();
+        path.stroke();
+
+        var svg = new Pattern.SVG(canvas.width, canvas.height);
+        var elements = path.svg();
+        for (var i = 0; i < elements.length; i++) {
+            svg.appendChild(elements[i]);
+        }
+
+        return svg;
     },
 
     unknown: function({canvas, style}={}) {
