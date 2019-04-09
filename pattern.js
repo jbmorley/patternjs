@@ -4,6 +4,7 @@ var Pattern = {
 
         this.points = [];
         this.points.push([x, y]);
+        this.isClosed = false;
 
         this.addPoint = function(x, y) {
             this.points.push([x, y]);
@@ -13,19 +14,30 @@ var Pattern = {
             return this.points.length;
         };
 
+        this.close = function() {
+            this.isClosed = true;
+        };
+
         this.svg = function() {
-            var polyline = document.createElementNS("http://www.w3.org/2000/svg", 'polyline');
+            var element;
+            if (this.isClosed) {
+                element = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
+            } else {
+                element = document.createElementNS("http://www.w3.org/2000/svg", 'polyline');
+            }
 
             var coordinates = []
             for (var i = 0; i < this.points.length; i++) {
                 coordinates.push(this.points[i][0] + "," + this.points[i][1]);
             }
             var points = coordinates.join(" ");
-            polyline.setAttribute('points', points);
-            polyline.setAttribute('stroke', 'black');
-            polyline.setAttribute('stroke-width', '1');
-            polyline.setAttribute('fill', 'none');
-            return polyline;
+
+            element.setAttribute('points', points);
+            element.setAttribute('stroke', 'black');
+            element.setAttribute('stroke-width', '1');
+            element.setAttribute('fill', 'none');
+
+            return element;
         }
 
     },
@@ -85,14 +97,23 @@ var Pattern = {
         };
 
         this.close = function() {
+            this.current.close();
             this.context.closePath();
         };
 
-        this.svg = function() {
-            var svg = [];
+        this.begin = function() {
+            this.context.beginPath();
+        };
+
+        this.fill = function() {
+            this.context.fill();
+        };
+
+        this.svg = function(width, height) {
+            var svg = new Pattern.SVG(width, height);
             for (var i = 0; i < this.lines.length; i++) {
                 var polyline = this.lines[i];
-                svg.push(polyline.svg())
+                svg.appendChild(polyline.svg());
             }
             return svg;
         };
@@ -402,7 +423,7 @@ var Pattern = {
             path.right(right);
             path.forward(featureLength);
             path.left(right);
-            path.forward(featureLength);
+            // path.forward(featureLength);
             path.close();
         }
         
@@ -422,42 +443,35 @@ var Pattern = {
         });
         path.stroke();
 
-        var svg = new Pattern.SVG(canvas.width, canvas.height);
-        var elements = path.svg();
-        for (var i = 0; i < elements.length; i++) {
-            svg.appendChild(elements[i]);
-        }
-
-        return svg;
+        return path.svg(canvas.width, canvas.height);
     },
 
-    unknown: function({canvas, style}={}) {
+    unknown: function({canvas, style, featureLength, spacing}={}) {
 
-        var drawTriangle = function(context, x, y, width, altitude) {
-            context.beginPath();
-            context.moveTo(x - ( width / 2), y + (altitude / 2));
-            context.lineTo(x + ( width / 2), y + (altitude / 2));
-            context.lineTo(x, y - (altitude / 2));
-            context.closePath();
-            context.fill();
+        var drawTriangle = function(path, x, y, width, altitude) {
+            path.moveTo(x - ( width / 2), y + (altitude / 2));
+            path.lineTo(x + ( width / 2), y + (altitude / 2));
+            path.lineTo(x, y - (altitude / 2));
+            path.close();
         }
 
-        var radius = 60 * window.devicePixelRatio;
+        var radius = featureLength * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
         Pattern.applyStyle(context, style);
-
-        context.lineWidth = 4 * window.devicePixelRatio;
         context.fillRect(0, 0, canvas.width, canvas.height);
-
         context.fillStyle = style.foregroundStyle;
 
-        padding = 6 * window.devicePixelRatio;
+        padding = spacing * window.devicePixelRatio;  // TODO: Parameterise this.
         altitude = radius / 2;
 
+        var path = new Pattern.Path(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
-            drawTriangle(context, x, y, radius, altitude);
+            drawTriangle(path, x, y, radius, altitude);
         });
+        path.fill();
+
+        return path.svg(canvas.width, canvas.height);
     }
 
 };
