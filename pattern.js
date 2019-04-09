@@ -462,7 +462,7 @@ var Pattern = {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = style.foregroundStyle;
 
-        padding = spacing * window.devicePixelRatio;  // TODO: Parameterise this.
+        padding = spacing * window.devicePixelRatio;
         altitude = radius / 2;
 
         var path = new Pattern.Path(context);
