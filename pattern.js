@@ -472,6 +472,75 @@ var Pattern = {
         path.fill();
 
         return path.svg(canvas.width, canvas.height);
+    },
+
+    pattern001: function({canvas, style, featureLength, spacing}={}) {
+
+        var drawElement = function(path, x, y, sideLength) {
+            path.moveTo(x, y);
+            for (i=0; i<4; i++) {
+                path.forward(sideLength);
+                path.left(Math.PI / 4);
+                path.forward(sideLength);
+                path.right(Math.PI / 2);
+                path.forward(sideLength);
+                path.left(Math.PI / 4);
+                path.forward(sideLength);
+                path.right(Math.PI / 2);
+            }
+            path.close();
+        }
+
+        var sideLength = featureLength * window.devicePixelRatio;
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var spacing = (Math.sqrt(sideLength * sideLength * 2) * 2) + (sideLength * 2) + spacing;
+
+        var path = new Pattern.Path(context);
+        Pattern.alternate(0, 0, canvas.width, canvas.height, spacing, spacing, false, function(x, y) {
+            drawElement(path, x, y, sideLength);
+        });
+        path.stroke();
+
+        return path.svg(canvas.width, canvas.height);
+    },
+
+    pattern002: function({canvas, style, featureLength, spacing}={}) {
+
+        var drawElement = function(path, x, y, sideLength) {
+            path.moveTo(x, y);
+            for (i=0; i<4; i++) {
+                path.forward(sideLength);
+                path.left(Math.PI / 4);
+                path.forward(sideLength);
+                path.right(Math.PI / 2);
+                path.forward(sideLength);
+                path.left(Math.PI / 4);
+                path.right(Math.PI / 2);
+            }
+            path.close();
+        }
+
+        var radius = featureLength * window.devicePixelRatio;
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = style.foregroundStyle;
+
+        padding = spacing * window.devicePixelRatio;
+        altitude = radius / 2;
+
+        var path = new Pattern.Path(context);
+        Pattern.alternate(0, 0, canvas.width, canvas.height, 100, 100, false, function(x, y) {
+            drawElement(path, x, y, radius, altitude);
+        });
+        path.stroke();
+
+        return path.svg(canvas.width, canvas.height);
     }
 
 };
