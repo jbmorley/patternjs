@@ -154,7 +154,7 @@ var Pattern = {
             offset = false;
         }
 
-        for (var j = y - stepY; j < y + height; j = j + ( stepY * 2 )) {
+        for (var j = y - stepY; j < y + height + stepY; j = j + ( stepY * 2 )) {
             for (var i = x - stepX; i < x + width + stepX; i = i + stepX) {
                 draw(i, j);
                 var i2 = i;
@@ -423,7 +423,6 @@ var Pattern = {
             path.right(right);
             path.forward(featureLength);
             path.left(right);
-            // path.forward(featureLength);
             path.close();
         }
         
@@ -446,41 +445,11 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    pattern001: function({canvas, style, featureLength, spacing}={}) {
+    stars: function({canvas, style, featureLength, ratio}={}) {
 
-        var drawElement = function(path, x, y, sideLength) {
-            path.moveTo(x, y);
-            for (i=0; i<4; i++) {
-                path.forward(sideLength);
-                path.left(Math.PI / 4);
-                path.forward(sideLength);
-                path.right(Math.PI / 2);
-                path.forward(sideLength);
-                path.left(Math.PI / 4);
-                path.forward(sideLength);
-                path.right(Math.PI / 2);
-            }
-            path.close();
-        }
-
-        var sideLength = featureLength * window.devicePixelRatio;
-
-        var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        var spacing = (Math.sqrt(sideLength * sideLength * 2) * 2) + (sideLength * 2) + spacing;
-
-        var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, spacing, spacing, false, function(x, y) {
-            drawElement(path, x, y, sideLength);
-        });
-        path.stroke();
-
-        return path.svg(canvas.width, canvas.height);
-    },
-
-    pattern002: function({canvas, style, featureLength, spacing}={}) {
+        var elementWidth = function(sideLength) {
+            return (4 * Math.sqrt((sideLength * sideLength) / 2)) + (2 * sideLength)
+        };
 
         var drawElement = function(path, x, y, sideLength) {
 
@@ -506,31 +475,47 @@ var Pattern = {
         Pattern.applyStyle(context, style);
         context.fillRect(0, 0, canvas.width, canvas.height);
 
-        // x^2 = 2 * a^2
-        // (x^2 / 2) = a^2
-        // a = Math.sqrt(x^2 / 2)
-        // width = a + x + a + a + x + a
-        // width = (4 * a) + (2 * x)
-
-        var largeSize = (4 * Math.sqrt((sideLength * sideLength) / 2)) + (2 * sideLength)
-
-        // var largeSize = (Math.sqrt(sideLength * sideLength * 2) * 2) + (sideLength * 2);
-
-        var smallSideLength = sideLength * (2 / 3);
-        var smallSize = (4 * Math.sqrt((smallSideLength * smallSideLength) / 2)) + (2 * smallSideLength)
-        // var smallSize = (Math.sqrt(smallSideLength * smallSideLength * 2) * 2) + (smallSideLength * 2);
+        var largeSize = elementWidth(sideLength);
+        var smallSideLength = sideLength * (ratio / 100);
+        var smallSize = elementWidth(smallSideLength);
 
         var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, largeSize + smallSize, largeSize, true, function(x, y) {
+        Pattern.alternate(0, 0, canvas.width, canvas.height, largeSize + smallSize, (largeSize / 2) + (smallSize / 2), true, function(x, y) {
             drawElement(path, x, y, sideLength);
-            drawElement(path, x, y, smallSideLength);
-            // drawElement(path, x + largeSize, y + ((largeSize - smallSize) / 2), smallSideLength);
+            drawElement(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
         });
         path.stroke();
 
         return path.svg(canvas.width, canvas.height);
     },
 
+    pattern001: function({canvas, style, featureLength, spacing}={}) {
+
+        var drawTriangle = function(path, x, y, width, altitude) {
+            path.moveTo(x - ( width / 2), y + (altitude / 2));
+            path.lineTo(x + ( width / 2), y + (altitude / 2));
+            path.lineTo(x, y - (altitude / 2));
+            path.close();
+        }
+
+        var radius = featureLength * window.devicePixelRatio;
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = style.foregroundStyle;
+
+        padding = spacing * window.devicePixelRatio;
+        altitude = radius / 2;
+
+        var path = new Pattern.Path(context);
+        Pattern.alternate(0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
+            drawTriangle(path, x, y, radius, altitude);
+        });
+        path.fill();
+
+        return path.svg(canvas.width, canvas.height);
+    },
 
     pattern003: function({canvas, style, featureLength, spacing}={}) {
 
@@ -563,34 +548,6 @@ var Pattern = {
             drawElement(path, x, y, radius, altitude);
         });
         path.stroke();
-
-        return path.svg(canvas.width, canvas.height);
-    },
-
-    pattern004: function({canvas, style, featureLength, spacing}={}) {
-
-        var drawTriangle = function(path, x, y, width, altitude) {
-            path.moveTo(x - ( width / 2), y + (altitude / 2));
-            path.lineTo(x + ( width / 2), y + (altitude / 2));
-            path.lineTo(x, y - (altitude / 2));
-            path.close();
-        }
-
-        var radius = featureLength * window.devicePixelRatio;
-
-        var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = style.foregroundStyle;
-
-        padding = spacing * window.devicePixelRatio;
-        altitude = radius / 2;
-
-        var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
-            drawTriangle(path, x, y, radius, altitude);
-        });
-        path.fill();
 
         return path.svg(canvas.width, canvas.height);
     }

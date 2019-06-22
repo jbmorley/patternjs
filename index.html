@@ -287,6 +287,27 @@
     lineWidth: 1,
 });</code></pre>
 
+<h2>Stars</h2>
+
+<div id="stars" class="pattern-container"></div>
+<script type="text/javascript">
+    initialize('stars', 300, function(canvas, options) {
+        return Pattern.stars({
+            canvas: canvas,
+            style: Pattern.styles.monochrome,
+            featureLength: options.featureLength,
+            ratio: options.ratio,
+        });
+    }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
+        ratio: {title: 'Ratio', default: 66, min: 0, max: 100}});
+</script>
+<pre><code class="javascript">Pattern.stars({
+    canvas: canvas,
+    style: Pattern.styles.monochrome,
+    featureLength: 20,
+    ratio: 66,
+});</code></pre>
+
 <h2>Pattern 001</h2>
 
 <div id="pattern001" class="pattern-container"></div>
@@ -298,52 +319,10 @@
             featureLength: options.featureLength,
             spacing: options.spacing,
         });
-    }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
-        spacing: {title: 'Spacing', default: 0, min: 0, max: 100}});
-</script>
-<pre><code class="javascript">Pattern.pattern001({
-    canvas: canvas,
-    style: Pattern.styles.monochrome,
-    featureLength: 20,
-    spacing: 0,
-});</code></pre>
-
-<h2>Pattern 002</h2>
-
-<div id="pattern002" class="pattern-container"></div>
-<script type="text/javascript">
-    initialize('pattern002', 300, function(canvas, options) {
-        return Pattern.pattern002({
-            canvas: canvas,
-            style: Pattern.styles.darkRed,
-            featureLength: options.featureLength,
-            spacing: options.spacing,
-        });
-    }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
-        spacing: {title: 'Spacing', default: 0, min: 0, max: 100}});
-</script>
-<pre><code class="javascript">Pattern.pattern002({
-    canvas: canvas,
-    style: Pattern.styles.darkRed,
-    featureLength: 20,
-    spacing: 0,
-});</code></pre>
-
-<h2>Pattern 004</h2>
-
-<div id="pattern004" class="pattern-container"></div>
-<script type="text/javascript">
-    initialize('pattern004', 300, function(canvas, options) {
-        return Pattern.pattern004({
-            canvas: canvas,
-            style: Pattern.styles.monochrome,
-            featureLength: options.featureLength,
-            spacing: options.spacing,
-        });
     }, {featureLength: {title: 'Feature Length', default: 60, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 6, min: 1, max: 20}});
 </script>
-<pre><code class="javascript">Pattern.pattern004({
+<pre><code class="javascript">Pattern.pattern001({
     canvas: canvas,
     style: Pattern.styles.monochrome,
     featureLength: 60,
