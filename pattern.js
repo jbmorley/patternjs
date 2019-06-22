@@ -447,12 +447,11 @@ var Pattern = {
 
     stars: function({canvas, style, featureLength, ratio}={}) {
 
-        var elementWidth = function(sideLength) {
+        var starWidth = function(sideLength) {
             return (4 * Math.sqrt((sideLength * sideLength) / 2)) + (2 * sideLength)
         };
 
-        var drawElement = function(path, x, y, sideLength) {
-
+        var drawStar = function(path, x, y, sideLength) {
             var offset = Math.sqrt(sideLength * sideLength * 2) / 2;
             path.moveTo(x - offset - sideLength, y + offset + sideLength);
             path.setAngle((Math.PI / 2) * 2);
@@ -475,14 +474,14 @@ var Pattern = {
         Pattern.applyStyle(context, style);
         context.fillRect(0, 0, canvas.width, canvas.height);
 
-        var largeSize = elementWidth(sideLength);
+        var largeSize = starWidth(sideLength);
         var smallSideLength = sideLength * (ratio / 100);
-        var smallSize = elementWidth(smallSideLength);
+        var smallSize = starWidth(smallSideLength);
 
         var path = new Pattern.Path(context);
         Pattern.alternate(0, 0, canvas.width, canvas.height, largeSize + smallSize, (largeSize / 2) + (smallSize / 2), true, function(x, y) {
-            drawElement(path, x, y, sideLength);
-            drawElement(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
+            drawStar(path, x, y, sideLength);
+            drawStar(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
         });
         path.stroke();
 
