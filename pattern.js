@@ -258,6 +258,11 @@ var Pattern = {
             foregroundStyle: '#beafe6',
         },
 
+        eggshell: {
+            backgroundStyle: '#f0ead6',
+            foregroundStyle: '#2e2c29',
+        },
+
     },
 
     asanoha: function({canvas, style, size, lineDrawer}={}) {
@@ -483,7 +488,8 @@ var Pattern = {
             drawStar(path, x, y, sideLength);
             drawStar(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
         });
-        path.stroke();
+        context.fillStyle = style.foregroundStyle;
+        path.fill();
 
         return path.svg(canvas.width, canvas.height);
     },
