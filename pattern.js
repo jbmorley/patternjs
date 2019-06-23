@@ -253,11 +253,6 @@ var Pattern = {
             foregroundStyle: '#336699',
         },
 
-        purples: {
-            backgroundStyle: '#4f2c64',
-            foregroundStyle: '#beafe6',
-        },
-
         eggshell: {
             backgroundStyle: '#f0ead6',
             foregroundStyle: '#2e2c29',
@@ -365,7 +360,7 @@ var Pattern = {
 
     },
 
-    sayagata: function({canvas, style, featureLength, lineWidth, angle}={}) {
+    sayagata: function({canvas, style, featureLength, lineWidth, angle, backgroundColor, foregroundColor}={}) {
 
         if (angle === undefined) { angle = Math.PI / 3; }
         if (featureLength === undefined) { featureLength = 10; }
@@ -432,7 +427,9 @@ var Pattern = {
         }
         
         var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
+        context.fillStyle = backgroundColor;
+        context.strokeStyle = foregroundColor;
+
         context.fillRect(0, 0, canvas.width, canvas.height);
         featureLength = featureLength * window.devicePixelRatio;
         context.lineWidth = lineWidth * window.devicePixelRatio;

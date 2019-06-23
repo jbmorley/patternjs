@@ -323,21 +323,25 @@
     initialize('sayagata', 300, function(canvas, options) {
         return Pattern.sayagata({
             canvas: canvas,
-            style: Pattern.styles.purples,
             featureLength: options.featureLength,
             angle: options.angle,
             lineWidth: options.lineWidth,
+            backgroundColor: options.backgroundColor,
+            foregroundColor: options.foregroundColor
         });
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
         featureLength: {title: 'Feature Length', default: 12, min: 1, max: 75},
-        angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60}});
+	    angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
+	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.sayagata({
     canvas: canvas,
-    style: Pattern.styles.purples,
     featureLength: 10,
     angle: Math.PI / 3,
     lineWidth: 1,
+    backgroundColor: '#4f2c64',
+    foregroundColor: '#beafe6'
 });</code></pre>
 
 <h2>Stars</h2>
