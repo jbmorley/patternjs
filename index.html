@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <title>pattern.js</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
     <link id="theme" rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+
     <script src="utilities.js"></script>
     <script>
 
@@ -157,23 +155,11 @@
             });
         }
 
-        Utilities.onDocumentReady(function() {
-				$(".basic").spectrum({
-			    color: "#f00",
-			    change: function(color) {
-			        $("#basic-log").text("change called: " + color.toHexString());
-			    }
-			});
-        });
-
     </script>
 </head>
 <body>
 
 <h1>pattern.js</h1>
-
-<input type='text' class="basic"/>
-<em id='basic-log'></em>
 
 <h2>麻の葉, Asa no ha</h2>
 <div id="asanoha" class="pattern-container"></div>
