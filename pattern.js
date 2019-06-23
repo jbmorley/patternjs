@@ -228,11 +228,6 @@ var Pattern = {
             foregroundStyle: '#ffffff',
         },
 
-        darkBlue: {
-            backgroundStyle: '#000033',
-            foregroundStyle: '#ffffff',
-        },
-
         darkRed: {
             backgroundStyle: '#3B0B17',
             foregroundStyle: '#ffffff',
@@ -260,7 +255,7 @@ var Pattern = {
 
     },
 
-    asanoha: function({canvas, style, size, lineDrawer}={}) {
+    asanoha: function({canvas, size, lineDrawer, backgroundColor, foregroundColor}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
             drawLine(context, x, y, x - ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
@@ -280,7 +275,8 @@ var Pattern = {
         var altitude = (Math.sqrt(3) / 2 ) * length;
         
         var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
+        context.fillStyle = backgroundColor;
+        context.strokeStyle = foregroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);        
         Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
             drawPrimitive(context, x, y, length, altitude, lineDrawer);

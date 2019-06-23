@@ -167,18 +167,22 @@
     initialize('asanoha', 300, function(canvas, options) {
         Pattern.asanoha({
             canvas: canvas,
-            style: Pattern.styles.darkBlue,
             size: options.size,
             lineDrawer: Pattern.drawers.line(options.lineWidth),
+            backgroundColor: options.backgroundColor,
+            foregroundColor: options.foregroundColor,
         });
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
-        size: {title: 'Size', default: 100, min: 1, max: 200}});
+        size: {title: 'Size', default: 100, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
-    style: Pattern.styles.darkBlue,
     size: 100,
     lineDrawer: Pattern.drawers.line(2),
+    backgroundStyle: '#000033',
+    foregroundStyle: '#ffffff'
 });</code></pre>
 
 <div id="asanoha-dots" class="pattern-container"></div>
