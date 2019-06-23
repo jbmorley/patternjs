@@ -450,7 +450,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    stars: function({canvas, style, featureLength, ratio}={}) {
+    stars: function({canvas, featureLength, ratio, foregroundColor, backgroundColor}={}) {
 
         var starWidth = function(sideLength) {
             return (4 * Math.sqrt((sideLength * sideLength) / 2)) + (2 * sideLength)
@@ -476,7 +476,7 @@ var Pattern = {
         var sideLength = featureLength * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
+        context.fillStyle = backgroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         var largeSize = starWidth(sideLength);
@@ -488,7 +488,7 @@ var Pattern = {
             drawStar(path, x, y, sideLength);
             drawStar(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
         });
-        context.fillStyle = style.foregroundStyle;
+        context.fillStyle = foregroundColor;
         path.fill();
 
         return path.svg(canvas.width, canvas.height);

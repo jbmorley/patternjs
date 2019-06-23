@@ -4,15 +4,14 @@
     <meta charset="utf-8">
     <title>pattern.js</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
     <link id="theme" rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
     <script src="utilities.js"></script>
     <script>
-
-        function onDocumentReady(callback) {
-            document.addEventListener('DOMContentLoaded', callback, false);
-        }
 
         function onResize(element, callback) {
                 var parent = element.parentElement;
@@ -53,6 +52,36 @@
             return div;
         }
 
+        function colorPicker(key, configuration, callback) {
+
+            var change = function(event) {
+                callback(key, event.target.value);
+            }
+
+            var div = document.createElement('div');
+            div.classList.add("control");
+
+            var label = document.createElement('label');
+            label.innerHTML = configuration.title;
+            div.appendChild(label);
+
+            var input = document.createElement('input');
+            input.type = "color";
+            input.value = configuration.default;
+            input.min = configuration.min;
+            input.max = configuration.max;
+            if (configuration.step !== undefined) {
+                input.step = configuration.step;
+            }
+            input.classList.add("colorPicker");
+            input.addEventListener('change', change);
+            input.addEventListener('input', change);
+            input.addEventListener('keyup', change);
+            div.appendChild(input);
+
+            return div;
+        }
+
         function initialize(id, height, renderer, parameters) {
             Utilities.onDocumentReady(function() {
 
@@ -68,13 +97,25 @@
                 container.appendChild(optionDiv);
 
                 for (var parameter in parameters) {
-                    options[parameter] = parameters[parameter].default;
-                    optionDiv.appendChild(slider(parameter,
-                                                 parameters[parameter],
-                                                 function(key, value) {
-                                                     options[key] = value;
-                                                     renderer(canvas, options);
-                                                 }));
+                	var settings = parameters[parameter];
+                    options[parameter] = settings.default;
+                    if (settings.type == "color") {
+                    	optionDiv.appendChild(colorPicker(parameter,
+                    									  settings,
+                    									  function(key, value) {
+                    									  	  console.log(value);
+	                                                          options[key] = value;
+	                                                          console.log(options);
+	                                                          renderer(canvas, options);
+	                                                      }));
+                    } else {
+	                    optionDiv.appendChild(slider(parameter,
+	                                                 settings,
+	                                                 function(key, value) {
+	                                                     options[key] = value;
+	                                                     renderer(canvas, options);
+	                                                 }));
+	                }
                 }
 
                 var buttonDiv = document.createElement('div');
@@ -116,11 +157,23 @@
             });
         }
 
+        Utilities.onDocumentReady(function() {
+				$(".basic").spectrum({
+			    color: "#f00",
+			    change: function(color) {
+			        $("#basic-log").text("change called: " + color.toHexString());
+			    }
+			});
+        });
+
     </script>
 </head>
 <body>
 
 <h1>pattern.js</h1>
+
+<input type='text' class="basic"/>
+<em id='basic-log'></em>
 
 <h2>麻の葉, Asa no ha</h2>
 <div id="asanoha" class="pattern-container"></div>
@@ -297,9 +350,13 @@
             style: Pattern.styles.eggshell,
             featureLength: options.featureLength,
             ratio: options.ratio,
+            foregroundColor: options.foregroundColor,
+            backgroundColor: options.backgroundColor,
         });
     }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
-        ratio: {title: 'Ratio', default: 66, min: 0, max: 100}});
+        ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
+        backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#2e2c29', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.stars({
     canvas: canvas,
