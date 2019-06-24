@@ -324,18 +324,18 @@
     foregroundColor: '#2e2c29'
 });</code></pre>
 
-<h2>Pattern 001</h2>
+<h2>Triangles</h2>
 
-<div id="pattern001" class="pattern-container"></div>
+<div id="triangles" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('pattern001', 300, function(canvas, options) {
-        return Pattern.pattern001(options);
+    initialize('triangles', 300, function(canvas, options) {
+        return Pattern.triangles(options);
     }, {featureLength: {title: 'Feature Length', default: 60, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.pattern001({
+<pre><code class="javascript">Pattern.triangles({
     canvas: canvas,
     featureLength: 60,
     spacing: 6,

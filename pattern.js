@@ -449,7 +449,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    pattern001: function({canvas, featureLength, spacing, backgroundColor, foregroundColor}={}) {
+    triangles: function({canvas, featureLength, spacing, backgroundColor, foregroundColor}={}) {
 
         var drawTriangle = function(path, x, y, width, altitude) {
             path.moveTo(x - ( width / 2), y + (altitude / 2));
