@@ -228,11 +228,6 @@ var Pattern = {
             foregroundStyle: '#ffffff',
         },
 
-        darkRed: {
-            backgroundStyle: '#3B0B17',
-            foregroundStyle: '#ffffff',
-        },
-
         purple: {
             backgroundStyle: '#330066',
             foregroundStyle: '#ffffff',
@@ -283,7 +278,7 @@ var Pattern = {
         });
     },
 
-    shippou: function({canvas, style, lineWidth, radius}={}) {
+    shippou: function({canvas, lineWidth, radius, backgroundColor, foregroundColor}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -295,7 +290,8 @@ var Pattern = {
         var lineWidth = lineWidth * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
+        context.fillStyle = backgroundColor;
+        context.strokeStyle = foregroundColor;
         context.lineWidth = lineWidth;
         context.fillRect(0, 0, canvas.width, canvas.height);
         Pattern.alternate(0, 0, canvas.width, canvas.height, radius * 2, radius, true, function(x, y) {
@@ -303,7 +299,7 @@ var Pattern = {
         });
     },
 
-    seigaiha: function({canvas, style, lineWidth, radius, lineSpacing, count, alternating}={}) {
+    seigaiha: function({canvas, lineWidth, radius, lineSpacing, count, alternating, backgroundColor, foregroundColor}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -322,8 +318,8 @@ var Pattern = {
         };
 
         var context = canvas.getContext('2d');
-
-        Pattern.applyStyle(context, style)
+        context.fillStyle = backgroundColor;
+        context.strokeStyle = foregroundColor;
         context.lineWidth = lineWidth * window.devicePixelRatio;
         context.fillRect(0, 0, canvas.width, canvas.height);
 

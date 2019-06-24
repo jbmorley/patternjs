@@ -90,6 +90,8 @@
                 canvas.classList.add('pattern');
                 container.appendChild(canvas);
 
+                options.canvas = canvas;
+
                 var optionDiv = document.createElement('div');
                 optionDiv.classList.add('content');
                 container.appendChild(optionDiv);
@@ -101,9 +103,7 @@
                     	optionDiv.appendChild(colorPicker(parameter,
                     									  settings,
                     									  function(key, value) {
-                    									  	  console.log(value);
 	                                                          options[key] = value;
-	                                                          console.log(options);
 	                                                          renderer(canvas, options);
 	                                                      }));
                     } else {
@@ -193,34 +193,43 @@
             style: Pattern.styles.darkRed,
             size: options.size,
             lineDrawer: Pattern.drawers.dottedLine(2, 8),
+            backgroundColor: options.backgroundColor,
+            foregroundColor: options.foregroundColor,
         });
-    }, {size: {title: 'Size', default: 100, min: 1, max: 200}});
+    }, {size: {title: 'Size', default: 100, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.asanoha({
     canvas: canvas,
-    style: Pattern.styles.darkRed,
     size: 100,
     lineDrawer: Pattern.drawers.dottedLine(2, 8),
+    backgroundStyle: '#3B0B17',
+    foregroundStyle: '#ffffff'
 });</code></pre>
 
 <h2>七宝, Shippou</h2>
-<div id="circles" class="pattern-container"></div>
+<div id="shippou" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('circles', 300, function(canvas, options) {
+    initialize('shippou', 300, function(canvas, options) {
         Pattern.shippou({
             canvas: canvas,
-            style: Pattern.styles.purple,
             lineWidth: options.lineWidth,
             radius: options.radius,
+            backgroundColor: options.backgroundColor,
+            foregroundColor: options.foregroundColor
         });
     }, {lineWidth: {title: 'Line Width', default: 4, min: 1, max: 20},
-        radius: {title: 'Radius', default: 40, min: 1, max: 100}});
+        radius: {title: 'Radius', default: 40, min: 1, max: 100},
+	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.shippou({
     canvas: canvas,
-    style: Pattern.styles.purple,
     lineWidth: 4,
     radius: 40,
+    backgroundColor: '#330066',
+    foregroundColor: '#ffffff'
 });</code></pre>
 
 <h2>青海波, Seigaiha</h2>
@@ -230,21 +239,23 @@
     initialize('waves', 300, function(canvas, options) {
         Pattern.seigaiha({
             canvas: canvas,
-            style: Pattern.styles.monochrome,
             lineWidth: options.lineWidth,
             radius: options.radius,
             lineSpacing: options.lineSpacing,
             count: options.count,
             alternating: false,
+			backgroundColor: options.backgroundColor,
+            foregroundColor: options.foregroundColor,
         });
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
-        radius: {title: 'Radius', default: 55, min: 1, max: 200}});
+        radius: {title: 'Radius', default: 55, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
-    style: Pattern.styles.monochrome,
     lineWidth: 3,
     radius: 55,
     lineSpacing: 10,
@@ -257,53 +268,54 @@
     initialize('waves-light', 300, function(canvas, options) {
         Pattern.seigaiha({
             canvas: canvas, 
-            style: Pattern.styles.sky,
             lineWidth: options.lineWidth,
             radius: options.radius,
             lineSpacing: options.lineSpacing, 
             count: options.count,
             alternating: false,
+            backgroundColor: options.backgroundColor,
+            foregroundColor: options.foregroundColor,
         });
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         count: {title: 'Line Count', default: 11, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 7, min: 1, max: 20},
-        radius: {title: 'Radius', default: 80, min: 1, max: 200}});
+        radius: {title: 'Radius', default: 80, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
-    canvas: canvas, 
-    style: Pattern.styles.sky,
+    canvas: canvas,
     lineWidth: 2, 
     radius: 80,
     lineSpacing: 7, 
     count: 11,
     alternating: false,
+    backgroundColor: '#ffffff',
+    foregroundColor: '#0033cc',
 });</code></pre>
 
 <div id="waves-inverted" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves-inverted', 300, function(canvas, options) {
-        Pattern.seigaiha({
-            canvas: canvas,
-            style: Pattern.styles.blues,
-            lineWidth: options.lineWidth,
-            radius: options.radius,
-            lineSpacing: options.lineSpacing,
-            count: options.count,
-            alternating: true
-        });
+    	options.canvas = canvas;
+    	options.alternating = true;
+        Pattern.seigaiha(options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
-        radius: {title: 'Radius', default: 44, min: 1, max: 200}});
+        radius: {title: 'Radius', default: 44, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#19334d', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'}});
 </script>
 <pre><code class="javascript">Pattern.seigaiha({
     canvas: canvas,
-    style: Pattern.styles.blues,
     lineWidth: 3,
     radius: 44,
     lineSpacing: 8,
     count: 5,
-    alternating: true
+    alternating: true,
+    backgroundColor: '#ffffff',
+    foregroundColor: '#0033cc',
 });</code></pre>
 
 <h2>紗綾形, Sayagata</h2>
@@ -311,14 +323,7 @@
 <div id="sayagata" class="pattern-container"></div>
 <script type="text/javascript">    
     initialize('sayagata', 300, function(canvas, options) {
-        return Pattern.sayagata({
-            canvas: canvas,
-            featureLength: options.featureLength,
-            angle: options.angle,
-            lineWidth: options.lineWidth,
-            backgroundColor: options.backgroundColor,
-            foregroundColor: options.foregroundColor
-        });
+        return Pattern.sayagata(options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
         featureLength: {title: 'Feature Length', default: 12, min: 1, max: 75},
 	    angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
@@ -339,14 +344,7 @@
 <div id="stars" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('stars', 300, function(canvas, options) {
-        return Pattern.stars({
-            canvas: canvas,
-            style: Pattern.styles.eggshell,
-            featureLength: options.featureLength,
-            ratio: options.ratio,
-            foregroundColor: options.foregroundColor,
-            backgroundColor: options.backgroundColor,
-        });
+        return Pattern.stars(options);
     }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
         ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
         backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
