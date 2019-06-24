@@ -200,11 +200,6 @@ var Pattern = {
         }
     },
 
-    applyStyle: function(context, style) {
-        context.fillStyle = style.backgroundStyle;
-        context.strokeStyle = style.foregroundStyle;
-    },
-
     drawers: {
 
         dottedLine: function(radius, increment) {
@@ -218,15 +213,6 @@ var Pattern = {
                 Pattern.drawLine(context, x1, y1, x2, y2, width);
             }
         }
-
-    },
-
-    styles: {
-
-        monochrome: {
-            backgroundStyle: '#000000',
-            foregroundStyle: '#ffffff',
-        },
 
     },
 
@@ -332,7 +318,7 @@ var Pattern = {
 
     },
 
-    sayagata: function({canvas, style, featureLength, lineWidth, angle, backgroundColor, foregroundColor}={}) {
+    sayagata: function({canvas, featureLength, lineWidth, angle, backgroundColor, foregroundColor}={}) {
 
         if (angle === undefined) { angle = Math.PI / 3; }
         if (featureLength === undefined) { featureLength = 10; }
@@ -463,7 +449,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    pattern001: function({canvas, style, featureLength, spacing}={}) {
+    pattern001: function({canvas, featureLength, spacing, backgroundColor, foregroundColor}={}) {
 
         var drawTriangle = function(path, x, y, width, altitude) {
             path.moveTo(x - ( width / 2), y + (altitude / 2));
@@ -475,9 +461,9 @@ var Pattern = {
         var radius = featureLength * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
+        context.fillStyle = backgroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = style.foregroundStyle;
+        context.fillStyle = foregroundColor;
 
         padding = spacing * window.devicePixelRatio;
         altitude = radius / 2;
@@ -491,7 +477,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    pattern003: function({canvas, style, featureLength, spacing}={}) {
+    pattern003: function({canvas, featureLength, spacing}={}) {
 
         var drawElement = function(path, x, y, sideLength) {
             path.moveTo(x, y);
@@ -510,9 +496,7 @@ var Pattern = {
         var radius = featureLength * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
-        Pattern.applyStyle(context, style);
         context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = style.foregroundStyle;
 
         padding = spacing * window.devicePixelRatio;
         altitude = radius / 2;
