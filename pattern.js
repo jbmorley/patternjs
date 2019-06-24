@@ -228,26 +228,6 @@ var Pattern = {
             foregroundStyle: '#ffffff',
         },
 
-        purple: {
-            backgroundStyle: '#330066',
-            foregroundStyle: '#ffffff',
-        },
-
-        sky: {
-            backgroundStyle: '#ffffff',
-            foregroundStyle: '#0033cc',
-        },
-
-        blues: {
-            backgroundStyle: '#19334d',
-            foregroundStyle: '#336699',
-        },
-
-        eggshell: {
-            backgroundStyle: '#f0ead6',
-            foregroundStyle: '#2e2c29',
-        },
-
     },
 
     asanoha: function({canvas, size, lineDrawer, backgroundColor, foregroundColor}={}) {

@@ -165,13 +165,8 @@
 <div id="asanoha" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('asanoha', 300, function(canvas, options) {
-        Pattern.asanoha({
-            canvas: canvas,
-            size: options.size,
-            lineDrawer: Pattern.drawers.line(options.lineWidth),
-            backgroundColor: options.backgroundColor,
-            foregroundColor: options.foregroundColor,
-        });
+    	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
+        Pattern.asanoha(options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
@@ -188,14 +183,8 @@
 <div id="asanoha-dots" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('asanoha-dots', 300, function(canvas, options) {
-        Pattern.asanoha({
-            canvas: canvas,
-            style: Pattern.styles.darkRed,
-            size: options.size,
-            lineDrawer: Pattern.drawers.dottedLine(2, 8),
-            backgroundColor: options.backgroundColor,
-            foregroundColor: options.foregroundColor,
-        });
+    	options.lineDrawer = Pattern.drawers.dottedLine(2, 8);
+        Pattern.asanoha(options);
     }, {size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
@@ -212,13 +201,7 @@
 <div id="shippou" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('shippou', 300, function(canvas, options) {
-        Pattern.shippou({
-            canvas: canvas,
-            lineWidth: options.lineWidth,
-            radius: options.radius,
-            backgroundColor: options.backgroundColor,
-            foregroundColor: options.foregroundColor
-        });
+        Pattern.shippou(options);
     }, {lineWidth: {title: 'Line Width', default: 4, min: 1, max: 20},
         radius: {title: 'Radius', default: 40, min: 1, max: 100},
 	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
@@ -237,16 +220,8 @@
 <div id="waves" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves', 300, function(canvas, options) {
-        Pattern.seigaiha({
-            canvas: canvas,
-            lineWidth: options.lineWidth,
-            radius: options.radius,
-            lineSpacing: options.lineSpacing,
-            count: options.count,
-            alternating: false,
-			backgroundColor: options.backgroundColor,
-            foregroundColor: options.foregroundColor,
-        });
+    	options.alternating = false;
+        Pattern.seigaiha(options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
@@ -266,17 +241,9 @@
 <div id="waves-light" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves-light', 300, function(canvas, options) {
-        Pattern.seigaiha({
-            canvas: canvas, 
-            lineWidth: options.lineWidth,
-            radius: options.radius,
-            lineSpacing: options.lineSpacing, 
-            count: options.count,
-            alternating: false,
-            backgroundColor: options.backgroundColor,
-            foregroundColor: options.foregroundColor,
-        });
-    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
+    	options.alternating = false;
+        Pattern.seigaiha(options);
+    }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 11, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 7, min: 1, max: 20},
         radius: {title: 'Radius', default: 80, min: 1, max: 200},
@@ -297,7 +264,6 @@
 <div id="waves-inverted" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves-inverted', 300, function(canvas, options) {
-    	options.canvas = canvas;
     	options.alternating = true;
         Pattern.seigaiha(options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
@@ -352,9 +318,10 @@
 </script>
 <pre><code class="javascript">Pattern.stars({
     canvas: canvas,
-    style: Pattern.styles.eggshell,
     featureLength: 20,
     ratio: 66,
+    backgroundColor: '#f0ead6',
+    foregroundColor: '#2e2c29'
 });</code></pre>
 
 <h2>Pattern 001</h2>
