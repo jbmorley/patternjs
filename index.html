@@ -104,6 +104,7 @@
                     									  settings,
                     									  function(key, value) {
 	                                                          options[key] = value;
+	                                                          options.canvas = canvas;
 	                                                          renderer(canvas, options);
 	                                                      }));
                     } else {
@@ -111,6 +112,7 @@
 	                                                 settings,
 	                                                 function(key, value) {
 	                                                     options[key] = value;
+	                                                     options.canvas = canvas;
 	                                                     renderer(canvas, options);
 	                                                 }));
 	                }
@@ -122,6 +124,7 @@
                 container.appendChild(buttonDiv);
 
                 var rendererWithOptions = function(canvas) {
+                	options.canvas = canvas;
                     return renderer(canvas, options);
                 }
 
