@@ -175,7 +175,6 @@ var Pattern = {
     },
 
     drawCircle: function(context, x, y, radius) {
-        context.fillStyle = 'white';
         context.beginPath();
         context.arc(x, y, radius * window.devicePixelRatio, 0, 2 * Math.PI);
         context.fill();
@@ -242,7 +241,8 @@ var Pattern = {
         var context = canvas.getContext('2d');
         context.fillStyle = backgroundColor;
         context.strokeStyle = foregroundColor;
-        context.fillRect(0, 0, canvas.width, canvas.height);        
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = foregroundColor;
         Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
             drawPrimitive(context, x, y, length, altitude, lineDrawer);
         });

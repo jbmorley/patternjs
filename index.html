@@ -80,7 +80,7 @@
             return div;
         }
 
-        function initialize(id, height, renderer, parameters) {
+        function initialize(id, method, height, renderer, parameters) {
             Utilities.onDocumentReady(function() {
 
                 var options = {}
@@ -99,7 +99,7 @@
                 pre.appendChild(code);   
 
                 var updateSource = function(options) {
-                    code.innerHTML = "Pattern.render(canvas, " + JSON.stringify(options, null, 4) + ");";
+                    code.innerHTML = "Pattern.render(canvas, \"" + method + "\", " + JSON.stringify(options, null, 4) + ");";
                     hljs.highlightBlock(code);
                 };
 
@@ -177,7 +177,7 @@
 <h2>麻の葉, Asa no ha</h2>
 <div id="asanoha" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('asanoha', 300, function(canvas, options) {
+    initialize('asanoha', 'asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "asanoha", options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
@@ -188,7 +188,7 @@
 
 <div id="asanoha-dots" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('asanoha-dots', 300, function(canvas, options) {
+    initialize('asanoha-dots', 'asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.dottedLine(2, 8);
         return Pattern.render(canvas, "asanoha", options);
     }, {size: {title: 'Size', default: 100, min: 1, max: 200},
@@ -199,7 +199,7 @@
 <h2>七宝, Shippou</h2>
 <div id="shippou" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('shippou', 300, function(canvas, options) {
+    initialize('shippou', 'shippou', 300, function(canvas, options) {
         return Pattern.render(canvas, "shippou", options);
     }, {lineWidth: {title: 'Line Width', default: 4, min: 1, max: 20},
         radius: {title: 'Radius', default: 40, min: 1, max: 100},
@@ -211,7 +211,7 @@
 
 <div id="waves" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('waves', 300, function(canvas, options) {
+    initialize('waves', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
@@ -224,7 +224,7 @@
 
 <div id="waves-light" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('waves-light', 300, function(canvas, options) {
+    initialize('waves-light', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
@@ -237,7 +237,7 @@
 
 <div id="waves-inverted" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('waves-inverted', 300, function(canvas, options) {
+    initialize('waves-inverted', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = true;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
@@ -252,7 +252,7 @@
 
 <div id="sayagata" class="pattern-container"></div>
 <script type="text/javascript">    
-    initialize('sayagata', 300, function(canvas, options) {
+    initialize('sayagata', 'sayagata', 300, function(canvas, options) {
         return Pattern.render(canvas, "sayagata", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
         featureLength: {title: 'Feature Length', default: 12, min: 1, max: 75},
@@ -265,7 +265,7 @@
 
 <div id="stars" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('stars', 300, function(canvas, options) {
+    initialize('stars', 'stars', 300, function(canvas, options) {
         return Pattern.render(canvas, "stars", options);
     }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
         ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
@@ -277,7 +277,7 @@
 
 <div id="triangles" class="pattern-container"></div>
 <script type="text/javascript">
-    initialize('triangles', 300, function(canvas, options) {
+    initialize('triangles', 'triangles', 300, function(canvas, options) {
         return Pattern.render(canvas, "triangles", options);
     }, {featureLength: {title: 'Feature Length', default: 60, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
