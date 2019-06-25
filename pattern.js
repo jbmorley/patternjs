@@ -216,7 +216,7 @@ var Pattern = {
 
     },
 
-    asanoha: function({canvas, size, lineDrawer, backgroundColor, foregroundColor}={}) {
+    asanoha: function(canvas, {size, lineDrawer, backgroundColor, foregroundColor}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
             drawLine(context, x, y, x - ( length / 2 ), y - ( ( altitude / 3 ) * orientation ));
@@ -244,7 +244,7 @@ var Pattern = {
         });
     },
 
-    shippou: function({canvas, lineWidth, radius, backgroundColor, foregroundColor}={}) {
+    shippou: function(canvas, {lineWidth, radius, backgroundColor, foregroundColor}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -265,7 +265,7 @@ var Pattern = {
         });
     },
 
-    seigaiha: function({canvas, lineWidth, radius, lineSpacing, count, alternating, backgroundColor, foregroundColor}={}) {
+    seigaiha: function(canvas, {lineWidth, radius, lineSpacing, count, alternating, backgroundColor, foregroundColor}={}) {
 
         var drawCircle = function(context, x, y, radius) {
             context.beginPath();
@@ -318,7 +318,7 @@ var Pattern = {
 
     },
 
-    sayagata: function({canvas, featureLength, lineWidth, angle, backgroundColor, foregroundColor}={}) {
+    sayagata: function(canvas, {featureLength, lineWidth, angle, backgroundColor, foregroundColor}={}) {
 
         if (angle === undefined) { angle = Math.PI / 3; }
         if (featureLength === undefined) { featureLength = 10; }
@@ -405,7 +405,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    stars: function({canvas, featureLength, ratio, foregroundColor, backgroundColor}={}) {
+    stars: function(canvas, {featureLength, ratio, foregroundColor, backgroundColor}={}) {
 
         var starWidth = function(sideLength) {
             return (4 * Math.sqrt((sideLength * sideLength) / 2)) + (2 * sideLength)
@@ -449,7 +449,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    triangles: function({canvas, featureLength, spacing, backgroundColor, foregroundColor}={}) {
+    triangles: function(canvas, {featureLength, spacing, backgroundColor, foregroundColor}={}) {
 
         var drawTriangle = function(path, x, y, width, altitude) {
             path.moveTo(x - ( width / 2), y + (altitude / 2));
@@ -477,7 +477,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    pattern003: function({canvas, featureLength, spacing}={}) {
+    pattern003: function(canvas, {featureLength, spacing}={}) {
 
         var drawElement = function(path, x, y, sideLength) {
             path.moveTo(x, y);

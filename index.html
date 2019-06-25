@@ -90,11 +90,18 @@
                 canvas.classList.add('pattern');
                 container.appendChild(canvas);
 
-                options.canvas = canvas;
-
                 var optionDiv = document.createElement('div');
                 optionDiv.classList.add('content');
                 container.appendChild(optionDiv);
+
+                var pre = document.createElement('pre');
+                var code = document.createElement('code');
+                pre.appendChild(code);   
+
+                var updateSource = function(options) {
+                    code.innerHTML = "Pattern.render(canvas, " + JSON.stringify(options, null, 4) + ");";
+                    hljs.highlightBlock(code);
+                };
 
                 for (var parameter in parameters) {
                 	var settings = parameters[parameter];
@@ -104,16 +111,16 @@
                     									  settings,
                     									  function(key, value) {
 	                                                          options[key] = value;
-	                                                          options.canvas = canvas;
 	                                                          renderer(canvas, options);
+                                                              updateSource(options);
 	                                                      }));
                     } else {
 	                    optionDiv.appendChild(slider(parameter,
 	                                                 settings,
 	                                                 function(key, value) {
 	                                                     options[key] = value;
-	                                                     options.canvas = canvas;
 	                                                     renderer(canvas, options);
+                                                         updateSource(options);
 	                                                 }));
 	                }
                 }
@@ -123,8 +130,9 @@
                 buttonDiv.classList.add('meta');
                 container.appendChild(buttonDiv);
 
+                container.appendChild(pre);
+
                 var rendererWithOptions = function(canvas) {
-                	options.canvas = canvas;
                     return renderer(canvas, options);
                 }
 
@@ -155,6 +163,8 @@
                     canvas.style.height = height + 'px';
                     renderer(canvas, options);
                 });
+
+                updateSource(options);
             });
         }
 
@@ -169,54 +179,33 @@
 <script type="text/javascript">
     initialize('asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
-        Pattern.asanoha(options);
+        Pattern.asanoha(canvas, options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.asanoha({
-    canvas: canvas,
-    size: 100,
-    lineDrawer: Pattern.drawers.line(2),
-    backgroundStyle: '#000033',
-    foregroundStyle: '#ffffff'
-});</code></pre>
 
 <div id="asanoha-dots" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('asanoha-dots', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.dottedLine(2, 8);
-        Pattern.asanoha(options);
+        Pattern.asanoha(canvas, options);
     }, {size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.asanoha({
-    canvas: canvas,
-    size: 100,
-    lineDrawer: Pattern.drawers.dottedLine(2, 8),
-    backgroundStyle: '#3B0B17',
-    foregroundStyle: '#ffffff'
-});</code></pre>
 
 <h2>七宝, Shippou</h2>
 <div id="shippou" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('shippou', 300, function(canvas, options) {
-        Pattern.shippou(options);
+        Pattern.shippou(canvas, options);
     }, {lineWidth: {title: 'Line Width', default: 4, min: 1, max: 20},
         radius: {title: 'Radius', default: 40, min: 1, max: 100},
 	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.shippou({
-    canvas: canvas,
-    lineWidth: 4,
-    radius: 40,
-    backgroundColor: '#330066',
-    foregroundColor: '#ffffff'
-});</code></pre>
 
 <h2>青海波, Seigaiha</h2>
 
@@ -224,7 +213,7 @@
 <script type="text/javascript">
     initialize('waves', 300, function(canvas, options) {
     	options.alternating = false;
-        Pattern.seigaiha(options);
+        Pattern.seigaiha(canvas, options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
@@ -232,20 +221,12 @@
 	    backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.seigaiha({
-    canvas: canvas,
-    lineWidth: 3,
-    radius: 55,
-    lineSpacing: 10,
-    count: 5,
-    alternating: false,
-});</code></pre>
 
 <div id="waves-light" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves-light', 300, function(canvas, options) {
     	options.alternating = false;
-        Pattern.seigaiha(options);
+        Pattern.seigaiha(canvas, options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 11, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 7, min: 1, max: 20},
@@ -253,22 +234,12 @@
 	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.seigaiha({
-    canvas: canvas,
-    lineWidth: 2, 
-    radius: 80,
-    lineSpacing: 7, 
-    count: 11,
-    alternating: false,
-    backgroundColor: '#ffffff',
-    foregroundColor: '#0033cc',
-});</code></pre>
 
 <div id="waves-inverted" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('waves-inverted', 300, function(canvas, options) {
     	options.alternating = true;
-        Pattern.seigaiha(options);
+        Pattern.seigaiha(canvas, options);
     }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
@@ -276,75 +247,43 @@
 	    backgroundColor: {title: 'Background Color', default: '#19334d', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.seigaiha({
-    canvas: canvas,
-    lineWidth: 3,
-    radius: 44,
-    lineSpacing: 8,
-    count: 5,
-    alternating: true,
-    backgroundColor: '#ffffff',
-    foregroundColor: '#0033cc',
-});</code></pre>
 
 <h2>紗綾形, Sayagata</h2>
 
 <div id="sayagata" class="pattern-container"></div>
 <script type="text/javascript">    
     initialize('sayagata', 300, function(canvas, options) {
-        return Pattern.sayagata(options);
+        return Pattern.sayagata(canvas, options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
         featureLength: {title: 'Feature Length', default: 12, min: 1, max: 75},
 	    angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
 	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.sayagata({
-    canvas: canvas,
-    featureLength: 10,
-    angle: Math.PI / 3,
-    lineWidth: 1,
-    backgroundColor: '#4f2c64',
-    foregroundColor: '#beafe6'
-});</code></pre>
 
 <h2>Stars</h2>
 
 <div id="stars" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('stars', 300, function(canvas, options) {
-        return Pattern.stars(options);
+        return Pattern.stars(canvas, options);
     }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
         ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
         backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#2e2c29', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.stars({
-    canvas: canvas,
-    featureLength: 20,
-    ratio: 66,
-    backgroundColor: '#f0ead6',
-    foregroundColor: '#2e2c29'
-});</code></pre>
 
 <h2>Triangles</h2>
 
 <div id="triangles" class="pattern-container"></div>
 <script type="text/javascript">
     initialize('triangles', 300, function(canvas, options) {
-        return Pattern.triangles(options);
+        return Pattern.triangles(canvas, options);
     }, {featureLength: {title: 'Feature Length', default: 60, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
-<pre><code class="javascript">Pattern.triangles({
-    canvas: canvas,
-    featureLength: 60,
-    spacing: 6,
-    backgroundColor: '#000000',
-    foregroundColor: '#ffffff'
-});</code></pre>
 
 <p class="copyright">
     Copyright &copy; Jason Barrie Morley 2019
