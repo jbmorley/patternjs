@@ -216,6 +216,10 @@ var Pattern = {
 
     },
 
+    render: function(canvas, pattern, options) {
+        Pattern[pattern](canvas, options);
+    },
+
     asanoha: function(canvas, {size, lineDrawer, backgroundColor, foregroundColor}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
