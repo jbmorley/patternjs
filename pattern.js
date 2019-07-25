@@ -472,6 +472,50 @@ var Pattern = {
         path.fill();
 
         return path.svg(canvas.width, canvas.height);
+    },
+    
+    hexagons: function({canvas, style, featureLength, spacing}={}) {
+    
+        var drawHexagon = function(path, x, y, length) {
+            path.moveTo(x, y);
+            path.left(Math.PI / 2);
+            path.forward(length);
+            path.lineTo(x + length, y);
+            path.lineTo(x + length, y + length);
+            path.lineTo(x, y + length);
+            path.lineTo(x, y);
+            path.close();
+        };
+
+        var drawTriangle = function(path, x, y, width, altitude) {
+            path.moveTo(x - ( width / 2), y + (altitude / 2));
+            path.lineTo(x + ( width / 2), y + (altitude / 2));
+            path.lineTo(x, y - (altitude / 2));
+            path.close();
+        };
+
+        var radius = featureLength * window.devicePixelRatio;
+        
+        radius = 2;
+
+        var context = canvas.getContext('2d');
+        Pattern.applyStyle(context, style);
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = style.foregroundStyle;
+
+        padding = spacing * window.devicePixelRatio;
+        altitude = radius / 2;
+        
+        var length = featureLength;
+
+        var path = new Pattern.Path(context);
+        Pattern.alternate(0, 0, canvas.width, canvas.height, length, length, true, function(x, y) {
+            drawHexagon(path, x, y, length);
+        });
+        // path.fill();
+        path.stroke();
+
+        return path.svg(canvas.width, canvas.height);
     }
 
 };
