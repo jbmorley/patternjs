@@ -56,7 +56,7 @@ var Pattern = {
             this.lines.push(polyline);
             this.current = polyline;
         };
-        
+
         this.lineTo = function(x, y) {
             this.current.addPoint(x, y);
             this.context.lineTo(x, y);
@@ -67,13 +67,13 @@ var Pattern = {
         this.stroke = function() {
             this.context.stroke();
         };
-        
+
         this.forward = function(distance) {
             var x = Math.sin(this.angle) * distance;
             var y = Math.cos(this.angle) * distance;
             this.lineTo(this.x + x, this.y + y);
         };
-        
+
         this.turn = function(angle) {
             this.angle = this.angle + angle;
         };
@@ -81,14 +81,14 @@ var Pattern = {
         this.setAngle = function(angle) {
             this.angle = angle;
         };
-        
+
         this.left = function(angle) {
             if (angle === undefined) {
                 angle = Math.PI / 2;
             }
             this.turn(angle);
         };
-        
+
         this.right = function(angle) {
             if (angle === undefined) {
                 angle = Math.PI / 2;
@@ -123,7 +123,7 @@ var Pattern = {
         this.lines = [];
         this.context.beginPath();
         this.moveTo(0, 0);
-        
+
     },
 
     SVG: function(width, height) {
@@ -159,7 +159,7 @@ var Pattern = {
                 draw(i, j);
                 var i2 = i;
                 if (offset) {
-                    i2 = i + ( stepX / 2 );                    
+                    i2 = i + ( stepX / 2 );
                 }
                 draw(i2, j + stepY);
             }
@@ -237,7 +237,7 @@ var Pattern = {
 
         var length = size * window.devicePixelRatio;
         var altitude = (Math.sqrt(3) / 2 ) * length;
-        
+
         var context = canvas.getContext('2d');
         context.fillStyle = backgroundColor;
         context.strokeStyle = foregroundColor;
@@ -284,7 +284,7 @@ var Pattern = {
                 if (circleRadius > 0) {
                     drawCircle(context, x, y, radius - ( i * step ));
                 }
-            }            
+            }
         };
 
         var context = canvas.getContext('2d');
@@ -326,7 +326,7 @@ var Pattern = {
 
         if (angle === undefined) { angle = Math.PI / 3; }
         if (featureLength === undefined) { featureLength = 10; }
-        
+
         var drawPattern = function(path, x, y, featureLength, left) {
             var right = Math.PI - left;
             path.moveTo(x, y);
@@ -387,7 +387,7 @@ var Pattern = {
             path.left(right);
             path.close();
         }
-        
+
         var context = canvas.getContext('2d');
         context.fillStyle = backgroundColor;
         context.strokeStyle = foregroundColor;
