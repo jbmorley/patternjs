@@ -219,6 +219,39 @@ var Pattern = {
         Pattern[pattern](canvas, options);
     },
 
+    other: function(canvas, {size, lineDrawer, backgroundColor, foregroundColor}={}) {
+
+		var drawThreeLines = function(context, x, y, length, altitude, orientation, drawLine) {
+            drawLine(context, x, y + altitude / 2, x + length, y + altitude / 2);
+            drawLine(context, x, y + altitude / 4, x + length, y + altitude / 4);
+			drawLine(context, x, y - altitude / 4, x + length, y - altitude / 4);
+
+			drawLine(context, x, y, x + length / 2, y + altitude);
+            drawLine(context, x + length / 4, y, x + length * 3 / 4, y + altitude);
+            drawLine(context, x - length / 4, y, x + length / 4, y + altitude);
+
+			drawLine(context, x, y, x - length / 2, y + altitude);
+            drawLine(context, x + length / 4, y, x - length / 4, y + altitude);
+            drawLine(context, x - length / 4, y, x - length * 3 / 4, y + altitude);
+		};
+
+        var drawPrimitive = function(context, x, y, length,  altitude, drawLine) {
+            drawThreeLines(context, x, y, length, altitude, 0, drawLine);
+        };
+
+        var length = size * window.devicePixelRatio;
+        var altitude = (Math.sqrt(3) / 2 ) * length;
+
+        var context = canvas.getContext('2d');
+        context.fillStyle = backgroundColor;
+        context.strokeStyle = foregroundColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = foregroundColor;
+        Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
+            drawPrimitive(context, x, y, length, altitude, lineDrawer);
+        });
+    },
+
     asanoha: function(canvas, {size, lineDrawer, backgroundColor, foregroundColor}={}) {
 
         var drawStar = function(context, x, y, length, altitude, orientation, drawLine) {
