@@ -30,11 +30,13 @@ logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(process)d] [%(l
 app = Flask(__name__)
 
 
+@app.route('/')
+def index():
+    return send_from_directory(ROOT_DIRECTORY, 'index.html')
+
+
 @app.route('/<path:path>')
-def index(path=None):
-    logging.info(path)
-    if not path:
-        return send_from_directory(ROOT_DIRECTORY, 'index.html')
+def everything_else(path):
     return send_from_directory(ROOT_DIRECTORY, path)
 
 
