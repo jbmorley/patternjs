@@ -219,28 +219,34 @@ var Pattern = {
         Pattern[pattern](canvas, options);
     },
 
-    other: function(canvas, {size, lineDrawer, backgroundColor, foregroundColor}={}) {
+    other: function(canvas, {size, spacing, lineDrawer, backgroundColor, foregroundColor}={}) {
 
-		var drawThreeLines = function(context, x, y, length, altitude, orientation, drawLine) {
-            drawLine(context, x, y + altitude / 2, x + length, y + altitude / 2);
-            drawLine(context, x, y + altitude / 4, x + length, y + altitude / 4);
-			drawLine(context, x, y - altitude / 4, x + length, y - altitude / 4);
+		var drawThreeLines = function(context, x, y, length, altitude, space, drawLine) {
+			var horY = n => altitude * n / 4 * space;
+			drawLine(context, x, y + horY(0), x + length, y + horY(0));
+            drawLine(context, x, y + horY(1), x + length, y + horY(1));
+            drawLine(context, x, y + horY(2), x + length, y + horY(2));
 
-			drawLine(context, x, y, x + length / 2, y + altitude);
-            drawLine(context, x + length / 4, y, x + length * 3 / 4, y + altitude);
-            drawLine(context, x - length / 4, y, x + length / 4, y + altitude);
+			var diagX = (n, end) => {
+				var actualN = n * space + end;
+				return length * actualN / 4;
+			};
+			drawLine(context, x + diagX(0, 0), y, x + diagX(0, 2), y + altitude);
+			drawLine(context, x + diagX(1, 0), y, x + diagX(1, 2), y + altitude);
+			drawLine(context, x + diagX(2, 0), y, x + diagX(2, 2), y + altitude);
 
-			drawLine(context, x, y, x - length / 2, y + altitude);
-            drawLine(context, x + length / 4, y, x - length / 4, y + altitude);
-            drawLine(context, x - length / 4, y, x - length * 3 / 4, y + altitude);
+			drawLine(context, x + diagX(1, 2), y, x + diagX(1, 0), y + altitude);
+			drawLine(context, x + diagX(2, 2), y, x + diagX(2, 0), y + altitude);
+			drawLine(context, x + diagX(3, 2), y, x + diagX(3, 0), y + altitude);
 		};
 
-        var drawPrimitive = function(context, x, y, length,  altitude, drawLine) {
-            drawThreeLines(context, x, y, length, altitude, 0, drawLine);
+        var drawPrimitive = function(context, x, y, length, altitude, space, drawLine) {
+            drawThreeLines(context, x, y, length, altitude, space, drawLine);
         };
 
         var length = size * window.devicePixelRatio;
-        var altitude = (Math.sqrt(3) / 2 ) * length;
+		var altitude = (Math.sqrt(3) / 2 ) * length;
+		var space = spacing / 100.0;
 
         var context = canvas.getContext('2d');
         context.fillStyle = backgroundColor;
@@ -248,7 +254,7 @@ var Pattern = {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = foregroundColor;
         Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
-            drawPrimitive(context, x, y, length, altitude, lineDrawer);
+            drawPrimitive(context, x, y, length, altitude, space, lineDrawer);
         });
     },
 
