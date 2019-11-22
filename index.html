@@ -179,12 +179,11 @@
 <script type="text/javascript">
     initialize('other', 'other', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
-        return Pattern.render(canvas, "other", {
-    "lineWidth": 1,
-    "size": 130,
-    "backgroundColor": "#00a3d8",
-    "foregroundColor": "#004d65"
-  });
+        return Pattern.render(canvas, "other", options);
+    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
+        size: {title: 'Size', default: 100, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 </script>
 
 <h2>麻の葉, Asa no ha</h2>
