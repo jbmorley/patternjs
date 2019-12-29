@@ -96,7 +96,7 @@
 
                 var pre = document.createElement('pre');
                 var code = document.createElement('code');
-                pre.appendChild(code);   
+                pre.appendChild(code);
 
                 var updateSource = function(options) {
                     code.innerHTML = "Pattern.render(canvas, \"" + method + "\", " + JSON.stringify(options, null, 4) + ");";
@@ -154,7 +154,7 @@
                     var svg = rendererWithOptions(canvas);
                     Utilities.performDownload(id + '_' + 600 + 'x' + 400 + '.svg', svg.toDataURL());
                 }));
-                
+
                 renderer(canvas, options);
                 onResize(canvas, function(canvas, parentWidth, parentHeight) {
                     canvas.width = parentWidth * window.devicePixelRatio;
@@ -173,6 +173,19 @@
 <body>
 
 <h1>pattern.js</h1>
+
+<h2>other</h2>
+<div id="other" class="pattern-container"></div>
+<script type="text/javascript">
+    initialize('other', 'other', 300, function(canvas, options) {
+    	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
+        return Pattern.render(canvas, "other", options);
+    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
+        size: {title: 'Size', default: 130, min: 1, max: 200},
+        spacing: {title: 'Spacing', default: 100, min: 0, max: 200},
+	    backgroundColor: {title: 'Background Color', default: '#00a3d8', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', default: '#004d65', type: 'color'}});
+</script>
 
 <h2>麻の葉, Asa no ha</h2>
 <div id="asanoha" class="pattern-container"></div>
@@ -251,7 +264,7 @@
 <h2>紗綾形, Sayagata</h2>
 
 <div id="sayagata" class="pattern-container"></div>
-<script type="text/javascript">    
+<script type="text/javascript">
     initialize('sayagata', 'sayagata', 300, function(canvas, options) {
         return Pattern.render(canvas, "sayagata", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
