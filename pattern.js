@@ -551,6 +551,58 @@ var Pattern = {
         path.stroke();
 
         return path.svg(canvas.width, canvas.height);
+    },
+
+    gosper: function(canvas, {featureLength, foregroundColor, backgroundColor, lineWidth}={}) {
+
+        var angle = Math.PI / 3;
+
+        var gosperOp = function() {};
+
+        var drawGosper = function(path, order, size, isA) {
+
+            if (order === 0) {
+                path.forward(size);
+                return;
+            }
+
+            var steps = isA ? "A-B--B+A++AA+B-" : "+A-BB--B-A++A+B";
+            for (var i = 0; i < steps.length; i++) {
+                var operation = gosperOp(steps.charAt(i));
+                operation(path, order - 1, size)
+            }
+        };
+
+        gosperOp = function(op) {
+            if (op === "A") {
+                return function(path, order, size) { drawGosper(path, order, size, true); };
+            }
+            if (op === "B") {
+                return function(path, order, size) { drawGosper(path, order, size, false); };
+            }
+            if (op === "-") {
+                return function(path, order, size) { path.right(Math.PI / 3); };
+            }
+            if (op === "+") {
+                return function(path, order, size) { path.left(Math.PI / 3); };
+            }
+        };
+
+        var lineWidth = lineWidth * window.devicePixelRatio;
+        var featureLength = featureLength * window.devicePixelRatio;
+
+        var context = canvas.getContext('2d');
+        context.fillStyle = backgroundColor;
+        context.strokeStyle = foregroundColor;
+        context.lineWidth = lineWidth;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var path = new Pattern.Path(context);
+        path.moveTo(1000, 600);
+        drawGosper(path, 6, featureLength, true);
+        path.stroke();
+
+        return path.svg(canvas.width, canvas.height);
     }
 
 };

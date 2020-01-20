@@ -246,9 +246,9 @@
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
-        count: {title: 'Line Count', default: 11, min: 2, max: 20},
-        lineSpacing: {title: 'Line Spacing', default: 7, min: 1, max: 20},
-        radius: {title: 'Radius', default: 80, min: 1, max: 200},
+        count: {title: 'Line Count', default: 10, min: 2, max: 20},
+        lineSpacing: {title: 'Line Spacing', default: 6, min: 1, max: 20},
+        radius: {title: 'Radius', default: 44, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'}});
 
@@ -279,10 +279,17 @@
 
     initialize('triangles', 'triangles', 300, function(canvas, options) {
         return Pattern.render(canvas, "triangles", options);
-    }, {featureLength: {title: 'Feature Length', default: 60, min: 1, max: 100},
-        spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
-        backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
+    }, {featureLength: {title: 'Feature Length', default: 26, min: 1, max: 100},
+        spacing: {title: 'Spacing', default: 2, min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', default: '#ebebeb', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
+
+    initialize('gosper', 'gosper', 300, function(canvas, options) {
+        return Pattern.render(canvas, "gosper", options);
+    }, {featureLength: {title: 'Feature Length', default: 10, min: 1, max: 100},
+        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
 </script>
 
