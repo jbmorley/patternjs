@@ -1,5 +1,9 @@
 var Pattern = {
 
+    logbase: function(base, value) {
+        return Math.log(value) / Math.log(base);
+    },
+
     Polyline: function(x, y) {
 
         this.points = [];
@@ -62,6 +66,18 @@ var Pattern = {
             this.context.lineTo(x, y);
             this.x = x;
             this.y = y;
+            if (this.x < this.minX) {
+                this.minX = this.x;
+            }
+            if (this.x > this.maxX) {
+                this.maxX = this.x;
+            }
+            if (this.y < this.minY) {
+                this.minY = this.y;
+            }
+            if (this.y > this.maxY) {
+                this.maxY = this.y;
+            }
         };
 
         this.stroke = function() {
@@ -118,11 +134,23 @@ var Pattern = {
             return svg;
         };
 
+        this.width = function() {
+            return this.maxX - this.minX;
+        }
+
+        this.height = function() {
+            return this.maxY - this.minY;
+        }
+
         this.context = context;
         this.angle = 0;
         this.lines = [];
         this.context.beginPath();
         this.moveTo(0, 0);
+        this.minX = 0;
+        this.maxX = 0;
+        this.minY = 0;
+        this.maxY = 0;
 
     },
 
@@ -216,7 +244,7 @@ var Pattern = {
     },
 
     render: function(canvas, pattern, options) {
-        Pattern[pattern](canvas, options);
+        return Pattern[pattern](canvas, options);
     },
 
     other: function(canvas, {size, spacing, lineDrawer, backgroundColor, foregroundColor}={}) {
@@ -597,9 +625,16 @@ var Pattern = {
         context.lineWidth = lineWidth;
         context.fillRect(0, 0, canvas.width, canvas.height);
 
+        var approximateScaleFactor = 1.3
+        order = Math.ceil(Pattern.logbase(3, ( ( ( canvas.width / 4 ) * 6 ) / featureLength ) / approximateScaleFactor )) + 1;
+        var numerator = ( approximateScaleFactor * ( 3.0 ** order ) * featureLength )
+        var rightShift = numerator / 6.0;
+
         var path = new Pattern.Path(context);
-        path.moveTo(1000, 600);
-        drawGosper(path, 6, featureLength, true);
+        path.left(order * ( Math.PI / 9 ) );
+        path.right(Math.PI / 3);
+        path.moveTo(canvas.width + rightShift, canvas.height/2);
+        drawGosper(path, order, featureLength, true);
         path.stroke();
 
         return path.svg(canvas.width, canvas.height);
