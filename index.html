@@ -12,12 +12,13 @@
     <script>
 
         function onResize(element, callback) {
-                var parent = element.parentElement;
-                var resizeCallback = function() {
-                    callback(element, parent.clientWidth, parent.clientHeight);
-                }
-                window.addEventListener('resize', resizeCallback, false);
-                resizeCallback();
+            var parent = element.parentElement;
+            var resizeCallback = function() {
+                callback(element, parent.clientWidth, parent.clientHeight);
+            }
+            window.addEventListener('resize', resizeCallback, false);
+            resizeCallback();
+            return resizeCallback;
         }
 
         function slider(key, configuration, callback) {
@@ -85,14 +86,25 @@
 
                 var options = {}
 
-                var container = document.getElementById(id);
+                var patternsDiv = document.getElementById('patterns');
+
+                var container = document.createElement('div');
+                container.id = id;
+                container.classList.add('pattern-container');
+                patternsDiv.appendChild(container);
+
                 var canvas = document.createElement('canvas');
                 canvas.classList.add('pattern');
                 container.appendChild(canvas);
 
+                var popoverDiv = document.createElement('div');
+                popoverDiv.classList.add('popover');
+                popoverDiv.classList.add('hidden');
+                container.appendChild(popoverDiv);
+
                 var optionDiv = document.createElement('div');
                 optionDiv.classList.add('content');
-                container.appendChild(optionDiv);
+                popoverDiv.appendChild(optionDiv);
 
                 var pre = document.createElement('pre');
                 var code = document.createElement('code');
@@ -128,9 +140,10 @@
                 var buttonDiv = document.createElement('div');
                 buttonDiv.classList.add('content');
                 buttonDiv.classList.add('meta');
-                container.appendChild(buttonDiv);
+                popoverDiv.appendChild(buttonDiv);
 
                 container.appendChild(pre);
+                popoverDiv.appendChild(pre);
 
                 var rendererWithOptions = function(canvas) {
                     return renderer(canvas, options);
@@ -156,7 +169,7 @@
                 }));
 
                 renderer(canvas, options);
-                onResize(canvas, function(canvas, parentWidth, parentHeight) {
+                var resize = onResize(canvas, function(canvas, parentWidth, parentHeight) {
                     canvas.width = parentWidth * window.devicePixelRatio;
                     canvas.height = height * window.devicePixelRatio;
                     canvas.style.width = parentWidth + 'px';
@@ -165,6 +178,13 @@
                 });
 
                 updateSource(options);
+
+                canvas.addEventListener("click", function() {
+                    container.classList.toggle('fill');
+                    popoverDiv.classList.toggle('hidden');
+                    resize();
+                    self.location.href = '#' + id;
+                });
             });
         }
 
@@ -173,23 +193,23 @@
 <body>
 
 <h1>pattern.js</h1>
-
-<h2>other</h2>
-<div id="other" class="pattern-container"></div>
+<div id="patterns" class="patterns"></div>
+<p class="copyright">
+    Copyright &copy; Jason Barrie Morley 2019-2020
+</p>
+<script src="pattern.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <script type="text/javascript">
+
     initialize('other', 'other', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "other", options);
-    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
+    }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         size: {title: 'Size', default: 130, min: 1, max: 200},
         spacing: {title: 'Spacing', default: 100, min: 0, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#00a3d8', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#004d65', type: 'color'}});
-</script>
 
-<h2>麻の葉, Asa no ha</h2>
-<div id="asanoha" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('asanoha', 'asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "asanoha", options);
@@ -197,46 +217,31 @@
         size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
-</script>
 
-<div id="asanoha-dots" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('asanoha-dots', 'asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.dottedLine(2, 8);
         return Pattern.render(canvas, "asanoha", options);
     }, {size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
-</script>
 
-<h2>七宝, Shippou</h2>
-<div id="shippou" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('shippou', 'shippou', 300, function(canvas, options) {
         return Pattern.render(canvas, "shippou", options);
-    }, {lineWidth: {title: 'Line Width', default: 4, min: 1, max: 20},
+    }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
         radius: {title: 'Radius', default: 40, min: 1, max: 100},
 	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
-</script>
 
-<h2>青海波, Seigaiha</h2>
-
-<div id="waves" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('waves', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
-    }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
+    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
         radius: {title: 'Radius', default: 55, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
-</script>
 
-<div id="waves-light" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('waves-light', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
@@ -246,64 +251,40 @@
         radius: {title: 'Radius', default: 80, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'}});
-</script>
 
-<div id="waves-inverted" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('waves-inverted', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = true;
         return Pattern.render(canvas, "seigaiha", options);
-    }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
+    }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
         radius: {title: 'Radius', default: 44, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#19334d', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'}});
-</script>
 
-<h2>紗綾形, Sayagata</h2>
-
-<div id="sayagata" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('sayagata', 'sayagata', 300, function(canvas, options) {
         return Pattern.render(canvas, "sayagata", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
-        featureLength: {title: 'Feature Length', default: 12, min: 1, max: 75},
+        featureLength: {title: 'Feature Length', default: 9, min: 1, max: 75},
 	    angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
 	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
-</script>
 
-<h2>Stars</h2>
-
-<div id="stars" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('stars', 'stars', 300, function(canvas, options) {
         return Pattern.render(canvas, "stars", options);
     }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
         ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
         backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#2e2c29', type: 'color'}});
-</script>
 
-<h2>Triangles</h2>
-
-<div id="triangles" class="pattern-container"></div>
-<script type="text/javascript">
     initialize('triangles', 'triangles', 300, function(canvas, options) {
         return Pattern.render(canvas, "triangles", options);
     }, {featureLength: {title: 'Feature Length', default: 60, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
+
 </script>
-
-<p class="copyright">
-    Copyright &copy; Jason Barrie Morley 2019
-</p>
-
-<script src="pattern.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
 
 </body>
 </html>
