@@ -149,9 +149,12 @@
                     return renderer(canvas, options);
                 }
 
+                var desktopSize = Math.max(window.screen.width * window.devicePixelRatio,
+                                           window.screen.height * window.devicePixelRatio);
+
                 buttonDiv.appendChild(Utilities.downloadButton(id,
-                                                               window.screen.width * window.devicePixelRatio,
-                                                               window.screen.height * window.devicePixelRatio,
+                                                               desktopSize,
+                                                               desktopSize,
                                                                "Download Desktop",
                                                                rendererWithOptions));
                 buttonDiv.appendChild(Utilities.downloadButton(id,
