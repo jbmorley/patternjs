@@ -141,13 +141,13 @@
 	                }
                 }
 
+                container.appendChild(pre);
+                popoverDiv.appendChild(pre);
+
                 var buttonDiv = document.createElement('div');
                 buttonDiv.classList.add('content');
                 buttonDiv.classList.add('meta');
                 popoverDiv.appendChild(buttonDiv);
-
-                container.appendChild(pre);
-                popoverDiv.appendChild(pre);
 
                 var rendererWithOptions = function(canvas) {
                     return renderer(canvas, options);

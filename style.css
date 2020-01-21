@@ -17,17 +17,19 @@ h1 {
 .patterns {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 1em;
-    margin: 1em;
+    grid-gap: 0;
+    margin: 0.5em;
 }
 
 .pattern-container {
     overflow: hidden;
+    margin: 0.5em;
 }
 
 .pattern-container.fill {
     grid-column-start: 1;
     grid-column-end: 4;
+    margin: 0.5em -0.5em;
 }
 
 .pattern {
@@ -37,8 +39,7 @@ h1 {
 
 .popover {
     margin-top: 1em;
-    border: 1px solid #333;
-    margin: 2em 1em;
+    margin: 1em;
 }
 
 .hidden {
@@ -46,9 +47,12 @@ h1 {
 }
 
 pre {
-    margin: 0;
-    background-color: #F0F0F0;
+    margin: 1em 0;
     padding: 1em;
+}
+
+code {
+    border-radius: 6px;
 }
 
 h1, h2, code, p, .content {
@@ -136,8 +140,6 @@ h1, h2, code, p, .content {
 
     .patterns {
         grid-template-columns: 1fr 1fr;
-        grid-gap: 8px;
-        margin: 8px;
     }
 
     .pattern-container.fill {
