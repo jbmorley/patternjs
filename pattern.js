@@ -626,7 +626,8 @@ var Pattern = {
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         var approximateScaleFactor = 1.3
-        order = Math.ceil(Pattern.logbase(3, ( ( ( canvas.width / 4 ) * 6 ) / featureLength ) / approximateScaleFactor )) + 1;
+        var maxDimension = Math.max(canvas.width, canvas.height);
+        order = Math.ceil(Pattern.logbase(3, ( ( ( maxDimension / 4 ) * 6 ) / featureLength ) / approximateScaleFactor )) + 1;
         var numerator = ( approximateScaleFactor * ( 3.0 ** order ) * featureLength )
         var rightShift = numerator / 6.0;
 

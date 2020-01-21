@@ -17,17 +17,15 @@ h1 {
 .patterns {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 0.5em;
+    grid-gap: 1em;
     margin: 1em;
 }
 
 .pattern-container {
-    margin: 1em 1em 0 0;
     overflow: hidden;
 }
 
 .pattern-container.fill {
-    min-width: 100%;
     grid-column-start: 1;
     grid-column-end: 4;
 }
@@ -39,7 +37,8 @@ h1 {
 
 .popover {
     margin-top: 1em;
-    border: 1px solid black;
+    border: 1px solid #333;
+    margin: 2em 1em;
 }
 
 .hidden {
@@ -130,4 +129,20 @@ h1, h2, code, p, .content {
 
 .copyright, .thanks {
     text-align: center;
+}
+
+
+@media only screen and (max-width: 600px)  {
+
+    .patterns {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 8px;
+        margin: 8px;
+    }
+
+    .pattern-container.fill {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
 }

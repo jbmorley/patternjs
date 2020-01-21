@@ -81,7 +81,7 @@
             return div;
         }
 
-        function initialize(id, method, height, renderer, parameters) {
+        function initialize(id, title, method, height, renderer, parameters) {
             Utilities.onDocumentReady(function() {
 
                 var options = {}
@@ -101,6 +101,10 @@
                 popoverDiv.classList.add('popover');
                 popoverDiv.classList.add('hidden');
                 container.appendChild(popoverDiv);
+
+                var header = document.createElement('h2');
+                header.innerHTML = title;
+                popoverDiv.appendChild(header);
 
                 var optionDiv = document.createElement('div');
                 optionDiv.classList.add('content');
@@ -207,7 +211,7 @@
 <script>hljs.initHighlightingOnLoad();</script>
 <script type="text/javascript">
 
-    initialize('other', 'other', 300, function(canvas, options) {
+    initialize('other', 'Hexagons and Lines', 'other', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "other", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
@@ -216,7 +220,7 @@
 	    backgroundColor: {title: 'Background Color', default: '#00a3d8', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#004d65', type: 'color'}});
 
-    initialize('asanoha', 'asanoha', 300, function(canvas, options) {
+    initialize('asanoha', 'Asanoha', 'asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "asanoha", options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
@@ -224,21 +228,21 @@
 	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('asanoha-dots', 'asanoha', 300, function(canvas, options) {
+    initialize('asanoha-dots', 'Asanoha', 'asanoha', 300, function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.dottedLine(2, 8);
         return Pattern.render(canvas, "asanoha", options);
     }, {size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('shippou', 'shippou', 300, function(canvas, options) {
+    initialize('shippou', 'Shippou', 'shippou', 300, function(canvas, options) {
         return Pattern.render(canvas, "shippou", options);
-    }, {lineWidth: {title: 'Line Width', default: 3, min: 1, max: 20},
+    }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         radius: {title: 'Radius', default: 40, min: 1, max: 100},
 	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('waves', 'seigaiha', 300, function(canvas, options) {
+    initialize('waves', 'Seigaha', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
@@ -248,7 +252,7 @@
 	    backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('waves-light', 'seigaiha', 300, function(canvas, options) {
+    initialize('waves-light', 'Seigaha', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
@@ -258,7 +262,7 @@
 	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'}});
 
-    initialize('waves-inverted', 'seigaiha', 300, function(canvas, options) {
+    initialize('waves-inverted', 'Seigaha', 'seigaiha', 300, function(canvas, options) {
     	options.alternating = true;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
@@ -268,7 +272,7 @@
 	    backgroundColor: {title: 'Background Color', default: '#19334d', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'}});
 
-    initialize('sayagata', 'sayagata', 300, function(canvas, options) {
+    initialize('sayagata', 'Sayagata', 'sayagata', 300, function(canvas, options) {
         return Pattern.render(canvas, "sayagata", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
         featureLength: {title: 'Feature Length', default: 9, min: 1, max: 75},
@@ -276,21 +280,21 @@
 	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
 
-    initialize('stars', 'stars', 300, function(canvas, options) {
+    initialize('stars', 'Stars', 'stars', 300, function(canvas, options) {
         return Pattern.render(canvas, "stars", options);
     }, {featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
         ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
         backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#2e2c29', type: 'color'}});
 
-    initialize('triangles', 'triangles', 300, function(canvas, options) {
+    initialize('triangles', 'Triangles', 'triangles', 300, function(canvas, options) {
         return Pattern.render(canvas, "triangles", options);
     }, {featureLength: {title: 'Feature Length', default: 26, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 2, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#ebebeb', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('gosper', 'gosper', 300, function(canvas, options) {
+    initialize('gosper', 'Gosper Curve', 'gosper', 300, function(canvas, options) {
         return Pattern.render(canvas, "gosper", options);
     }, {featureLength: {title: 'Feature Length', default: 5, min: 4, max: 100},
         lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
