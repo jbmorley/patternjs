@@ -81,6 +81,10 @@
             return div;
         }
 
+        function checkbox(key, configuration, callback) {
+
+        }
+
         function initialize(id, title, method, height, renderer, parameters) {
             Utilities.onDocumentReady(function() {
 
@@ -130,6 +134,14 @@
 	                                                          renderer(canvas, options);
                                                               updateSource(options);
 	                                                      }));
+                    } else if (settings.type == "boolean") {
+                        optionDiv.appendChild(checkbox(parameter,
+	                                                   settings,
+	                                                   function(key, value) {
+	                                                       options[key] = value;
+	                                                       renderer(canvas, options);
+                                                           updateSource(options);
+	                                                   }));
                     } else {
 	                    optionDiv.appendChild(slider(parameter,
 	                                                 settings,
@@ -299,6 +311,15 @@
         lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#e4ef65', type: 'color'},
         foregroundColor: {title: 'Foreground Color', default: '#9aa60d', type: 'color'}});
+
+    initialize('tiles', 'Tiles', 'tiles', 300, function(canvas, options) {
+        return Pattern.render(canvas, "tiles", options);
+    }, {angle: {title: 'Angle', default: (Math.PI / 60) * 11, min: 0, max: Math.PI / 4, step: Math.PI / 60},
+        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', default: '#1a0952', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
+        horizontalLength: {title: 'Horizontal Length', default: 40, min: 1, max: 40},
+        verticalLength: {title: 'Vertical Length', default: 30, min: 1, max: 40}});
 
 </script>
 

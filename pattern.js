@@ -9,9 +9,25 @@ var Pattern = {
         this.points = [];
         this.points.push([x, y]);
         this.isClosed = false;
+        this.minX = null;
+        this.maxX = null;
+        this.minY = null;
+        this.maxY = null;
 
         this.addPoint = function(x, y) {
             this.points.push([x, y]);
+            if (this.minX === null || x < this.minX) {
+                this.minX = x;
+            }
+            if (this.maxX === null || x > this.maxX) {
+                this.maxX = x;
+            }
+            if (this.minY === null || y < this.minY) {
+                this.minY = y;
+            }
+            if (this.maxY === null || y > this.maxY) {
+                this.maxY = y;
+            }
         };
 
         this.length = function() {
@@ -44,13 +60,18 @@ var Pattern = {
             return element;
         }
 
+        this.forEach = function(iterator) {
+            for (var i = 0; i < this.points.length; i++) {
+                iterator(this.points[i], i);
+            }
+        }
+
     },
 
     Path: function(context) {
 
         this.moveTo = function(x, y) {
             this.startPolyline(x, y);
-            this.context.moveTo(x, y);
             this.x = x;
             this.y = y;
         };
@@ -63,24 +84,32 @@ var Pattern = {
 
         this.lineTo = function(x, y) {
             this.current.addPoint(x, y);
-            this.context.lineTo(x, y);
             this.x = x;
             this.y = y;
-            if (this.x < this.minX) {
-                this.minX = this.x;
-            }
-            if (this.x > this.maxX) {
-                this.maxX = this.x;
-            }
-            if (this.y < this.minY) {
-                this.minY = this.y;
-            }
-            if (this.y > this.maxY) {
-                this.maxY = this.y;
-            }
         };
 
+        this.apply = function() {
+            var context = this.context;
+            var transform = this.transform;
+            this.forLines(function(polyline) {
+                if (polyline.length < 2) {
+                    return;
+                }
+                polyline.forEach(function(point, index) {
+                    var [x, y] = transform(point);
+                    if (index == 0) {
+                        context.moveTo(x, y);
+                    }
+                    context.lineTo(x, y);
+                });
+                if (polyline.isClosed) {
+                    context.closePath();
+                }
+            });
+        }
+
         this.stroke = function() {
+            this.apply();
             this.context.stroke();
         };
 
@@ -122,6 +151,7 @@ var Pattern = {
         };
 
         this.fill = function() {
+            this.apply();
             this.context.fill();
         };
 
@@ -134,24 +164,68 @@ var Pattern = {
             return svg;
         };
 
+        this.forLines = function(iterator) {
+            for (var i = 0; i < this.lines.length; i++) {
+                var polyline = this.lines[i];
+                iterator(polyline);
+            }
+        }
+
+        this.bounds = function() {
+
+            var minX = null;
+            var maxX = null;
+            var minY = null;
+            var maxY = null;
+
+            this.forLines(function(polyline) {
+                if (polyline.length() < 2) {
+                    return;
+                }
+                if (minX === null || line.minX < minX) {
+                    minX = polyline.minX;
+                }
+                if (maxX == null || line.maxX > maxX) {
+                    maxX = polyline.maxX;
+                }
+                if (minY === null || line.minY < minY) {
+                    minY = polyline.minY;
+                }
+                if (maxY == null || line.maxY > maxY) {
+                    maxY = polyline.maxY;
+                }
+            });
+
+            return [minX, minY, maxX - minX, maxY - minY];
+        }
+
         this.width = function() {
-            return this.maxX - this.minX;
+            var [x, y, width, height] = this.bounds();
+            return width;
         }
 
         this.height = function() {
-            return this.maxY - this.minY;
+            var [x, y, width, height] = this.bounds();
+            return height;
+        }
+
+        this.setCenter = function(x, y) {
+            var self = this;
+            this.transform = function(point) {
+                var [pointX, pointY] = point;
+                var [minX, minY, width, height] = self.bounds();
+                var centerX  =  minX + (width / 2);
+                var centerY = minY + (height / 2);
+                return [pointX - centerX + x, pointY - centerY + y];
+            };
         }
 
         this.context = context;
         this.angle = 0;
         this.lines = [];
         this.context.beginPath();
+        this.transform = function(point) { return point; }
         this.moveTo(0, 0);
-        this.minX = 0;
-        this.maxX = 0;
-        this.minY = 0;
-        this.maxY = 0;
-
     },
 
     SVG: function(width, height) {
@@ -177,20 +251,37 @@ var Pattern = {
 
     },
 
-    alternate: function(x, y, width, height, stepX, stepY, offset, draw) {
-        if (offset === undefined) {
-            offset = false;
+    alternate: function(context, x, y, width, height, stepX, stepY, offset, draw, debug) {
+
+        function alternate(x, y, width, height, stepX, stepY, offset, draw) {
+            if (offset === undefined) {
+                offset = false;
+            }
+
+            for (var j = y - stepY; j < y + height + stepY; j = j + ( stepY * 2 )) {
+                for (var i = x - stepX; i < x + width + stepX; i = i + stepX) {
+                    draw(i, j, false);
+                    var i2 = i;
+                    if (offset) {
+                        i2 = i + ( stepX / 2 );
+                    }
+                    draw(i2, j + stepY, offset);
+                }
+            }
         }
 
-        for (var j = y - stepY; j < y + height + stepY; j = j + ( stepY * 2 )) {
-            for (var i = x - stepX; i < x + width + stepX; i = i + stepX) {
-                draw(i, j);
-                var i2 = i;
+        alternate(x, y, width, height, stepX, stepY, offset, draw);
+        if (debug) {
+            alternate(x, y, width, height, stepX, stepY, offset, function(x, y, offset) {
                 if (offset) {
-                    i2 = i + ( stepX / 2 );
+                    context.fillStyle = 'cyan';
+                } else {
+                    context.fillStyle = 'magenta';
                 }
-                draw(i2, j + stepY);
-            }
+                context.beginPath();
+                context.arc(x, y, 4, 0, 2 * Math.PI);
+                context.fill();
+            });
         }
     },
 
@@ -281,7 +372,7 @@ var Pattern = {
         context.strokeStyle = foregroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = foregroundColor;
-        Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
             drawPrimitive(context, x, y, length, altitude, space, lineDrawer);
         });
     },
@@ -310,7 +401,7 @@ var Pattern = {
         context.strokeStyle = foregroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = foregroundColor;
-        Pattern.alternate(0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
             drawPrimitive(context, x, y, length, altitude, lineDrawer);
         });
     },
@@ -331,7 +422,7 @@ var Pattern = {
         context.strokeStyle = foregroundColor;
         context.lineWidth = lineWidth;
         context.fillRect(0, 0, canvas.width, canvas.height);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, radius * 2, radius, true, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, radius * 2, radius, true, function(x, y) {
             drawCircle(context, x, y, radius);
         });
     },
@@ -468,7 +559,7 @@ var Pattern = {
         var stepY = 10 * featureLength * Math.cos( right / 2 );
 
         var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, stepX, stepY, false, function(x, y) {
             drawPattern(path, x, y, featureLength, angle);
         });
         path.stroke();
@@ -510,7 +601,7 @@ var Pattern = {
         var smallSize = starWidth(smallSideLength);
 
         var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, largeSize + smallSize, (largeSize / 2) + (smallSize / 2), true, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, largeSize + smallSize, (largeSize / 2) + (smallSize / 2), true, function(x, y) {
             drawStar(path, x, y, sideLength);
             drawStar(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
         });
@@ -540,7 +631,7 @@ var Pattern = {
         altitude = radius / 2;
 
         var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, radius + padding, altitude + padding, true, function(x, y) {
             drawTriangle(path, x, y, radius, altitude);
         });
         path.fill();
@@ -573,7 +664,7 @@ var Pattern = {
         altitude = radius / 2;
 
         var path = new Pattern.Path(context);
-        Pattern.alternate(0, 0, canvas.width, canvas.height, 100, 100, false, function(x, y) {
+        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, 100, 100, false, function(x, y) {
             drawElement(path, x, y, radius, altitude);
         });
         path.stroke();
@@ -639,6 +730,55 @@ var Pattern = {
         path.stroke();
 
         return path.svg(canvas.width, canvas.height);
-    }
+    },
+
+    tiles: function(canvas, {foregroundColor, backgroundColor, angle, lineWidth, horizontalLength, verticalLength}={}) {
+
+        var context = canvas.getContext('2d');
+        context.fillStyle = foregroundColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        var featureWidth = 2 * horizontalLength * Math.cos(angle);
+        var featureHeight = verticalLength;
+        var verticalSpacing = lineWidth / Math.cos(angle);
+        var verticalOffset = verticalLength - (Math.tan(angle) * (featureWidth / 2));
+
+        function drawFeature(path, offset) {
+            if (offset) {
+                path.setAngle(Math.PI);
+            } else {
+                path.setAngle(0);
+            }
+            path.forward(verticalLength);
+            path.left((Math.PI / 2) + angle);
+            path.forward(horizontalLength);
+            path.right(2 * angle);
+            path.forward(horizontalLength);
+            path.left((Math.PI / 2) + angle);
+            path.forward(verticalLength);
+            path.left((Math.PI / 2) - angle);
+            path.forward(horizontalLength);
+            path.close();
+        };
+
+        // TODO: Consider adding scaling to the path.
+        // TODO: Consider adding fill styles to the path.
+        // TODO: Automatically inject the context.
+
+        context.fillStyle = backgroundColor;
+        Pattern.alternate(
+            context,
+            0, 0,
+            canvas.width,
+            canvas.height,
+            featureWidth + lineWidth, featureHeight + verticalSpacing,
+            true,
+            function(x, y, offset) {
+                var path = new Pattern.Path(context);
+                drawFeature(path, offset);
+                path.setCenter(x, y);
+                path.fill();
+            });
+    },
 
 };
