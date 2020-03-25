@@ -38,7 +38,7 @@ var Pattern = {
             this.isClosed = true;
         };
 
-        this.svg = function() {
+        this.svg = function(transform) {
             var element;
             if (this.isClosed) {
                 element = document.createElementNS("http://www.w3.org/2000/svg", 'polygon');
@@ -48,7 +48,8 @@ var Pattern = {
 
             var coordinates = []
             for (var i = 0; i < this.points.length; i++) {
-                coordinates.push(this.points[i][0] + "," + this.points[i][1]);
+                var [x, y] = transform([this.points[i][0], this.points[i][1]]);
+                coordinates.push(x + "," + y);
             }
             var points = coordinates.join(" ");
 
@@ -65,6 +66,26 @@ var Pattern = {
                 iterator(this.points[i], i);
             }
         }
+
+    },
+
+    Image: function(context) {
+
+        this.add = function(element) {
+            this.elements.push(element);
+        };
+
+        this.svg = function(width, height) {
+            var svg = new Pattern.SVG(width, height);
+            this.elements.forEach(function(element) {
+                element.lines.forEach(function(polyline) {
+                    svg.appendChild(polyline.svg(element.transform));
+                });
+            });
+            return svg;
+        };
+
+        this.elements = [];
 
     },
 
@@ -159,7 +180,7 @@ var Pattern = {
             var svg = new Pattern.SVG(width, height);
             for (var i = 0; i < this.lines.length; i++) {
                 var polyline = this.lines[i];
-                svg.appendChild(polyline.svg());
+                svg.appendChild(polyline.svg(this.transform));
             }
             return svg;
         };
@@ -601,10 +622,15 @@ var Pattern = {
         var smallSize = starWidth(smallSideLength);
 
         var path = new Pattern.Path(context);
-        Pattern.alternate(context, 0, 0, canvas.width, canvas.height, largeSize + smallSize, (largeSize / 2) + (smallSize / 2), true, function(x, y) {
-            drawStar(path, x, y, sideLength);
-            drawStar(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
-        });
+        Pattern.alternate(context,
+                          0, 0,
+                          canvas.width, canvas.height,
+                          largeSize + smallSize, (largeSize / 2) + (smallSize / 2),
+                          true,
+                          function(x, y) {
+                              drawStar(path, x, y, sideLength);
+                              drawStar(path, x + (largeSize / 2) + (smallSize / 2), y, smallSideLength);
+                          });
         context.fillStyle = foregroundColor;
         path.fill();
 
@@ -765,6 +791,8 @@ var Pattern = {
         // TODO: Consider adding fill styles to the path.
         // TODO: Automatically inject the context.
 
+        var image = new Pattern.Image();
+
         context.fillStyle = backgroundColor;
         Pattern.alternate(
             context,
@@ -775,10 +803,13 @@ var Pattern = {
             true,
             function(x, y, offset) {
                 var path = new Pattern.Path(context);
+                image.add(path);
                 drawFeature(path, offset);
                 path.setCenter(x, y);
                 path.fill();
             });
+
+        return image.svg(canvas.width, canvas.height);
     },
 
 };
