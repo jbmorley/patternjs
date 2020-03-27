@@ -321,18 +321,35 @@
 	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'},
         alternating: {title: 'Alternate', default: true, type: 'boolean'}});
 
-    initialize('Sayagata', 'sayagata', null, {
-        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
-        featureLength: {title: 'Feature Length', default: 9, min: 1, max: 75},
-	    angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
-	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
+    initialize('Sayagata', 'sayagata', null, null, {
+        lineWidth: 1,
+        featureLength: 9,
+	    angle: Math.PI / 2.5,
+	    backgroundColor: '#4f2c64',
+	    foregroundColor: '#beafe6',
+    });
+
+    initialize('Sayagata', 'sayagata', null, null, {
+        "lineWidth": 3,
+        "featureLength": 9,
+        "angle": 1.46607657167524,
+        "backgroundColor": "#cf1103",
+        "foregroundColor": "#f8d3b5"
+    });
+
+    initialize('Sayagata', 'sayagata', null, null, {
+        "lineWidth": 3,
+        "featureLength": 12,
+        "angle": 1.30899693899575,
+        "backgroundColor": "#abc9a3",
+        "foregroundColor": "#4461ac"
+    });
 
     initialize('Stars', 'stars', null, null, {
-        featureLength: 20,
-        ratio: 66,
-        backgroundColor: '#f0ead6',
-	    foregroundColor: '#2e2c29',
+        "featureLength": 20,
+        "ratio": 66,
+        "backgroundColor": "#f0ead6",
+	    "foregroundColor": "#2e2c29",
     });
 
     initialize('Triangles', 'triangles', null, null, {

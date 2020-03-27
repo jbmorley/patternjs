@@ -505,6 +505,14 @@ var Pattern = {
 
     },
 
+    sayagata_options: {
+        lineWidth: {title: 'Line Width', min: 1, max: 10},
+        featureLength: {title: 'Feature Length', min: 1, max: 75},
+	    angle: {title: 'Angle', min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
+	    backgroundColor: {title: 'Background Color', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', type: 'color'},
+    },
+
     sayagata: function(canvas, {featureLength, lineWidth, angle, backgroundColor, foregroundColor}={}) {
 
         if (angle === undefined) { angle = Math.PI / 3; }
