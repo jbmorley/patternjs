@@ -328,17 +328,26 @@
 	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
 
-    initialize('Stars', 'stars', null, {
-        featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
-        ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
-        backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#2e2c29', type: 'color'}});
+    initialize('Stars', 'stars', null, null, {
+        featureLength: 20,
+        ratio: 66,
+        backgroundColor: '#f0ead6',
+	    foregroundColor: '#2e2c29',
+    });
 
-    initialize('Triangles', 'triangles', null, {
-        featureLength: {title: 'Feature Length', default: 26, min: 1, max: 100},
-        spacing: {title: 'Spacing', default: 2, min: 1, max: 20},
-        backgroundColor: {title: 'Background Color', default: '#ebebeb', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
+    initialize('Triangles', 'triangles', null, null, {
+        featureLength: 26,
+        spacing: 2,
+        backgroundColor: '#ebebeb',
+	    foregroundColor: '#ffffff',
+    });
+
+    initialize('pattern003', 'pattern003', null, null, {
+        featureLength: 26,
+        spacing: 2,
+        backgroundColor: '#ebebeb',
+	    foregroundColor: '#ffffff',
+    });
 
     initialize('Gosper Curve', 'gosper', null, null, {
         featureLength: 9,

@@ -592,6 +592,13 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
+    stars_options: {
+        featureLength: {title: 'Feature Length', min: 1, max: 100},
+        ratio: {title: 'Ratio', min: 0, max: 100},
+        backgroundColor: {title: 'Background Color', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', type: 'color'}
+    },
+
     stars: function(canvas, {featureLength, ratio, foregroundColor, backgroundColor}={}) {
 
         var starWidth = function(sideLength) {
@@ -641,6 +648,13 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
+    triangles_options: {
+        featureLength: {title: 'Feature Length', min: 1, max: 100},
+        spacing: {title: 'Spacing', min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', type: 'color'},
+    },
+
     triangles: function(canvas, {featureLength, spacing, backgroundColor, foregroundColor}={}) {
 
         var drawTriangle = function(path, x, y, width, altitude) {
@@ -669,7 +683,14 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    pattern003: function(canvas, {featureLength, spacing}={}) {
+    pattern003_options: {
+        featureLength: {title: 'Feature Length', min: 4, max: 100},
+        lineWidth: {title: 'Line Width', min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', type: 'color'},
+    },
+
+    pattern003: function(canvas, {featureLength, spacing, backgroundColor, foregroundColor}={}) {
 
         var drawElement = function(path, x, y, sideLength) {
             path.moveTo(x, y);
@@ -688,7 +709,9 @@ var Pattern = {
         var radius = featureLength * window.devicePixelRatio;
 
         var context = canvas.getContext('2d');
+        context.fillStyle = backgroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
+        context.strokeStyle = foregroundColor;
 
         padding = spacing * window.devicePixelRatio;
         altitude = radius / 2;
