@@ -452,6 +452,16 @@ var Pattern = {
         });
     },
 
+    seigaiha_options: {
+        lineWidth: {title: 'Line Width', min: 1, max: 20},
+        count: {title: 'Line Count', min: 2, max: 20},
+        lineSpacing: {title: 'Line Spacing', min: 1, max: 20},
+        radius: {title: 'Radius', default: 44, min: 1, max: 200},
+	    backgroundColor: {title: 'Background Color', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', type: 'color'},
+        alternating: {title: 'Alternate', type: 'boolean'},
+    },
+
     seigaiha: function(canvas, {lineWidth, radius, lineSpacing, count, alternating, backgroundColor, foregroundColor}={}) {
 
         var drawCircle = function(context, x, y, radius) {

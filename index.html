@@ -294,39 +294,52 @@
 	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Seigaha', 'seigaiha', null, {
-        lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
-        count: {title: 'Line Count', default: 5, min: 2, max: 20},
-        lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
-        radius: {title: 'Radius', default: 55, min: 1, max: 200},
-	    backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
-        alternating: {title: 'Alternate', default: false, type: 'boolean'}});
+    initialize('Seigaha', 'seigaiha', null, null, {
+        "lineWidth": 1,
+        "count": 14,
+        "lineSpacing": 3,
+        "radius": 44,
+        "backgroundColor": "#ffffff",
+        "foregroundColor": "#ff2600",
+        "alternating": false
+    });
 
-    initialize('Seigaha', 'seigaiha', null, {
-        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
-        count: {title: 'Line Count', default: 10, min: 2, max: 20},
-        lineSpacing: {title: 'Line Spacing', default: 6, min: 1, max: 20},
-        radius: {title: 'Radius', default: 44, min: 1, max: 200},
-	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'},
-        alternating: {title: 'Alternate', default: false, type: 'boolean'}});
+    initialize('Seigaha', 'seigaiha', null, null, {
+        "lineWidth": 2,
+        "count": 5,
+        "lineSpacing": 10,
+        "radius": 55,
+	    "backgroundColor": '#000000',
+	    "foregroundColor": '#ffffff',
+        "alternating": false,
+    });
 
-    initialize('Seigaha', 'seigaiha', null, {
-        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
-        count: {title: 'Line Count', default: 5, min: 2, max: 20},
-        lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
-        radius: {title: 'Radius', default: 44, min: 1, max: 200},
-	    backgroundColor: {title: 'Background Color', default: '#19334d', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'},
-        alternating: {title: 'Alternate', default: true, type: 'boolean'}});
+    initialize('Seigaha', 'seigaiha', null, null, {
+        "lineWidth": 1,
+        "count": 10,
+        "lineSpacing": 6,
+        "radius": 44,
+	    "backgroundColor": '#ffffff',
+	    "foregroundColor": '#0033cc',
+        "alternating": false,
+    });
+
+    initialize('Seigaha', 'seigaiha', null, null, {
+        "lineWidth": 1,
+        "count": 5,
+        "lineSpacing": 8,
+        "radius": 44,
+	    "backgroundColor": '#19334d',
+	    "foregroundColor": '#336699',
+        "alternating": true,
+    });
 
     initialize('Sayagata', 'sayagata', null, null, {
-        lineWidth: 1,
-        featureLength: 9,
-	    angle: Math.PI / 2.5,
-	    backgroundColor: '#4f2c64',
-	    foregroundColor: '#beafe6',
+        "lineWidth": 1,
+        "featureLength": 9,
+	    "angle": Math.PI / 2.5,
+	    "backgroundColor": '#4f2c64',
+	    "foregroundColor": '#beafe6',
     });
 
     initialize('Sayagata', 'sayagata', null, null, {
@@ -353,24 +366,24 @@
     });
 
     initialize('Triangles', 'triangles', null, null, {
-        featureLength: 26,
-        spacing: 2,
-        backgroundColor: '#ebebeb',
-	    foregroundColor: '#ffffff',
+        "featureLength": 26,
+        "spacing": 2,
+        "backgroundColor": '#ebebeb',
+	    "foregroundColor": '#ffffff',
     });
 
     initialize('pattern003', 'pattern003', null, null, {
-        featureLength: 26,
-        spacing: 2,
-        backgroundColor: '#ebebeb',
-	    foregroundColor: '#ffffff',
+        "featureLength": 26,
+        "spacing": 2,
+        "backgroundColor": '#ebebeb',
+	    "foregroundColor": '#ffffff',
     });
 
     initialize('Gosper Curve', 'gosper', null, null, {
-        featureLength: 9,
-        lineWidth: 1,
-        backgroundColor: '#e4ef65',
-        foregroundColor: '#9aa60d',
+        "featureLength": 9,
+        "lineWidth": 1,
+        "backgroundColor": '#e4ef65',
+        "foregroundColor": '#9aa60d',
     });
 
     initialize('Tiles', 'tiles', null, null, {
