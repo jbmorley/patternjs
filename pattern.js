@@ -702,6 +702,13 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
+    gosper_options: {
+        featureLength: {title: 'Feature Length', min: 4, max: 100},
+        lineWidth: {title: 'Line Width', min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', type: 'color'},
+    },
+
     gosper: function(canvas, {featureLength, foregroundColor, backgroundColor, lineWidth}={}) {
 
         var angle = Math.PI / 3;

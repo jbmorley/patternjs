@@ -340,11 +340,12 @@
         backgroundColor: {title: 'Background Color', default: '#ebebeb', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Gosper Curve', 'gosper', null, {
-        featureLength: {title: 'Feature Length', default: 9, min: 4, max: 100},
-        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
-        backgroundColor: {title: 'Background Color', default: '#e4ef65', type: 'color'},
-        foregroundColor: {title: 'Foreground Color', default: '#9aa60d', type: 'color'}});
+    initialize('Gosper Curve', 'gosper', null, null, {
+        featureLength: 9,
+        lineWidth: 1,
+        backgroundColor: '#e4ef65',
+        foregroundColor: '#9aa60d',
+    });
 
     initialize('Tiles', 'tiles', null, null, {
         angle: (Math.PI / 60) * 11,
@@ -353,7 +354,8 @@
         foregroundColor: '#ffffff',
         horizontalLength: 40,
         verticalLength: 30,
-        alternate: true});
+        alternate: true,
+    });
 
     initialize('Tiles', 'tiles', null, null, {
         angle: (Math.PI / 60) * 11,
