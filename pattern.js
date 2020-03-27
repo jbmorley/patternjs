@@ -814,6 +814,8 @@ var Pattern = {
 
     dots: function(canvas, {foregroundColor, backgroundColor, radius, spacing, alternate}={}) {
 
+        // TODO: Support SVG download.
+
         var context = canvas.getContext('2d');
         context.fillStyle = backgroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
