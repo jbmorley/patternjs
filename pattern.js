@@ -758,7 +758,7 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
-    tiles: function(canvas, {foregroundColor, backgroundColor, angle, lineWidth, horizontalLength, verticalLength}={}) {
+    tiles: function(canvas, {foregroundColor, backgroundColor, angle, lineWidth, horizontalLength, verticalLength, alternate}={}) {
 
         var context = canvas.getContext('2d');
         context.fillStyle = foregroundColor;
@@ -800,7 +800,7 @@ var Pattern = {
             canvas.width,
             canvas.height,
             featureWidth + lineWidth, featureHeight + verticalSpacing,
-            true,
+            alternate,
             function(x, y, offset) {
                 var path = new Pattern.Path(context);
                 image.add(path);
@@ -810,6 +810,25 @@ var Pattern = {
             });
 
         return image.svg(canvas.width, canvas.height);
+    },
+
+    dots: function(canvas, {foregroundColor, backgroundColor, radius, spacing, alternate}={}) {
+
+        var context = canvas.getContext('2d');
+        context.fillStyle = backgroundColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = foregroundColor;
+        Pattern.alternate(
+            context,
+            0, 0,
+            canvas.width,
+            canvas.height,
+            spacing + (2 * radius), spacing + (2 * radius),
+            alternate,
+            function(x, y, offset) {
+                Pattern.drawCircle(context, x, y, radius);
+            });
+
     },
 
 };

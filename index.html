@@ -83,6 +83,27 @@
 
         function checkbox(key, configuration, callback) {
 
+            var change = function(event) {
+                callback(key, event.target.checked);
+            }
+
+            var div = document.createElement('div');
+            div.classList.add("control");
+
+            var label = document.createElement('label');
+            label.innerHTML = configuration.title;
+            div.appendChild(label);
+
+            var input = document.createElement('input');
+            input.type = "checkbox";
+            input.checked = configuration.default;
+            input.addEventListener('change', change);
+            input.addEventListener('input', change);
+            input.addEventListener('keyup', change);
+
+            div.appendChild(input);
+
+            return div;
         }
 
         function initialize(id, title, method, height, renderer, parameters) {
@@ -254,34 +275,34 @@
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
     initialize('waves', 'Seigaha', 'seigaiha', 300, function(canvas, options) {
-    	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
         radius: {title: 'Radius', default: 55, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#000000', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
+	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
+        alternating: {title: 'Alternate', default: false, type: 'boolean'}});
 
     initialize('waves-light', 'Seigaha', 'seigaiha', 300, function(canvas, options) {
-    	options.alternating = false;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 10, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 6, min: 1, max: 20},
         radius: {title: 'Radius', default: 44, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#ffffff', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'}});
+	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'},
+        alternating: {title: 'Alternate', default: false, type: 'boolean'}});
 
     initialize('waves-inverted', 'Seigaha', 'seigaiha', 300, function(canvas, options) {
-    	options.alternating = true;
         return Pattern.render(canvas, "seigaiha", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
         radius: {title: 'Radius', default: 44, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#19334d', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'}});
+	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'},
+        alternating: {title: 'Alternate', default: true, type: 'boolean'}});
 
     initialize('sayagata', 'Sayagata', 'sayagata', 300, function(canvas, options) {
         return Pattern.render(canvas, "sayagata", options);
@@ -319,7 +340,16 @@
         backgroundColor: {title: 'Background Color', default: '#1a0952', type: 'color'},
         foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
         horizontalLength: {title: 'Horizontal Length', default: 40, min: 1, max: 40},
-        verticalLength: {title: 'Vertical Length', default: 30, min: 1, max: 40}});
+        verticalLength: {title: 'Vertical Length', default: 30, min: 1, max: 40},
+        alternate: {title: 'Alternate', default: true, type: 'boolean'}});
+
+    initialize('dots', 'Dots', 'dots', 300, function(canvas, options) {
+        return Pattern.render(canvas, "dots", options);
+    }, {radius: {title: 'Radius', default: 14, min: 1, max: 20},
+        spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', default: '#e63b7a', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
+        alternate: {title: 'Alternate', default: true, type: 'boolean'}});
 
 </script>
 
