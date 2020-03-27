@@ -18,23 +18,28 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 0;
-    margin: 0.5em;
+    margin: 1em;
 }
 
 .pattern-container {
     overflow: hidden;
-    margin: 0.5em;
+    margin: 1em;
 }
 
 .pattern-container.fill {
     grid-column-start: 1;
     grid-column-end: 4;
-    margin: 0.5em -0.5em;
+    margin: 1em -1em;
 }
 
 .pattern {
     display: block;
     cursor: pointer;
+    border-radius: 6px;
+}
+
+.pattern-container.fill .pattern {
+    border-radius: 0;
 }
 
 .popover {
