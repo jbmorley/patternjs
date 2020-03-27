@@ -111,10 +111,19 @@
             return div;
         }
 
-        function initialize(title, method, height, renderer, parameters) {
+        function initialize(title, method, renderer, parameters, defaults) {
             Utilities.onDocumentReady(function() {
 
+                if (parameters === null) {
+                    parameters = Pattern.options(method);
+                    for (var parameter in parameters) {
+                        console.log(parameter);
+                        parameters[parameter]['default'] = defaults[parameter];
+                    }
+                }
+
                 var id = uuidv4();
+                var height = 300;
                 var options = {}
 
                 var patternsDiv = document.getElementById('patterns');
@@ -255,7 +264,7 @@
 <script>hljs.initHighlightingOnLoad();</script>
 <script type="text/javascript">
 
-    initialize('Hexagons and Lines', 'other', 300, function(canvas, options) {
+    initialize('Hexagons and Lines', 'other', function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "other", options);
     }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
@@ -264,7 +273,7 @@
 	    backgroundColor: {title: 'Background Color', default: '#00a3d8', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#004d65', type: 'color'}});
 
-    initialize('Asanoha', 'asanoha', 300, function(canvas, options) {
+    initialize('Asanoha', 'asanoha', function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
         return Pattern.render(canvas, "asanoha", options);
     }, {lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
@@ -272,20 +281,20 @@
 	    backgroundColor: {title: 'Background Color', default: '#000033', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Asanoha', 'asanoha', 300, function(canvas, options) {
+    initialize('Asanoha', 'asanoha', function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.dottedLine(2, 8);
         return Pattern.render(canvas, "asanoha", options);
     }, {size: {title: 'Size', default: 100, min: 1, max: 200},
 	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Shippou', 'shippou', 300, null, {
+    initialize('Shippou', 'shippou', null, {
         lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         radius: {title: 'Radius', default: 40, min: 1, max: 100},
 	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Seigaha', 'seigaiha', 300, null, {
+    initialize('Seigaha', 'seigaiha', null, {
         lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 10, min: 1, max: 20},
@@ -294,7 +303,7 @@
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
         alternating: {title: 'Alternate', default: false, type: 'boolean'}});
 
-    initialize('Seigaha', 'seigaiha', 300, null, {
+    initialize('Seigaha', 'seigaiha', null, {
         lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 10, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 6, min: 1, max: 20},
@@ -303,7 +312,7 @@
 	    foregroundColor: {title: 'Foreground Color', default: '#0033cc', type: 'color'},
         alternating: {title: 'Alternate', default: false, type: 'boolean'}});
 
-    initialize('Seigaha', 'seigaiha', 300, null, {
+    initialize('Seigaha', 'seigaiha', null, {
         lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         count: {title: 'Line Count', default: 5, min: 2, max: 20},
         lineSpacing: {title: 'Line Spacing', default: 8, min: 1, max: 20},
@@ -312,46 +321,67 @@
 	    foregroundColor: {title: 'Foreground Color', default: '#336699', type: 'color'},
         alternating: {title: 'Alternate', default: true, type: 'boolean'}});
 
-    initialize('Sayagata', 'sayagata', 300, null, {
+    initialize('Sayagata', 'sayagata', null, {
         lineWidth: {title: 'Line Width', default: 1, min: 1, max: 10},
         featureLength: {title: 'Feature Length', default: 9, min: 1, max: 75},
 	    angle: {title: 'Angle', default: Math.PI / 2.5, min: Math.PI / 30, max: Math.PI / 2, step: Math.PI / 60},
 	    backgroundColor: {title: 'Background Color', default: '#4f2c64', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#beafe6', type: 'color'}});
 
-    initialize('Stars', 'stars', 300, null, {
+    initialize('Stars', 'stars', null, {
         featureLength: {title: 'Feature Length', default: 20, min: 1, max: 100},
         ratio: {title: 'Ratio', default: 66, min: 0, max: 100},
         backgroundColor: {title: 'Background Color', default: '#f0ead6', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#2e2c29', type: 'color'}});
 
-    initialize('Triangles', 'triangles', 300, null, {
+    initialize('Triangles', 'triangles', null, {
         featureLength: {title: 'Feature Length', default: 26, min: 1, max: 100},
         spacing: {title: 'Spacing', default: 2, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#ebebeb', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Gosper Curve', 'gosper', 300, null, {
+    initialize('Gosper Curve', 'gosper', null, {
         featureLength: {title: 'Feature Length', default: 9, min: 4, max: 100},
         lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
         backgroundColor: {title: 'Background Color', default: '#e4ef65', type: 'color'},
         foregroundColor: {title: 'Foreground Color', default: '#9aa60d', type: 'color'}});
 
-    initialize('Tiles', 'tiles', 300, null, {
-        angle: {title: 'Angle', default: (Math.PI / 60) * 11, min: 0, max: Math.PI / 4, step: Math.PI / 60},
-        lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
-        backgroundColor: {title: 'Background Color', default: '#1a0952', type: 'color'},
-        foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
-        horizontalLength: {title: 'Horizontal Length', default: 40, min: 1, max: 40},
-        verticalLength: {title: 'Vertical Length', default: 30, min: 1, max: 40},
-        alternate: {title: 'Alternate', default: true, type: 'boolean'}});
+    initialize('Tiles', 'tiles', null, null, {
+        angle: (Math.PI / 60) * 11,
+        lineWidth: 1,
+        backgroundColor: '#1a0952',
+        foregroundColor: '#ffffff',
+        horizontalLength: 40,
+        verticalLength: 30,
+        alternate: true});
 
-    initialize('Dots', 'dots', 300, null, {
-        radius: {title: 'Radius', default: 14, min: 1, max: 20},
-        spacing: {title: 'Spacing', default: 6, min: 1, max: 20},
-        backgroundColor: {title: 'Background Color', default: '#e63b7a', type: 'color'},
-        foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'},
-        alternate: {title: 'Alternate', default: true, type: 'boolean'}});
+    initialize('Tiles', 'tiles', null, null, {
+        angle: (Math.PI / 60) * 11,
+        lineWidth: 1,
+        backgroundColor: '#ffffff',
+        foregroundColor: '#000000',
+        horizontalLength: 40,
+        verticalLength: 30,
+        alternate: false,
+    });
+
+    initialize('Tiles', 'tiles', null, null, {
+        "angle": 0.261799387799149,
+        "lineWidth": 1,
+        "backgroundColor": "#ffffff",
+        "foregroundColor": "#000000",
+        "horizontalLength": 40,
+        "verticalLength": 2,
+        "alternate": false,
+    });
+
+    initialize('Dots', 'dots', null, null, {
+        radius: 12,
+        spacing: 6,
+        backgroundColor: '#e63b7a',
+        foregroundColor: '#ffffff',
+        alternate: true,
+    });
 
 </script>
 

@@ -359,6 +359,10 @@ var Pattern = {
         return Pattern[pattern](canvas, options);
     },
 
+    options: function(pattern) {
+        return Pattern[pattern + "_options"];
+    },
+
     other: function(canvas, {size, spacing, lineDrawer, backgroundColor, foregroundColor}={}) {
 
 		var drawThreeLines = function(context, x, y, length, altitude, space, drawLine) {
@@ -758,6 +762,16 @@ var Pattern = {
         return path.svg(canvas.width, canvas.height);
     },
 
+    tiles_options: {
+        angle: {title: 'Angle', min: 0, max: Math.PI / 4, step: Math.PI / 60},
+        lineWidth: {title: 'Line Width', min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', type: 'color'},
+        horizontalLength: {title: 'Horizontal Length', min: 1, max: 40},
+        verticalLength: {title: 'Vertical Length', min: 1, max: 40},
+        alternate: {title: 'Alternate', type: 'boolean'}
+    },
+
     tiles: function(canvas, {foregroundColor, backgroundColor, angle, lineWidth, horizontalLength, verticalLength, alternate}={}) {
 
         var context = canvas.getContext('2d');
@@ -810,6 +824,14 @@ var Pattern = {
             });
 
         return image.svg(canvas.width, canvas.height);
+    },
+
+    dots_options: {
+        radius: {title: 'Radius', min: 1, max: 20},
+        spacing: {title: 'Spacing', min: 1, max: 20},
+        backgroundColor: {title: 'Background Color', type: 'color'},
+        foregroundColor: {title: 'Foreground Color', type: 'color'},
+        alternate: {title: 'Alternate', default: true, type: 'boolean'}
     },
 
     dots: function(canvas, {foregroundColor, backgroundColor, radius, spacing, alternate}={}) {
