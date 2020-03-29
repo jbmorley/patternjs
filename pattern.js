@@ -363,7 +363,17 @@ var Pattern = {
         return Pattern[pattern + "_options"];
     },
 
-    other: function(canvas, {size, spacing, lineDrawer, backgroundColor, foregroundColor}={}) {
+    other_options: {
+        lineWidth: {title: 'Line Width', min: 1, max: 20},
+        size: {title: 'Size', min: 1, max: 200},
+        spacing: {title: 'Spacing', min: 0, max: 200},
+	    backgroundColor: {title: 'Background Color', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', type: 'color'}
+    },
+
+    other: function(canvas, {size, spacing, lineWidth, backgroundColor, foregroundColor}={}) {
+
+        var lineDrawer = Pattern.drawers.line(lineWidth);
 
 		var drawThreeLines = function(context, x, y, length, altitude, space, drawLine) {
 			var horY = n => altitude * n / 4 * space;
@@ -429,6 +439,13 @@ var Pattern = {
         Pattern.alternate(context, 0, 0, canvas.width, canvas.height, length, altitude, true, function(x, y) {
             drawPrimitive(context, x, y, length, altitude, lineDrawer);
         });
+    },
+
+    shippou_options: {
+        lineWidth: {title: 'Line Width', min: 1, max: 20},
+        radius: {title: 'Radius', min: 1, max: 100},
+	    backgroundColor: {title: 'Background Color', type: 'color'},
+	    foregroundColor: {title: 'Foreground Color', type: 'color'},
     },
 
     shippou: function(canvas, {lineWidth, radius, backgroundColor, foregroundColor}={}) {

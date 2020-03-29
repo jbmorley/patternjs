@@ -264,14 +264,13 @@
 <script>hljs.initHighlightingOnLoad();</script>
 <script type="text/javascript">
 
-    initialize('Hexagons and Lines', 'other', function(canvas, options) {
-    	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
-        return Pattern.render(canvas, "other", options);
-    }, {lineWidth: {title: 'Line Width', default: 1, min: 1, max: 20},
-        size: {title: 'Size', default: 130, min: 1, max: 200},
-        spacing: {title: 'Spacing', default: 100, min: 0, max: 200},
-	    backgroundColor: {title: 'Background Color', default: '#00a3d8', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#004d65', type: 'color'}});
+    initialize('Hexagons and Lines', 'other', null, null, {
+        "lineWidth": 1,
+        "size": 130,
+        "spacing": 100,
+	    "backgroundColor": '#00a3d8',
+	    "foregroundColor": '#004d65',
+    });
 
     initialize('Asanoha', 'asanoha', function(canvas, options) {
     	options.lineDrawer = Pattern.drawers.line(options.lineWidth);
@@ -288,11 +287,12 @@
 	    backgroundColor: {title: 'Background Color', default: '#3B0B17', type: 'color'},
 	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
 
-    initialize('Shippou', 'shippou', null, {
-        lineWidth: {title: 'Line Width', default: 2, min: 1, max: 20},
-        radius: {title: 'Radius', default: 40, min: 1, max: 100},
-	    backgroundColor: {title: 'Background Color', default: '#330066', type: 'color'},
-	    foregroundColor: {title: 'Foreground Color', default: '#ffffff', type: 'color'}});
+    initialize('Shippou', 'shippou', null, null, {
+        "lineWidth": 2,
+        "radius": 40,
+	    "backgroundColor": '#330066',
+	    "foregroundColor": '#ffffff',
+    });
 
     initialize('Seigaha', 'seigaiha', null, null, {
         "lineWidth": 1,
