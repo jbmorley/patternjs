@@ -4,6 +4,34 @@ var Pattern = {
         return Math.log(value) / Math.log(base);
     },
 
+    Arc: function(context, x, y, radius, startAngle, endAngle) {
+
+        this.context = context;
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.startAngle = startAngle;
+        this.endAngle = endAngle;
+        this.transform = function(point) { return point; }
+
+        this.apply = function() {
+            this.context.beginPath();
+            var [x, y] = this.transform([this.x, this.y]);
+            this.context.arc(x, y, radius, this.startAngle, this.endAngle);
+        }
+
+        this.stroke = function() {
+            this.apply();
+            this.context.stroke();
+        }
+
+        this.fill = function() {
+            this.apply();
+            this.context.fill();
+        }
+
+    },
+
     Polyline: function(x, y) {
 
         this.points = [];
@@ -916,7 +944,9 @@ var Pattern = {
             spacing + (2 * radius), spacing + (2 * radius),
             alternate,
             function(x, y, offset) {
-                Pattern.drawCircle(context, x, y, radius);
+                var circle = new Pattern.Arc(context, x, y, radius, 0, 2 * Math.PI);
+                circle.fill();
+                // Pattern.drawCircle(context, x, y, radius);
             });
 
     },
