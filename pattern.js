@@ -725,7 +725,7 @@ var Pattern = {
         foregroundColor: {title: 'Foreground Color', type: 'color'},
     },
 
-    pattern003: function(canvas, {featureLength, spacing, backgroundColor, foregroundColor}={}) {
+    pattern003: function(canvas, {featureLength, lineWidth, spacing, backgroundColor, foregroundColor}={}) {
 
         var drawElement = function(path, x, y, sideLength) {
             path.moveTo(x, y);
@@ -747,6 +747,7 @@ var Pattern = {
         context.fillStyle = backgroundColor;
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.strokeStyle = foregroundColor;
+        context.lineWidth = lineWidth;
 
         padding = spacing * window.devicePixelRatio;
         altitude = radius / 2;
