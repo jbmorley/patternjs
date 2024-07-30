@@ -8,4 +8,4 @@ JavaScript pattern rendering library.
 
 Pattern.js constitutes a small number of utilities for drawing repeating patterns, and high-level APIs for specific patterns.
 
-See it [here](https://patternjs.com).
+See it [here](https://patternjs.jbmorley.co.uk).
